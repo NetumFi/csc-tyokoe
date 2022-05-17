@@ -1,0 +1,24 @@
+csc:
+  hosts:
+    koe7:
+      hostname: koe7
+      ansible_ssh_host: 128.214.254.177
+      ansible_port: 22
+      ansible_connection: ssh
+      ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+  vars:
+    developers:
+      - name: Jarno Luttinen
+        account: jluttinen
+      - name: Jermu Mäki
+        account: jmaki
+      - name: Jouko Johansson
+        account: jjohansson
+      - name: Mohamid Shaker
+        account: mshaker
+      - name: Tommi Sahimäki
+        account: tsahimaki
+      - name: Zoltan Varga
+        account: zvarga
+      - name: Teijo Kokko
+        account: tkokko

@@ -1,0 +1,6 @@
+---
+- hosts: csc
+  tasks:
+    - name: Toimiiko yhteys
+      debug:
+        msg: 'Toimii!'
