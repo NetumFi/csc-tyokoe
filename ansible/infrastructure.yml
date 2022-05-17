@@ -1,0 +1,63 @@
+---
+- hosts: csc
+  user: ansible
+  become: yes
+  vars:
+
+  tasks:
+    - name: "Ensure group 'tyokoe' exists"
+      group:
+        name: tyokoe
+        gid: 3001
+        state: present
+    - name: "Ensure group 'nginx' exists"
+      group:
+        name: nginx
+        gid: 101
+        state: present
+    - name: "Add the user tyokoe with a specific uid and a primary group of 'tyokoe'"
+      user:
+        name: tyokoe
+        comment: CSC DigiVisio2030 työkoesovelluskäyttäjä
+        uid: 3001
+        groups: tyokoe,docker,nginx
+        home: "{{ appdir }}"
+
+    - name: "Create key file"
+      become: true
+      copy:
+        remote_src: yes
+        src: "{{ key }}"
+        dest: "{{ appdir }}/ssl.key"
+        owner: tyokoe
+        group: nginx
+        mode: a-w,u+r,g+r
+    - name: "Create pem file"
+      become: true
+      shell: cat "{{ certificate }}" > "{{ pem }}" && cat "{{ intermediate_certificate }}" >> "{{ pem }}"
+    - name: "Modify pem file"
+      become: true
+      file:
+        path: "{{ appdir }}/ssl.pem"
+        owner: tyokoe
+        group: nginx
+        mode: a-w,u+r,g+r
+    - name: "Create nginx.conf"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'docker-compose/nginx.conf.j2'
+        dest: "{{ appdir }}/nginx.conf"
+    - name: "Create docker-compose.yml"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'docker-compose/docker-compose.yml.j2'
+        dest: "{{ appdir }}/docker-compose.yml"
+
+    - name: "Run docker compose"
+      become: true
+      become_user: tyokoe
+      shell:
+        chdir: "{{ appdir }}"
+        cmd: docker compose up -d
