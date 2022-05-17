@@ -50,7 +50,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/csc2022
     username: csc2022
-    password:
+    password: csc2022
     hikari:
       poolName: Hikari
       auto-commit: false
