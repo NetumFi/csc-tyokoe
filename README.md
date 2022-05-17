@@ -29,7 +29,7 @@ In the project root, JHipster generates configuration files for tools like git, 
     brew install just 
 ```
 
-## Just commands
+### Just commands
 
 | command  | Description                               |
 |----------|-------------------------------------------|
@@ -38,8 +38,6 @@ In the project root, JHipster generates configuration files for tools like git, 
 | logs     | Tails the local db logs                   |
 | clean    | Cleans the local db                       |
 | up-fedev | Local liveserver for frontend development |
-
-
 
 
 ## Development
