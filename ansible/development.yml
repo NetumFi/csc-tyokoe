@@ -7,6 +7,12 @@ csc:
       ansible_connection: ssh
       ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
   vars:
+    appdir: /opt/tyokoe
+    domain: koe7-dv.csc.fi
+    key: "/home/cloud-user/koe7-dv.csc.fi.key"
+    certificate: "/home/cloud-user/koe7-dv_csc_fi_cert.cer"
+    intermediate_certificate: "/home/cloud-user/koe-dv_csc_fi_interm.cer"
+    pem: "{{ appdir }}/ssl.pem"
     developers:
       - name: Jarno Luttinen
         account: jluttinen
