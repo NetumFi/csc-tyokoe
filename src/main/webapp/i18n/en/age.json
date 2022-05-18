@@ -1,0 +1,28 @@
+{
+  "csc2022App": {
+    "age": {
+      "home": {
+        "title": "Ages",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Age",
+        "createOrEditLabel": "Create or edit a Age",
+        "notFound": "No Ages found"
+      },
+      "created": "A new Age is created with identifier {{ param }}",
+      "updated": "A Age is updated with identifier {{ param }}",
+      "deleted": "A Age is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Age {{ id }}?"
+      },
+      "detail": {
+        "title": "Age"
+      },
+      "id": "ID",
+      "code": "Code",
+      "codeId": "Code Id",
+      "labelEn": "Label En",
+      "labelFi": "Label Fi",
+      "labelSv": "Label Sv"
+    }
+  }
+}

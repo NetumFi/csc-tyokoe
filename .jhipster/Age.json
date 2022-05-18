@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20220518090059",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "age",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codeId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "labelEn",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "labelFi",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "labelSv",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Age",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

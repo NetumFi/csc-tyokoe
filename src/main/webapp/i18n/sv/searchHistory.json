@@ -1,0 +1,25 @@
+{
+  "csc2022App": {
+    "searchHistory": {
+      "home": {
+        "title": "Search Histories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Skapa en ny Search History",
+        "createOrEditLabel": "Skapa eller ändra en Search History",
+        "notFound": "No Search Histories found"
+      },
+      "created": "En ny Search History är skapad med id {{ param }}",
+      "updated": "En Search History är uppdaterad med id  {{ param }}",
+      "deleted": "En Search History är borttagen med id  {{ param }}",
+      "delete": {
+        "question": "Är du säker på att du vill ta bort Search History {{ id }}?"
+      },
+      "detail": {
+        "title": "Search History"
+      },
+      "id": "ID",
+      "searchTerm": "Search Term",
+      "user": "User"
+    }
+  }
+}

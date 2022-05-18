@@ -1,0 +1,25 @@
+{
+  "csc2022App": {
+    "searchHistory": {
+      "home": {
+        "title": "Search Histories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Search History",
+        "createOrEditLabel": "Create or edit a Search History",
+        "notFound": "No Search Histories found"
+      },
+      "created": "A new Search History is created with identifier {{ param }}",
+      "updated": "A Search History is updated with identifier {{ param }}",
+      "deleted": "A Search History is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Search History {{ id }}?"
+      },
+      "detail": {
+        "title": "Search History"
+      },
+      "id": "ID",
+      "searchTerm": "Search Term",
+      "user": "User"
+    }
+  }
+}
