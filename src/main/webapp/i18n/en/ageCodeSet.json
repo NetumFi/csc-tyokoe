@@ -1,0 +1,28 @@
+{
+  "csc2022App": {
+    "ageCodeSet": {
+      "home": {
+        "title": "Age Code Sets",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Age Code Set",
+        "createOrEditLabel": "Create or edit a Age Code Set",
+        "notFound": "No Age Code Sets found"
+      },
+      "created": "A new Age Code Set is created with identifier {{ param }}",
+      "updated": "A Age Code Set is updated with identifier {{ param }}",
+      "deleted": "A Age Code Set is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Age Code Set {{ id }}?"
+      },
+      "detail": {
+        "title": "Age Code Set"
+      },
+      "id": "ID",
+      "code": "Code",
+      "codeId": "Code Id",
+      "labelEn": "Label En",
+      "labelFi": "Label Fi",
+      "labelSv": "Label Sv"
+    }
+  }
+}

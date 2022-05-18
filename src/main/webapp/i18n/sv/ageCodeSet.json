@@ -1,0 +1,28 @@
+{
+  "csc2022App": {
+    "ageCodeSet": {
+      "home": {
+        "title": "Age Code Sets",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Skapa en ny Age Code Set",
+        "createOrEditLabel": "Skapa eller ändra en Age Code Set",
+        "notFound": "No Age Code Sets found"
+      },
+      "created": "En ny Age Code Set är skapad med id {{ param }}",
+      "updated": "En Age Code Set är uppdaterad med id  {{ param }}",
+      "deleted": "En Age Code Set är borttagen med id  {{ param }}",
+      "delete": {
+        "question": "Är du säker på att du vill ta bort Age Code Set {{ id }}?"
+      },
+      "detail": {
+        "title": "Age Code Set"
+      },
+      "id": "ID",
+      "code": "Code",
+      "codeId": "Code Id",
+      "labelEn": "Label En",
+      "labelFi": "Label Fi",
+      "labelSv": "Label Sv"
+    }
+  }
+}

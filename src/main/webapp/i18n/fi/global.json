@@ -13,6 +13,8 @@
         "searchSetting": "Search Setting",
         "readingList": "Reading List",
         "note": "Note",
+        "ageCodeSet": "Age Code Set",
+        "educationLevelCodeSet": "Education Level Code Set",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
