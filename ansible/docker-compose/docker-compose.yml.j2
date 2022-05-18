@@ -1,17 +1,18 @@
 version: '3.2'
 
 networks:
-  application: {}
+  default:
+    external:
+      name: digivisio
 
 volumes:
   jenkins: {}
+  sonar: {}
 
 services:
   nginx:
     image: nginx:latest
     restart: unless-stopped
-    networks:
-      application: {}
     ports:
       - 80:80
       - 443:443
@@ -25,8 +26,6 @@ services:
   jenkins:
     image: jenkins/jenkins
     restart: unless-stopped
-    networks:
-      application: { }
     environment:
       JENKINS_OPTS: "--prefix=/jenkins"
     extra_hosts:
@@ -40,10 +39,10 @@ services:
 
   sonar:
     image: sonarqube:9.3.0-community
-    networks:
-      application: { }
     extra_hosts:
       - host.docker.internal:172.17.0.1
     environment:
       sonar.forceAuthentication: "false"
       SONAR_WEB_CONTEXT: "/sonar"
+    volumes:
+      - sonar:/opt/sonarqube/data
