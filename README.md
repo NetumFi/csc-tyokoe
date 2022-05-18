@@ -39,6 +39,11 @@ In the project root, JHipster generates configuration files for tools like git, 
 | clean    | Cleans the local db                       |
 | up-fedev | Local liveserver for frontend development |
 
+### JDL update 
+
+```bash 
+    jhipster jdl csc-jdl.jdl
+```
 
 ## Development
 
