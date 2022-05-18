@@ -1,5 +1,6 @@
 package fi.netum.csc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -21,9 +22,6 @@ public class SearchSetting implements Serializable {
     @Column(name = "search_term")
     private String searchTerm;
 
-    @Column(name = "education_level")
-    private String educationLevel;
-
     @Column(name = "role")
     private String role;
 
@@ -33,6 +31,14 @@ public class SearchSetting implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "searchSettings" }, allowSetters = true)
+    private EducationLevelCodeSet educationLevelCodeSet;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "searchSettings" }, allowSetters = true)
+    private AgeCodeSet ageCodeSet;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -60,19 +66,6 @@ public class SearchSetting implements Serializable {
 
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
-    }
-
-    public String getEducationLevel() {
-        return this.educationLevel;
-    }
-
-    public SearchSetting educationLevel(String educationLevel) {
-        this.setEducationLevel(educationLevel);
-        return this;
-    }
-
-    public void setEducationLevel(String educationLevel) {
-        this.educationLevel = educationLevel;
     }
 
     public String getRole() {
@@ -114,6 +107,32 @@ public class SearchSetting implements Serializable {
         return this;
     }
 
+    public EducationLevelCodeSet getEducationLevelCodeSet() {
+        return this.educationLevelCodeSet;
+    }
+
+    public void setEducationLevelCodeSet(EducationLevelCodeSet educationLevelCodeSet) {
+        this.educationLevelCodeSet = educationLevelCodeSet;
+    }
+
+    public SearchSetting educationLevelCodeSet(EducationLevelCodeSet educationLevelCodeSet) {
+        this.setEducationLevelCodeSet(educationLevelCodeSet);
+        return this;
+    }
+
+    public AgeCodeSet getAgeCodeSet() {
+        return this.ageCodeSet;
+    }
+
+    public void setAgeCodeSet(AgeCodeSet ageCodeSet) {
+        this.ageCodeSet = ageCodeSet;
+    }
+
+    public SearchSetting ageCodeSet(AgeCodeSet ageCodeSet) {
+        this.setAgeCodeSet(ageCodeSet);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -139,7 +158,6 @@ public class SearchSetting implements Serializable {
         return "SearchSetting{" +
             "id=" + getId() +
             ", searchTerm='" + getSearchTerm() + "'" +
-            ", educationLevel='" + getEducationLevel() + "'" +
             ", role='" + getRole() + "'" +
             ", age='" + getAge() + "'" +
             "}";

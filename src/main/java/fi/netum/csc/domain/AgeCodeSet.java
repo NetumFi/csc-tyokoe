@@ -1,6 +1,9 @@
 package fi.netum.csc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -32,6 +35,10 @@ public class AgeCodeSet implements Serializable {
 
     @Column(name = "label_sv")
     private String labelSv;
+
+    @OneToMany(mappedBy = "ageCodeSet")
+    @JsonIgnoreProperties(value = { "user", "educationLevelCodeSet", "ageCodeSet" }, allowSetters = true)
+    private Set<SearchSetting> searchSettings = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -111,6 +118,37 @@ public class AgeCodeSet implements Serializable {
 
     public void setLabelSv(String labelSv) {
         this.labelSv = labelSv;
+    }
+
+    public Set<SearchSetting> getSearchSettings() {
+        return this.searchSettings;
+    }
+
+    public void setSearchSettings(Set<SearchSetting> searchSettings) {
+        if (this.searchSettings != null) {
+            this.searchSettings.forEach(i -> i.setAgeCodeSet(null));
+        }
+        if (searchSettings != null) {
+            searchSettings.forEach(i -> i.setAgeCodeSet(this));
+        }
+        this.searchSettings = searchSettings;
+    }
+
+    public AgeCodeSet searchSettings(Set<SearchSetting> searchSettings) {
+        this.setSearchSettings(searchSettings);
+        return this;
+    }
+
+    public AgeCodeSet addSearchSetting(SearchSetting searchSetting) {
+        this.searchSettings.add(searchSetting);
+        searchSetting.setAgeCodeSet(this);
+        return this;
+    }
+
+    public AgeCodeSet removeSearchSetting(SearchSetting searchSetting) {
+        this.searchSettings.remove(searchSetting);
+        searchSetting.setAgeCodeSet(null);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

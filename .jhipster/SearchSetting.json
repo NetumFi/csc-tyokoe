@@ -10,10 +10,6 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "educationLevel",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "role",
       "fieldType": "String"
     },
@@ -34,6 +30,18 @@
       "ownerSide": true,
       "relationshipName": "user",
       "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "educationLevelCodeSet",
+      "otherEntityRelationshipName": "searchSetting",
+      "relationshipName": "educationLevelCodeSet",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "ageCodeSet",
+      "otherEntityRelationshipName": "searchSetting",
+      "relationshipName": "ageCodeSet",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

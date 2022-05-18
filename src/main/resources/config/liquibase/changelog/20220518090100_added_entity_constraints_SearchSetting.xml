@@ -13,5 +13,17 @@
                                  constraintName="fk_search_setting__user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="education_level_code_set_id"
+                                 baseTableName="search_setting"
+                                 constraintName="fk_search_setting__education_level_code_set_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="education_level_code_set"/>
+
+        <addForeignKeyConstraint baseColumnNames="age_code_set_id"
+                                 baseTableName="search_setting"
+                                 constraintName="fk_search_setting__age_code_set_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="age_code_set"/>
     </changeSet>
 </databaseChangeLog>

@@ -26,7 +26,6 @@ entity EducationLevelCodeSet {
 
 entity SearchSetting {
 	searchTerm String
-    educationLevel String
     role String
     age String  // --> enumeration
 }
@@ -51,6 +50,9 @@ relationship ManyToOne {
  ReadingList{user(login)} to User
  SearchHistory{user(login)} to User
  Note{user(login)} to User
+ SearchSetting to EducationLevelCodeSet
+ SearchSetting to AgeCodeSet
+
 }
 
 use mapstruct, serviceImpl, pagination for *

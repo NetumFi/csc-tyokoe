@@ -12,13 +12,15 @@ public class SearchSettingDTO implements Serializable {
 
     private String searchTerm;
 
-    private String educationLevel;
-
     private String role;
 
     private String age;
 
     private UserDTO user;
+
+    private EducationLevelCodeSetDTO educationLevelCodeSet;
+
+    private AgeCodeSetDTO ageCodeSet;
 
     public Long getId() {
         return id;
@@ -34,14 +36,6 @@ public class SearchSettingDTO implements Serializable {
 
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
-    }
-
-    public String getEducationLevel() {
-        return educationLevel;
-    }
-
-    public void setEducationLevel(String educationLevel) {
-        this.educationLevel = educationLevel;
     }
 
     public String getRole() {
@@ -66,6 +60,22 @@ public class SearchSettingDTO implements Serializable {
 
     public void setUser(UserDTO user) {
         this.user = user;
+    }
+
+    public EducationLevelCodeSetDTO getEducationLevelCodeSet() {
+        return educationLevelCodeSet;
+    }
+
+    public void setEducationLevelCodeSet(EducationLevelCodeSetDTO educationLevelCodeSet) {
+        this.educationLevelCodeSet = educationLevelCodeSet;
+    }
+
+    public AgeCodeSetDTO getAgeCodeSet() {
+        return ageCodeSet;
+    }
+
+    public void setAgeCodeSet(AgeCodeSetDTO ageCodeSet) {
+        this.ageCodeSet = ageCodeSet;
     }
 
     @Override
@@ -95,10 +105,11 @@ public class SearchSettingDTO implements Serializable {
         return "SearchSettingDTO{" +
             "id=" + getId() +
             ", searchTerm='" + getSearchTerm() + "'" +
-            ", educationLevel='" + getEducationLevel() + "'" +
             ", role='" + getRole() + "'" +
             ", age='" + getAge() + "'" +
             ", user=" + getUser() +
+            ", educationLevelCodeSet=" + getEducationLevelCodeSet() +
+            ", ageCodeSet=" + getAgeCodeSet() +
             "}";
     }
 }

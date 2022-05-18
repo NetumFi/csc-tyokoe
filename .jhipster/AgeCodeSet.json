@@ -31,6 +31,13 @@
   "name": "AgeCodeSet",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "searchSetting",
+      "otherEntityRelationshipName": "ageCodeSet",
+      "relationshipName": "searchSetting",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "service": "serviceImpl"
 }

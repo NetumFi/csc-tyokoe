@@ -37,12 +37,6 @@ export const SearchSettingDetail = (props: RouteComponentProps<{ id: string }>) 
           </dt>
           <dd>{searchSettingEntity.searchTerm}</dd>
           <dt>
-            <span id="educationLevel">
-              <Translate contentKey="csc2022App.searchSetting.educationLevel">Education Level</Translate>
-            </span>
-          </dt>
-          <dd>{searchSettingEntity.educationLevel}</dd>
-          <dt>
             <span id="role">
               <Translate contentKey="csc2022App.searchSetting.role">Role</Translate>
             </span>
@@ -58,6 +52,14 @@ export const SearchSettingDetail = (props: RouteComponentProps<{ id: string }>) 
             <Translate contentKey="csc2022App.searchSetting.user">User</Translate>
           </dt>
           <dd>{searchSettingEntity.user ? searchSettingEntity.user.login : ''}</dd>
+          <dt>
+            <Translate contentKey="csc2022App.searchSetting.educationLevelCodeSet">Education Level Code Set</Translate>
+          </dt>
+          <dd>{searchSettingEntity.educationLevelCodeSet ? searchSettingEntity.educationLevelCodeSet.id : ''}</dd>
+          <dt>
+            <Translate contentKey="csc2022App.searchSetting.ageCodeSet">Age Code Set</Translate>
+          </dt>
+          <dd>{searchSettingEntity.ageCodeSet ? searchSettingEntity.ageCodeSet.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/search-setting" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

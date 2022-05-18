@@ -19,10 +19,11 @@
       },
       "id": "ID",
       "searchTerm": "Search Term",
-      "educationLevel": "Education Level",
       "role": "Role",
       "age": "Age",
-      "user": "User"
+      "user": "User",
+      "educationLevelCodeSet": "Education Level Code Set",
+      "ageCodeSet": "Age Code Set"
     }
   }
 }

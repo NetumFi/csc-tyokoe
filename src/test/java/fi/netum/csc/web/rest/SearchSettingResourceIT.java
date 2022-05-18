@@ -44,9 +44,6 @@ class SearchSettingResourceIT {
     private static final String DEFAULT_SEARCH_TERM = "AAAAAAAAAA";
     private static final String UPDATED_SEARCH_TERM = "BBBBBBBBBB";
 
-    private static final String DEFAULT_EDUCATION_LEVEL = "AAAAAAAAAA";
-    private static final String UPDATED_EDUCATION_LEVEL = "BBBBBBBBBB";
-
     private static final String DEFAULT_ROLE = "AAAAAAAAAA";
     private static final String UPDATED_ROLE = "BBBBBBBBBB";
 
@@ -86,11 +83,7 @@ class SearchSettingResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static SearchSetting createEntity(EntityManager em) {
-        SearchSetting searchSetting = new SearchSetting()
-            .searchTerm(DEFAULT_SEARCH_TERM)
-            .educationLevel(DEFAULT_EDUCATION_LEVEL)
-            .role(DEFAULT_ROLE)
-            .age(DEFAULT_AGE);
+        SearchSetting searchSetting = new SearchSetting().searchTerm(DEFAULT_SEARCH_TERM).role(DEFAULT_ROLE).age(DEFAULT_AGE);
         return searchSetting;
     }
 
@@ -101,11 +94,7 @@ class SearchSettingResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static SearchSetting createUpdatedEntity(EntityManager em) {
-        SearchSetting searchSetting = new SearchSetting()
-            .searchTerm(UPDATED_SEARCH_TERM)
-            .educationLevel(UPDATED_EDUCATION_LEVEL)
-            .role(UPDATED_ROLE)
-            .age(UPDATED_AGE);
+        SearchSetting searchSetting = new SearchSetting().searchTerm(UPDATED_SEARCH_TERM).role(UPDATED_ROLE).age(UPDATED_AGE);
         return searchSetting;
     }
 
@@ -131,7 +120,6 @@ class SearchSettingResourceIT {
         assertThat(searchSettingList).hasSize(databaseSizeBeforeCreate + 1);
         SearchSetting testSearchSetting = searchSettingList.get(searchSettingList.size() - 1);
         assertThat(testSearchSetting.getSearchTerm()).isEqualTo(DEFAULT_SEARCH_TERM);
-        assertThat(testSearchSetting.getEducationLevel()).isEqualTo(DEFAULT_EDUCATION_LEVEL);
         assertThat(testSearchSetting.getRole()).isEqualTo(DEFAULT_ROLE);
         assertThat(testSearchSetting.getAge()).isEqualTo(DEFAULT_AGE);
     }
@@ -170,7 +158,6 @@ class SearchSettingResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(searchSetting.getId().intValue())))
             .andExpect(jsonPath("$.[*].searchTerm").value(hasItem(DEFAULT_SEARCH_TERM)))
-            .andExpect(jsonPath("$.[*].educationLevel").value(hasItem(DEFAULT_EDUCATION_LEVEL)))
             .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)));
     }
@@ -205,7 +192,6 @@ class SearchSettingResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(searchSetting.getId().intValue()))
             .andExpect(jsonPath("$.searchTerm").value(DEFAULT_SEARCH_TERM))
-            .andExpect(jsonPath("$.educationLevel").value(DEFAULT_EDUCATION_LEVEL))
             .andExpect(jsonPath("$.role").value(DEFAULT_ROLE))
             .andExpect(jsonPath("$.age").value(DEFAULT_AGE));
     }
@@ -229,7 +215,7 @@ class SearchSettingResourceIT {
         SearchSetting updatedSearchSetting = searchSettingRepository.findById(searchSetting.getId()).get();
         // Disconnect from session so that the updates on updatedSearchSetting are not directly saved in db
         em.detach(updatedSearchSetting);
-        updatedSearchSetting.searchTerm(UPDATED_SEARCH_TERM).educationLevel(UPDATED_EDUCATION_LEVEL).role(UPDATED_ROLE).age(UPDATED_AGE);
+        updatedSearchSetting.searchTerm(UPDATED_SEARCH_TERM).role(UPDATED_ROLE).age(UPDATED_AGE);
         SearchSettingDTO searchSettingDTO = searchSettingMapper.toDto(updatedSearchSetting);
 
         restSearchSettingMockMvc
@@ -245,7 +231,6 @@ class SearchSettingResourceIT {
         assertThat(searchSettingList).hasSize(databaseSizeBeforeUpdate);
         SearchSetting testSearchSetting = searchSettingList.get(searchSettingList.size() - 1);
         assertThat(testSearchSetting.getSearchTerm()).isEqualTo(UPDATED_SEARCH_TERM);
-        assertThat(testSearchSetting.getEducationLevel()).isEqualTo(UPDATED_EDUCATION_LEVEL);
         assertThat(testSearchSetting.getRole()).isEqualTo(UPDATED_ROLE);
         assertThat(testSearchSetting.getAge()).isEqualTo(UPDATED_AGE);
     }
@@ -329,8 +314,6 @@ class SearchSettingResourceIT {
         SearchSetting partialUpdatedSearchSetting = new SearchSetting();
         partialUpdatedSearchSetting.setId(searchSetting.getId());
 
-        partialUpdatedSearchSetting.age(UPDATED_AGE);
-
         restSearchSettingMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedSearchSetting.getId())
@@ -344,9 +327,8 @@ class SearchSettingResourceIT {
         assertThat(searchSettingList).hasSize(databaseSizeBeforeUpdate);
         SearchSetting testSearchSetting = searchSettingList.get(searchSettingList.size() - 1);
         assertThat(testSearchSetting.getSearchTerm()).isEqualTo(DEFAULT_SEARCH_TERM);
-        assertThat(testSearchSetting.getEducationLevel()).isEqualTo(DEFAULT_EDUCATION_LEVEL);
         assertThat(testSearchSetting.getRole()).isEqualTo(DEFAULT_ROLE);
-        assertThat(testSearchSetting.getAge()).isEqualTo(UPDATED_AGE);
+        assertThat(testSearchSetting.getAge()).isEqualTo(DEFAULT_AGE);
     }
 
     @Test
@@ -361,11 +343,7 @@ class SearchSettingResourceIT {
         SearchSetting partialUpdatedSearchSetting = new SearchSetting();
         partialUpdatedSearchSetting.setId(searchSetting.getId());
 
-        partialUpdatedSearchSetting
-            .searchTerm(UPDATED_SEARCH_TERM)
-            .educationLevel(UPDATED_EDUCATION_LEVEL)
-            .role(UPDATED_ROLE)
-            .age(UPDATED_AGE);
+        partialUpdatedSearchSetting.searchTerm(UPDATED_SEARCH_TERM).role(UPDATED_ROLE).age(UPDATED_AGE);
 
         restSearchSettingMockMvc
             .perform(
@@ -380,7 +358,6 @@ class SearchSettingResourceIT {
         assertThat(searchSettingList).hasSize(databaseSizeBeforeUpdate);
         SearchSetting testSearchSetting = searchSettingList.get(searchSettingList.size() - 1);
         assertThat(testSearchSetting.getSearchTerm()).isEqualTo(UPDATED_SEARCH_TERM);
-        assertThat(testSearchSetting.getEducationLevel()).isEqualTo(UPDATED_EDUCATION_LEVEL);
         assertThat(testSearchSetting.getRole()).isEqualTo(UPDATED_ROLE);
         assertThat(testSearchSetting.getAge()).isEqualTo(UPDATED_AGE);
     }

@@ -155,11 +155,9 @@ describe('SearchSetting e2e test', () => {
     it('should create an instance of SearchSetting', () => {
       cy.get(`[data-cy="searchTerm"]`).type('Pizza').should('have.value', 'Pizza');
 
-      cy.get(`[data-cy="educationLevel"]`).type('Romania Marketing').should('have.value', 'Romania Marketing');
+      cy.get(`[data-cy="role"]`).type('Romania Marketing').should('have.value', 'Romania Marketing');
 
-      cy.get(`[data-cy="role"]`).type('navigate').should('have.value', 'navigate');
-
-      cy.get(`[data-cy="age"]`).type('Mouse clicks-and-mortar services').should('have.value', 'Mouse clicks-and-mortar services');
+      cy.get(`[data-cy="age"]`).type('navigate').should('have.value', 'navigate');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

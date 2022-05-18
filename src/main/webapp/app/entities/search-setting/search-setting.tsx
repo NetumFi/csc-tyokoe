@@ -107,10 +107,6 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                 <th className="hand" onClick={sort('searchTerm')}>
                   <Translate contentKey="csc2022App.searchSetting.searchTerm">Search Term</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('educationLevel')}>
-                  <Translate contentKey="csc2022App.searchSetting.educationLevel">Education Level</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('role')}>
                   <Translate contentKey="csc2022App.searchSetting.role">Role</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -119,6 +115,13 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                 </th>
                 <th>
                   <Translate contentKey="csc2022App.searchSetting.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="csc2022App.searchSetting.educationLevelCodeSet">Education Level Code Set</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="csc2022App.searchSetting.ageCodeSet">Age Code Set</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -132,10 +135,25 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                     </Button>
                   </td>
                   <td>{searchSetting.searchTerm}</td>
-                  <td>{searchSetting.educationLevel}</td>
                   <td>{searchSetting.role}</td>
                   <td>{searchSetting.age}</td>
                   <td>{searchSetting.user ? searchSetting.user.login : ''}</td>
+                  <td>
+                    {searchSetting.educationLevelCodeSet ? (
+                      <Link to={`/education-level-code-set/${searchSetting.educationLevelCodeSet.id}`}>
+                        {searchSetting.educationLevelCodeSet.id}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {searchSetting.ageCodeSet ? (
+                      <Link to={`/age-code-set/${searchSetting.ageCodeSet.id}`}>{searchSetting.ageCodeSet.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/search-setting/${searchSetting.id}`} color="info" size="sm" data-cy="entityDetailsButton">

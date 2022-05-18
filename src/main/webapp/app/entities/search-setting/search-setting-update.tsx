@@ -10,6 +10,10 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { IEducationLevelCodeSet } from 'app/shared/model/education-level-code-set.model';
+import { getEntities as getEducationLevelCodeSets } from 'app/entities/education-level-code-set/education-level-code-set.reducer';
+import { IAgeCodeSet } from 'app/shared/model/age-code-set.model';
+import { getEntities as getAgeCodeSets } from 'app/entities/age-code-set/age-code-set.reducer';
 import { ISearchSetting } from 'app/shared/model/search-setting.model';
 import { getEntity, updateEntity, createEntity, reset } from './search-setting.reducer';
 
@@ -19,6 +23,8 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const users = useAppSelector(state => state.userManagement.users);
+  const educationLevelCodeSets = useAppSelector(state => state.educationLevelCodeSet.entities);
+  const ageCodeSets = useAppSelector(state => state.ageCodeSet.entities);
   const searchSettingEntity = useAppSelector(state => state.searchSetting.entity);
   const loading = useAppSelector(state => state.searchSetting.loading);
   const updating = useAppSelector(state => state.searchSetting.updating);
@@ -35,6 +41,8 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
     }
 
     dispatch(getUsers({}));
+    dispatch(getEducationLevelCodeSets({}));
+    dispatch(getAgeCodeSets({}));
   }, []);
 
   useEffect(() => {
@@ -48,6 +56,8 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
       ...searchSettingEntity,
       ...values,
       user: users.find(it => it.id.toString() === values.user.toString()),
+      educationLevelCodeSet: educationLevelCodeSets.find(it => it.id.toString() === values.educationLevelCodeSet.toString()),
+      ageCodeSet: ageCodeSets.find(it => it.id.toString() === values.ageCodeSet.toString()),
     };
 
     if (isNew) {
@@ -63,6 +73,8 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
       : {
           ...searchSettingEntity,
           user: searchSettingEntity?.user?.id,
+          educationLevelCodeSet: searchSettingEntity?.educationLevelCodeSet?.id,
+          ageCodeSet: searchSettingEntity?.ageCodeSet?.id,
         };
 
   return (
@@ -98,13 +110,6 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
                 type="text"
               />
               <ValidatedField
-                label={translate('csc2022App.searchSetting.educationLevel')}
-                id="search-setting-educationLevel"
-                name="educationLevel"
-                data-cy="educationLevel"
-                type="text"
-              />
-              <ValidatedField
                 label={translate('csc2022App.searchSetting.role')}
                 id="search-setting-role"
                 name="role"
@@ -130,6 +135,38 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
                   ? users.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.login}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="search-setting-educationLevelCodeSet"
+                name="educationLevelCodeSet"
+                data-cy="educationLevelCodeSet"
+                label={translate('csc2022App.searchSetting.educationLevelCodeSet')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {educationLevelCodeSets
+                  ? educationLevelCodeSets.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="search-setting-ageCodeSet"
+                name="ageCodeSet"
+                data-cy="ageCodeSet"
+                label={translate('csc2022App.searchSetting.ageCodeSet')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {ageCodeSets
+                  ? ageCodeSets.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}
