@@ -22,6 +22,16 @@
         uid: 3001
         groups: tyokoe,docker,nginx
         home: "{{ appdir }}"
+    - name: "Get docker group"
+      getent:
+        database: group
+        split: ':'
+        key: 'docker'
+    - debug:
+        var: ansible_facts.getent_group.docker[1]
+    - name: "Set docker group fact"
+      set_fact:
+        docker_group: "{{ ansible_facts.getent_group.docker[1] }}"
 
     - name: "Create key file"
       become: true
@@ -35,6 +45,8 @@
     - name: "Create pem file"
       become: true
       shell: cat "{{ certificate }}" > "{{ pem }}" && cat "{{ intermediate_certificate }}" >> "{{ pem }}"
+      args:
+        creates: "{{ pem }}"
     - name: "Modify pem file"
       become: true
       file:
