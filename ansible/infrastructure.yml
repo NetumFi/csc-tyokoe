@@ -33,7 +33,7 @@
       set_fact:
         docker_group: "{{ ansible_facts.getent_group.docker[1] }}"
 
-    - name: "Create key file"
+    - name: "Create SSL key file"
       become: true
       copy:
         remote_src: yes
@@ -42,12 +42,12 @@
         owner: tyokoe
         group: nginx
         mode: a-w,u+r,g+r
-    - name: "Create pem file"
+    - name: "Create SSL pem file"
       become: true
       shell: cat "{{ certificate }}" > "{{ pem }}" && cat "{{ intermediate_certificate }}" >> "{{ pem }}"
       args:
         creates: "{{ pem }}"
-    - name: "Modify pem file"
+    - name: "Modify SSL pem file"
       become: true
       file:
         path: "{{ appdir }}/ssl.pem"
@@ -60,13 +60,20 @@
       template:
         src: 'docker-compose/nginx.conf.j2'
         dest: "{{ appdir }}/nginx.conf"
+        mode: '0644'
+
+    - name: "Create docker network"
+      become: true
+      shell:
+        cmd: "docker network create digivisio || true"
+
     - name: "Create docker-compose.yml"
       become: true
       become_user: tyokoe
       template:
         src: 'docker-compose/docker-compose.yml.j2'
         dest: "{{ appdir }}/docker-compose.yml"
-
+        mode: '0644'
     - name: "Run docker compose"
       become: true
       become_user: tyokoe
