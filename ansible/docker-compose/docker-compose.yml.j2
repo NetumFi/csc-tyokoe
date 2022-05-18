@@ -3,6 +3,9 @@ version: '3.2'
 networks:
   application: {}
 
+volumes:
+  jenkins: {}
+
 services:
   nginx:
     image: nginx:latest
@@ -25,6 +28,22 @@ services:
     networks:
       application: { }
     environment:
-        JENKINS_OPTS: "--prefix=/jenkins"
+      JENKINS_OPTS: "--prefix=/jenkins"
     extra_hosts:
       - host.docker.internal:172.17.0.1
+    privileged: true
+    user: "jenkins:{{ docker_group }}"
+    volumes:
+      - jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+
+  sonar:
+    image: sonarqube:9.3.0-community
+    networks:
+      application: { }
+    extra_hosts:
+      - host.docker.internal:172.17.0.1
+    environment:
+      sonar.forceAuthentication: "false"
+      SONAR_WEB_CONTEXT: "/sonar"
