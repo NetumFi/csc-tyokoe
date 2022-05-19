@@ -1,0 +1,29 @@
+{
+  "csc2022App": {
+    "searchSetting": {
+      "home": {
+        "title": "Search Settings",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Skapa en ny Search Setting",
+        "createOrEditLabel": "Skapa eller ändra en Search Setting",
+        "notFound": "No Search Settings found"
+      },
+      "created": "En ny Search Setting är skapad med id {{ param }}",
+      "updated": "En Search Setting är uppdaterad med id  {{ param }}",
+      "deleted": "En Search Setting är borttagen med id  {{ param }}",
+      "delete": {
+        "question": "Är du säker på att du vill ta bort Search Setting {{ id }}?"
+      },
+      "detail": {
+        "title": "Search Setting"
+      },
+      "id": "ID",
+      "searchTerm": "Search Term",
+      "role": "Role",
+      "age": "Age",
+      "user": "User",
+      "educationLevelCodeSet": "Education Level Code Set",
+      "ageCodeSet": "Age Code Set"
+    }
+  }
+}

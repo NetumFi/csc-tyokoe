@@ -1,0 +1,27 @@
+{
+  "csc2022App": {
+    "note": {
+      "home": {
+        "title": "Notes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Skapa en ny Note",
+        "createOrEditLabel": "Skapa eller ändra en Note",
+        "notFound": "No Notes found"
+      },
+      "created": "En ny Note är skapad med id {{ param }}",
+      "updated": "En Note är uppdaterad med id  {{ param }}",
+      "deleted": "En Note är borttagen med id  {{ param }}",
+      "delete": {
+        "question": "Är du säker på att du vill ta bort Note {{ id }}?"
+      },
+      "detail": {
+        "title": "Note"
+      },
+      "id": "ID",
+      "content": "Content",
+      "materialId": "Material Id",
+      "created": "Created",
+      "user": "User"
+    }
+  }
+}

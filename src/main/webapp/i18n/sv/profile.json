@@ -1,0 +1,27 @@
+{
+  "csc2022App": {
+    "profile": {
+      "home": {
+        "title": "Profiles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Skapa en ny Profile",
+        "createOrEditLabel": "Skapa eller ändra en Profile",
+        "notFound": "No Profiles found"
+      },
+      "created": "En ny Profile är skapad med id {{ param }}",
+      "updated": "En Profile är uppdaterad med id  {{ param }}",
+      "deleted": "En Profile är borttagen med id  {{ param }}",
+      "delete": {
+        "question": "Är du säker på att du vill ta bort Profile {{ id }}?"
+      },
+      "detail": {
+        "title": "Profile"
+      },
+      "id": "ID",
+      "keywords": "Keywords",
+      "education": "Education",
+      "language": "Language",
+      "user": "User"
+    }
+  }
+}

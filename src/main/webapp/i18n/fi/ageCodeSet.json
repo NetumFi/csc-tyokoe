@@ -1,0 +1,29 @@
+{
+  "csc2022App": {
+    "ageCodeSet": {
+      "home": {
+        "title": "Age Code Sets",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Luo Age Code Set",
+        "createOrEditLabel": "Luo tai muokkaa Age Code Set",
+        "notFound": "Age Code Set ei löytynyt"
+      },
+      "created": "Uusi Age Code Set on luotu, id: {{ param }}",
+      "updated": "Age Code Set on päivitetty, id: {{ param }}",
+      "deleted": "Age Code Set on päivitetty, id: {{ param }}",
+      "delete": {
+        "question": "Haluatko varmasti poistaa Age Code Set {{ id }}?"
+      },
+      "detail": {
+        "title": "Age Code Set"
+      },
+      "id": "ID",
+      "code": "Code",
+      "codeId": "Code Id",
+      "labelEn": "Label En",
+      "labelFi": "Label Fi",
+      "labelSv": "Label Sv",
+      "searchSetting": "Search Setting"
+    }
+  }
+}

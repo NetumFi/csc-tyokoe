@@ -1,0 +1,26 @@
+{
+  "csc2022App": {
+    "readingList": {
+      "home": {
+        "title": "Reading Lists",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Luo Reading List",
+        "createOrEditLabel": "Luo tai muokkaa Reading List",
+        "notFound": "Reading List ei löytynyt"
+      },
+      "created": "Uusi Reading List on luotu, id: {{ param }}",
+      "updated": "Reading List on päivitetty, id: {{ param }}",
+      "deleted": "Reading List on päivitetty, id: {{ param }}",
+      "delete": {
+        "question": "Haluatko varmasti poistaa Reading List {{ id }}?"
+      },
+      "detail": {
+        "title": "Reading List"
+      },
+      "id": "ID",
+      "materialId": "Material Id",
+      "created": "Created",
+      "user": "User"
+    }
+  }
+}

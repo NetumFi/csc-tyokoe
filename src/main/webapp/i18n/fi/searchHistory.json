@@ -1,0 +1,25 @@
+{
+  "csc2022App": {
+    "searchHistory": {
+      "home": {
+        "title": "Search Histories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Luo Search History",
+        "createOrEditLabel": "Luo tai muokkaa Search History",
+        "notFound": "Search History ei löytynyt"
+      },
+      "created": "Uusi Search History on luotu, id: {{ param }}",
+      "updated": "Search History on päivitetty, id: {{ param }}",
+      "deleted": "Search History on päivitetty, id: {{ param }}",
+      "delete": {
+        "question": "Haluatko varmasti poistaa Search History {{ id }}?"
+      },
+      "detail": {
+        "title": "Search History"
+      },
+      "id": "ID",
+      "searchTerm": "Search Term",
+      "user": "User"
+    }
+  }
+}

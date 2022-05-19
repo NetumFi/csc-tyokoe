@@ -1,0 +1,27 @@
+{
+  "csc2022App": {
+    "note": {
+      "home": {
+        "title": "Notes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Luo Note",
+        "createOrEditLabel": "Luo tai muokkaa Note",
+        "notFound": "Note ei löytynyt"
+      },
+      "created": "Uusi Note on luotu, id: {{ param }}",
+      "updated": "Note on päivitetty, id: {{ param }}",
+      "deleted": "Note on päivitetty, id: {{ param }}",
+      "delete": {
+        "question": "Haluatko varmasti poistaa Note {{ id }}?"
+      },
+      "detail": {
+        "title": "Note"
+      },
+      "id": "ID",
+      "content": "Content",
+      "materialId": "Material Id",
+      "created": "Created",
+      "user": "User"
+    }
+  }
+}

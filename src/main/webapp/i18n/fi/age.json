@@ -1,0 +1,28 @@
+{
+  "csc2022App": {
+    "age": {
+      "home": {
+        "title": "Ages",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Luo Age",
+        "createOrEditLabel": "Luo tai muokkaa Age",
+        "notFound": "Age ei löytynyt"
+      },
+      "created": "Uusi Age on luotu, id: {{ param }}",
+      "updated": "Age on päivitetty, id: {{ param }}",
+      "deleted": "Age on päivitetty, id: {{ param }}",
+      "delete": {
+        "question": "Haluatko varmasti poistaa Age {{ id }}?"
+      },
+      "detail": {
+        "title": "Age"
+      },
+      "id": "ID",
+      "code": "Code",
+      "codeId": "Code Id",
+      "labelEn": "Label En",
+      "labelFi": "Label Fi",
+      "labelSv": "Label Sv"
+    }
+  }
+}

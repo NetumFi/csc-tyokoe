@@ -1,0 +1,28 @@
+{
+  "csc2022App": {
+    "age": {
+      "home": {
+        "title": "Ages",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Skapa en ny Age",
+        "createOrEditLabel": "Skapa eller ändra en Age",
+        "notFound": "No Ages found"
+      },
+      "created": "En ny Age är skapad med id {{ param }}",
+      "updated": "En Age är uppdaterad med id  {{ param }}",
+      "deleted": "En Age är borttagen med id  {{ param }}",
+      "delete": {
+        "question": "Är du säker på att du vill ta bort Age {{ id }}?"
+      },
+      "detail": {
+        "title": "Age"
+      },
+      "id": "ID",
+      "code": "Code",
+      "codeId": "Code Id",
+      "labelEn": "Label En",
+      "labelFi": "Label Fi",
+      "labelSv": "Label Sv"
+    }
+  }
+}
