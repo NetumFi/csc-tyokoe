@@ -12,7 +12,7 @@ import java.util.List;
 public class AoeSearchParametersTest {
 
     @Test
-    void testDoSearch() throws Exception {
+    void testAoeSearchParameters() throws Exception {
         List<Filter> filters = List.of(new Filter("educationalLevels", List.of("e5a48ada-3de0-4246-9b8f-32d4ff68e22f")),
             new Filter("learningResourceTypes", List.of("73bed523-aa9b-4463-8bed-3b31ce3a927a",
                 "c1256389-a47d-4a44-beb2-bdbbc79abb28")));
