@@ -48,7 +48,7 @@
     -->
     <changeSet id="20220518090100-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/search_setting.csv"
+                  file="config/liquibase/data/search_setting.csv"
                   separator=";"
                   tableName="search_setting"
                   usePreparedStatements="true">

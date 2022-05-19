@@ -45,7 +45,7 @@
     -->
     <changeSet id="20220518095059-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/education_level_code_set.csv"
+                  file="config/liquibase/data/education_level_code_set.csv"
                   separator=";"
                   tableName="education_level_code_set"
                   usePreparedStatements="true">

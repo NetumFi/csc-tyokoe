@@ -17,7 +17,6 @@
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220518090057_added_entity_Profile.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220518090058_added_entity_SearchHistory.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20220518090059_added_entity_Age.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220518090100_added_entity_SearchSetting.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220518090101_added_entity_ReadingList.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220518090102_added_entity_Note.xml" relativeToChangelogFile="false"/>
