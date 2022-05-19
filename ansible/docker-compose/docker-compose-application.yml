@@ -1,0 +1,26 @@
+version: '3.2'
+
+networks:
+  infra:
+    external:
+      name: digivisio
+
+services:
+  csc2022-app:
+    image: csc2022:promoted
+#    restart: unless-stopped
+    extra_hosts:
+      - host.docker.internal:172.17.0.1
+    ports:
+      - 8080:8080
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev,api-docs
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+#      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+#      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/csc2022
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgres:5432/csc2022
+      - SPRING_DATASOURCE_PASSWORD=katatoninen tietokanta
+    networks:
+      - infra

@@ -21,7 +21,7 @@
         comment: CSC DigiVisio2030 työkoesovelluskäyttäjä
         uid: 3001
         groups: tyokoe,docker,nginx
-        home: "{{ appdir }}"
+        home: "{{ infradir }}"
     - name: "Get docker group"
       getent:
         database: group
@@ -33,12 +33,25 @@
       set_fact:
         docker_group: "{{ ansible_facts.getent_group.docker[1] }}"
 
+    - name: "Ensure infra directory exists"
+      become: true
+      become_user: tyokoe
+      file:
+        path: "{{ infradir }}"
+        state: directory
+    - name: "Ensure application directory exists"
+      become: true
+      become_user: tyokoe
+      file:
+        path: "{{ appdir }}"
+        state: directory
+
     - name: "Create SSL key file"
       become: true
       copy:
         remote_src: yes
         src: "{{ key }}"
-        dest: "{{ appdir }}/ssl.key"
+        dest: "{{ infradir }}/ssl.key"
         owner: tyokoe
         group: nginx
         mode: a-w,u+r,g+r
@@ -50,7 +63,7 @@
     - name: "Modify SSL pem file"
       become: true
       file:
-        path: "{{ appdir }}/ssl.pem"
+        path: "{{ infradir }}/ssl.pem"
         owner: tyokoe
         group: nginx
         mode: a-w,u+r,g+r
@@ -59,24 +72,35 @@
       become_user: tyokoe
       template:
         src: 'docker-compose/nginx.conf.j2'
-        dest: "{{ appdir }}/nginx.conf"
+        dest: "{{ infradir }}/nginx.conf"
         mode: '0644'
-
-    - name: "Create docker network"
-      become: true
-      shell:
-        cmd: "docker network create digivisio || true"
+      notify: "Restart nginx"
 
     - name: "Create docker-compose.yml"
       become: true
       become_user: tyokoe
       template:
         src: 'docker-compose/docker-compose.yml.j2'
+        dest: "{{ infradir }}/docker-compose.yml"
+        mode: '0644'
+    - name: "Create docker-compose-application.yml"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: 'docker-compose/docker-compose-application.yml'
         dest: "{{ appdir }}/docker-compose.yml"
         mode: '0644'
     - name: "Run docker compose"
       become: true
       become_user: tyokoe
       shell:
-        chdir: "{{ appdir }}"
+        chdir: "{{ infradir }}"
         cmd: docker compose up -d
+
+  handlers:
+    - name: "Restart nginx"
+      become: true
+      become_user: tyokoe
+      shell:
+        chdir: "{{ infradir }}"
+        cmd: "docker compose up -d --force-recreate nginx"
