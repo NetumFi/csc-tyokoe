@@ -13,9 +13,6 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/search-history">
         <Translate contentKey="global.menu.entities.searchHistory" />
       </MenuItem>
-      <MenuItem icon="asterisk" to="/age">
-        <Translate contentKey="global.menu.entities.age" />
-      </MenuItem>
       <MenuItem icon="asterisk" to="/search-setting">
         <Translate contentKey="global.menu.entities.searchSetting" />
       </MenuItem>

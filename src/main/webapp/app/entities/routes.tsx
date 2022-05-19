@@ -4,7 +4,6 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
 import Profile from './profile';
 import SearchHistory from './search-history';
-import Age from './age';
 import SearchSetting from './search-setting';
 import ReadingList from './reading-list';
 import Note from './note';
@@ -19,7 +18,6 @@ export default ({ match }) => {
         {/* prettier-ignore */}
         <ErrorBoundaryRoute path={`${match.url}profile`} component={Profile} />
         <ErrorBoundaryRoute path={`${match.url}search-history`} component={SearchHistory} />
-        <ErrorBoundaryRoute path={`${match.url}age`} component={Age} />
         <ErrorBoundaryRoute path={`${match.url}search-setting`} component={SearchSetting} />
         <ErrorBoundaryRoute path={`${match.url}reading-list`} component={ReadingList} />
         <ErrorBoundaryRoute path={`${match.url}note`} component={Note} />
