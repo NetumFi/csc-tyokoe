@@ -27,3 +27,20 @@ ansible-playbook -i development.yml docker.yml --extra-vars=ansible_user=TUNNUS
 * docker
 * docker compose
 * kehittäjät docker-ryhmään
+
+# Infrastruktuurin asennus
+
+```
+ansible-playbook -i development.yml promotion.yml --extra-vars=ansible_user=TUNNUS 
+```
+
+# Promootio
+
+Skripti `csc2022-promote.sh` seuraa docker-tapahtumia ja käynnistää sovelluksen uudestaan kun docker image
+merkitään (Jenkinsissä) tägillä `csc2022:promoted`. Tällä hetkellä se pitää käynnistää käsin. 
+
+```
+[tyokoe@koe7-dv csc2022]$ pwd
+/opt/tyokoe/csc2022
+[tyokoe@koe7-dv csc2022]$ nohup ./csc2022-promote.sh &
+```
