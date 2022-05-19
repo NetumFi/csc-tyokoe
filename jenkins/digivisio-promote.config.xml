@@ -1,0 +1,66 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1181.va_25d15548158">
+    <actions>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2081.v3919681ffc1e"/>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2081.v3919681ffc1e">
+            <jobProperties/>
+            <triggers/>
+            <parameters/>
+            <options/>
+        </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+    </actions>
+    <description></description>
+    <keepDependencies>false</keepDependencies>
+    <properties>
+        <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+                <jp.ikedam.jenkins.plugins.extensible__choice__parameter.ExtensibleChoiceParameterDefinition plugin="extensible-choice-parameter@1.8.0">
+                    <name>PROMOTED_BUILD</name>
+                    <description>The build number to promote from project digivisio-develop:</description>
+                    <editable>false</editable>
+                    <editableType>NoFilter</editableType>
+                    <choiceListProvider class="jp.ikedam.jenkins.plugins.extensible_choice_parameter.SystemGroovyChoiceListProvider">
+                        <groovyScript plugin="script-security@1172.v35f6a_0b_8207e">
+                            <script>def builds = []
+
+                                def job = jenkins.model.Jenkins.instance.getItem(&apos;digivisio-develop&apos;)
+                                job.builds.each {
+                                def build = it
+                                if (it.getResult().toString().equals(&quot;SUCCESS&quot;)) {
+                                it.badgeActions.each {
+                                builds.add(build.displayName[1..-1])
+                                }
+                                }
+                                }
+
+                                builds.unique();</script>
+                            <sandbox>false</sandbox>
+                        </groovyScript>
+                        <usePredefinedVariables>false</usePredefinedVariables>
+                    </choiceListProvider>
+                </jp.ikedam.jenkins.plugins.extensible__choice__parameter.ExtensibleChoiceParameterDefinition>
+            </parameterDefinitions>
+        </hudson.model.ParametersDefinitionProperty>
+    </properties>
+    <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2692.v76b_089ccd026">
+        <script>pipeline {
+            agent any
+
+            stages {
+            stage(&quot;Promote&quot;){
+            steps {
+            script {
+            currentBuild.displayName = &quot;Promoting build #$PROMOTED_BUILD&quot;
+            currentBuild.description = &quot;Promoted version $PROMOTED_BUILD of csc2022 (digivisio) to &apos;developmestduction&apos;.&quot;
+            }
+            sh &apos;docker tag csc2022:$PROMOTED_BUILD csc2022:promoted&apos;
+            }
+            }
+            }
+            }
+        </script>
+        <sandbox>true</sandbox>
+    </definition>
+    <triggers/>
+    <disabled>false</disabled>
+</flow-definition>
