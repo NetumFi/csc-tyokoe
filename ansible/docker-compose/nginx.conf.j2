@@ -22,13 +22,16 @@ http {
 
     access_log /var/log/nginx/data-access.log combined;
 
+    set $target "http://csc2022-app:8080";
+
     location / {
-       proxy_pass http://host.docker.internal:8080/;
+       proxy_pass $target;
+       resolver 127.0.0.11 valid=30s;
        proxy_set_header X-Real-IP  $remote_addr;
        proxy_set_header X-Forwarded-For $remote_addr;
        proxy_set_header Host $host;
        proxy_set_header X-Forwarded-Proto $scheme;
-       proxy_redirect http://host.docker.internal:8080/ $scheme://$http_host/;
+       proxy_redirect $target $scheme://$http_host;
        proxy_http_version 1.1;
        proxy_set_header Upgrade $http_upgrade;
        proxy_set_header Connection $connection_upgrade;
