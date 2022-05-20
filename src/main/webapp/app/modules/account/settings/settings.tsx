@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+    import React, { useEffect } from 'react';
 import { Button, Col, Row } from 'reactstrap';
 import { Translate, translate, ValidatedField, ValidatedForm, isEmail } from 'react-jhipster';
 import { toast } from 'react-toastify';

@@ -1,21 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import MenuItem from 'app/shared/layout/menus/menu-item';
-import { Translate, translate } from 'react-jhipster';
-import { NavDropdown } from './menu-components';
+import {Translate, translate} from 'react-jhipster';
+import {NavDropdown} from './menu-components';
+import {useAppSelector} from "app/config/store";
 
-const accountMenuItemsAuthenticated = () => (
-  <>
-    <MenuItem icon="wrench" to="/account/settings" data-cy="settings">
-      <Translate contentKey="global.menu.account.settings">Settings</Translate>
-    </MenuItem>
-    <MenuItem icon="lock" to="/account/password" data-cy="passwordItem">
-      <Translate contentKey="global.menu.account.password">Password</Translate>
-    </MenuItem>
-    <MenuItem icon="sign-out-alt" to="/logout" data-cy="logout">
-      <Translate contentKey="global.menu.account.logout">Sign out</Translate>
-    </MenuItem>
-  </>
-);
+const accountMenuItemsAuthenticated = () => {
+
+  return (
+    <>
+      <MenuItem icon="wrench" to="/account/settings" data-cy="settings">
+        <Translate contentKey="global.menu.account.settings">Settings</Translate>
+      </MenuItem>
+      <MenuItem icon="lock" to="/account/password" data-cy="passwordItem">
+        <Translate contentKey="global.menu.account.password">Password</Translate>
+      </MenuItem>
+      <MenuItem icon="lock" to="/account/searchsettings" data-cy="passwordItem">
+
+        Haku-asetukset
+      </MenuItem>
+
+      <MenuItem icon="sign-out-alt" to="/logout" data-cy="logout">
+        <Translate contentKey="global.menu.account.logout">Sign out</Translate>
+      </MenuItem>
+    </>
+  );
+}
 
 const accountMenuItems = () => (
   <>
@@ -28,10 +37,14 @@ const accountMenuItems = () => (
   </>
 );
 
-export const AccountMenu = ({ isAuthenticated = false }) => (
-  <NavDropdown name={translate('global.menu.account.main')} id="account-menu" data-cy="accountMenu">
-    {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}
-  </NavDropdown>
-);
+export const AccountMenu = ({isAuthenticated = false}) => {
+  const account = useAppSelector(state => state.authentication.account);
+
+  return (
+    <NavDropdown name={translate('global.menu.title', {username: account.firstName + ' ' + account.lastName})} id="account-menu" data-cy="accountMenu">
+      {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}
+    </NavDropdown>
+  )
+};
 
 export default AccountMenu;
