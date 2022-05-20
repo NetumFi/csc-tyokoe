@@ -1,9 +1,7 @@
 import React from 'react';
 import MenuItem from 'app/shared/layout/menus/menu-item';
-import { DropdownItem } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavDropdown } from './menu-components';
-import { Translate, translate } from 'react-jhipster';
+import {NavDropdown} from './menu-components';
+import {Translate, translate} from 'react-jhipster';
 
 const adminMenuItems = () => (
   <>
@@ -33,7 +31,7 @@ const openAPIItem = () => (
 );
 
 export const AdminMenu = ({ showOpenAPI }) => (
-  <NavDropdown icon="users-cog" name={translate('global.menu.admin.main')} id="admin-menu" data-cy="adminMenu">
+  <NavDropdown name={translate('global.menu.admin.main')} id="admin-menu" data-cy="adminMenu">
     {adminMenuItems()}
     {showOpenAPI && openAPIItem()}
   </NavDropdown>
