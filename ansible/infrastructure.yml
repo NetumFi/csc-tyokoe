@@ -76,20 +76,29 @@
         mode: '0644'
       notify: "Restart nginx"
 
-    - name: "Create docker-compose.yml"
+    - name: "Create infra docker-compose.yml"
       become: true
       become_user: tyokoe
       template:
         src: 'docker-compose/docker-compose.yml.j2'
         dest: "{{ infradir }}/docker-compose.yml"
         mode: '0644'
-    - name: "Create docker-compose-application.yml"
+    - name: "Create application docker-compose.yml"
       become: true
       become_user: tyokoe
       copy:
         src: 'docker-compose/docker-compose-application.yml'
         dest: "{{ appdir }}/docker-compose.yml"
         mode: '0644'
+    - name: "Copy promotion scripts"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: "{{ item }}"
+        dest: "{{ appdir }}"
+        mode: '0554'
+      with_fileglob:
+        - docker-compose/*.sh
     - name: "Run docker compose"
       become: true
       become_user: tyokoe

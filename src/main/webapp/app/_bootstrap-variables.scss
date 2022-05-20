@@ -4,3 +4,18 @@
 * https://github.com/twbs/bootstrap/blob/v4-dev/scss/_variables.scss can be overwritten here
 * Make sure not to add !default to values here
 */
+
+@import '~bootswatch/dist/lux/variables';
+
+$theme-colors: (
+  "primary":    #3A7A10
+) !default;
+
+$navbar-light-color: #FFF;
+$navbar-light-hover-color: #fff;
+$navbar-light-brand-color: #fff;
+$navbar-light-brand-hover-color: #fff;
+$nav-link-color: #fff;
+$nav-link-hover-color: #fff;
+$navbar-light-active-color: #fff;
+$font-size-sm: 400;
