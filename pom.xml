@@ -38,6 +38,7 @@
         <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx512m</argLine>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <run.addResources>false</run.addResources>
+        <sonar.project.extra.properties>sonar-project-dev.properties</sonar.project.extra.properties>
         <!-- These remain empty unless the corresponding profile is active -->
         <profile.no-liquibase />
         <profile.api-docs />
@@ -512,6 +513,7 @@
                             <configuration>
                                 <files>
                                     <file>sonar-project.properties</file>
+                                    <file>${sonar.project.extra.properties}</file>
                                 </files>
                             </configuration>
                         </execution>
