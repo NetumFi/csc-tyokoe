@@ -3,6 +3,8 @@ package fi.netum.csc.repository;
 import fi.netum.csc.domain.SearchSetting;
 import java.util.List;
 import java.util.Optional;
+
+import fi.netum.csc.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -37,4 +39,8 @@ public interface SearchSettingRepository extends JpaRepository<SearchSetting, Lo
 
     @Query("select searchSetting from SearchSetting searchSetting left join fetch searchSetting.user where searchSetting.id =:id")
     Optional<SearchSetting> findOneWithToOneRelationships(@Param("id") Long id);
+
+
+    @Query("select searchSetting from SearchSetting searchSetting left join fetch searchSetting.user left join  fetch searchSetting.educationLevelCodeSet left join fetch  searchSetting.ageCodeSet where searchSetting.user =:user")
+    Optional<SearchSetting> findOneByUser(@Param("user") User user);
 }

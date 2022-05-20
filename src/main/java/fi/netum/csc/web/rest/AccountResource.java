@@ -3,21 +3,34 @@ package fi.netum.csc.web.rest;
 import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.UserRepository;
 import fi.netum.csc.security.SecurityUtils;
-import fi.netum.csc.service.MailService;
-import fi.netum.csc.service.UserService;
-import fi.netum.csc.service.dto.AdminUserDTO;
-import fi.netum.csc.service.dto.PasswordChangeDTO;
+import fi.netum.csc.service.*;
+import fi.netum.csc.service.dto.*;
 import fi.netum.csc.web.rest.errors.*;
+import fi.netum.csc.web.rest.errors.EmailAlreadyUsedException;
+import fi.netum.csc.web.rest.errors.InvalidPasswordException;
 import fi.netum.csc.web.rest.vm.KeyAndPasswordVM;
 import fi.netum.csc.web.rest.vm.ManagedUserVM;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
+import tech.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing the current user's account.
@@ -26,12 +39,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class AccountResource {
 
+    private final SearchHistoryService searchHistoryService;
+
     private static class AccountResourceException extends RuntimeException {
 
         private AccountResourceException(String message) {
             super(message);
         }
     }
+
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
@@ -41,10 +60,17 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final SearchSettingService searchSettingService;
+    private final ReadingListService readingListService;
+
+
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, SearchSettingService searchSettingService, ReadingListService readingListService, SearchHistoryService searchHistoryService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.searchSettingService = searchSettingService;
+        this.readingListService = readingListService;
+        this.searchHistoryService = searchHistoryService;
     }
 
     /**
@@ -74,7 +100,7 @@ public class AccountResource {
     @GetMapping("/activate")
     public void activateAccount(@RequestParam(value = "key") String key) {
         Optional<User> user = userService.activateRegistration(key);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this activation key");
         }
     }
@@ -122,7 +148,7 @@ public class AccountResource {
             throw new EmailAlreadyUsedException();
         }
         Optional<User> user = userRepository.findOneByLogin(userLogin);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("User could not be found");
         }
         userService.updateUser(
@@ -179,7 +205,7 @@ public class AccountResource {
         }
         Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this reset key");
         }
     }

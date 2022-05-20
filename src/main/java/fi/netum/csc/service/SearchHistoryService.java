@@ -1,5 +1,6 @@
 package fi.netum.csc.service;
 
+import fi.netum.csc.domain.User;
 import fi.netum.csc.service.dto.SearchHistoryDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -63,4 +64,6 @@ public interface SearchHistoryService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<SearchHistoryDTO> findAllByUser(User user, Pageable pageable);
 }

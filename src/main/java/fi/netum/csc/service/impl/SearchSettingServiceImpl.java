@@ -1,6 +1,7 @@
 package fi.netum.csc.service.impl;
 
 import fi.netum.csc.domain.SearchSetting;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.SearchSettingRepository;
 import fi.netum.csc.service.SearchSettingService;
 import fi.netum.csc.service.dto.SearchSettingDTO;
@@ -84,5 +85,11 @@ public class SearchSettingServiceImpl implements SearchSettingService {
     public void delete(Long id) {
         log.debug("Request to delete SearchSetting : {}", id);
         searchSettingRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<SearchSettingDTO> findByUser(User user) {
+        Optional<SearchSetting> userSettingPage = searchSettingRepository.findOneByUser(user);
+        return userSettingPage.map(searchSettingMapper::toDto);
     }
 }

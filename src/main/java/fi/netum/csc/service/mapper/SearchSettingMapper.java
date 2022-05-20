@@ -29,10 +29,20 @@ public interface SearchSettingMapper extends EntityMapper<SearchSettingDTO, Sear
     @Named("educationLevelCodeSetId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "labelFi", source="labelFi")
+    @Mapping(target = "labelEn", source="labelEn")
+    @Mapping(target = "labelSv", source="labelSv")
+    @Mapping(target = "code", source="code")
+    @Mapping(target = "codeId", source="codeId")
     EducationLevelCodeSetDTO toDtoEducationLevelCodeSetId(EducationLevelCodeSet educationLevelCodeSet);
 
     @Named("ageCodeSetId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "labelFi", source="labelFi")
+    @Mapping(target = "labelEn", source="labelEn")
+    @Mapping(target = "labelSv", source="labelSv")
+    @Mapping(target = "code", source="code")
+    @Mapping(target = "codeId", source="codeId")
     AgeCodeSetDTO toDtoAgeCodeSetId(AgeCodeSet ageCodeSet);
 }

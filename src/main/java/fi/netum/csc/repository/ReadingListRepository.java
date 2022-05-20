@@ -3,6 +3,8 @@ package fi.netum.csc.repository;
 import fi.netum.csc.domain.ReadingList;
 import java.util.List;
 import java.util.Optional;
+
+import fi.netum.csc.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -14,9 +16,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ReadingListRepository extends JpaRepository<ReadingList, Long> {
-    @Query("select readingList from ReadingList readingList where readingList.user.login = ?#{principal.username}")
-    List<ReadingList> findByUserIsCurrentUser();
-
     default Optional<ReadingList> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }
@@ -40,4 +39,6 @@ public interface ReadingListRepository extends JpaRepository<ReadingList, Long> 
 
     @Query("select readingList from ReadingList readingList left join fetch readingList.user where readingList.id =:id")
     Optional<ReadingList> findOneWithToOneRelationships(@Param("id") Long id);
+
+    Page<ReadingList> findAllByUser(User user, Pageable pageable);
 }
