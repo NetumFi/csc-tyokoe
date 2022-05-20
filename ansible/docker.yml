@@ -1,5 +1,5 @@
 ---
-- hosts: csc 
+- hosts: csc
   user: ansible
   become: yes
   tasks:

@@ -1,0 +1,221 @@
+{
+  "id": "1901",
+  "materials": [
+    {
+      "id": "5879",
+      "language": "fi",
+      "link": "",
+      "priority": 0,
+      "filepath": "https://aoe.object.pouta.csc.fi/luomutehtavasuomelleluomuinstituuttimikkeliintarjacronberg-1643102604434.pdf",
+      "originalfilename": "luomu-tehtava_suomelle_-_luomuinstituutti_mikkeliin_tarja_cronberg.pdf",
+      "filesize": 4611178,
+      "mimetype": "application/pdf",
+      "format": "7bit",
+      "filekey": "luomutehtavasuomelleluomuinstituuttimikkeliintarjacronberg-1643102604434.pdf",
+      "filebucket": "aoe",
+      "publishedat": "2022-01-25T09:35:50.480Z",
+      "pdfkey": null,
+      "displayName": {
+        "fi": "Luomu-Tehtävä Suomelle_-_luomuinstituutti_mikkeliin_tarja_cronberg",
+        "sv": "Luomu-Tehtävä Suomelle_-_luomuinstituutti_mikkeliin_tarja_cronberg",
+        "en": "Luomu-Tehtävä Suomelle_-_luomuinstituutti_mikkeliin_tarja_cronberg"
+      }
+    }
+  ],
+  "owner": false,
+  "name": [
+    {
+      "id": "16718",
+      "materialname": "Cronberg Tarja (2011) - Luomu: Tehtävä Suomelle? Luomuinstituutti Mikkeliin",
+      "language": "fi",
+      "slug": "",
+      "educationalmaterialid": "1901"
+    },
+    {
+      "id": "16719",
+      "materialname": "Cronberg Tarja (2011) - Luomu: Tehtävä Suomelle? Luomuinstituutti Mikkeliin",
+      "language": "sv",
+      "slug": "",
+      "educationalmaterialid": "1901"
+    },
+    {
+      "id": "16720",
+      "materialname": "Cronberg Tarja (2011) - Luomu: Tehtävä Suomelle? Luomuinstituutti Mikkeliin",
+      "language": "en",
+      "slug": "",
+      "educationalmaterialid": "1901"
+    }
+  ],
+  "createdAt": "2022-01-25T09:23:24.268Z",
+  "updatedAt": "2022-01-25T09:35:50.483Z",
+  "publishedAt": "2022-01-25T09:35:50.480Z",
+  "archivedAt": null,
+  "suitsAllEarlyChildhoodSubjects": false,
+  "suitsAllPrePrimarySubjects": false,
+  "suitsAllBasicStudySubjects": false,
+  "suitsAllUpperSecondarySubjects": false,
+  "suitsAllVocationalDegrees": false,
+  "suitsAllSelfMotivatedSubjects": false,
+  "suitsAllBranches": false,
+  "suitsAllUpperSecondarySubjectsNew": false,
+  "ratingContentAverage": null,
+  "ratingVisualAverage": null,
+  "viewCounter": "30",
+  "downloadCounter": "333",
+  "author": [
+    {
+      "id": "7001",
+      "authorname": "Cronberg Tarja",
+      "organization": "",
+      "educationalmaterialid": "1901",
+      "organizationkey": ""
+    }
+  ],
+  "publisher": [],
+  "description": [
+    {
+      "id": "11911",
+      "description": "Mikkelin kaupunki ja seudun muut kunnat sekä Etelä-Savon maakuntaliitto ja Etelä-Savon ELY-keskus käynnistivät luomuinstituutin perustamisen selvitys-hankkeen. Tarja Cronberg aloitti selvitystyön 1.4.2011. Selvityksessä hän täsmensi luomuinstituutin tehtävänkuvausta, laati ehdotuksen organisoitumis- ja rahoitusmalliksi sekä loi instituutille lähivuosien toimintasuunnitelman.\nTämän raportin Tarja Cronberg laati selvitystyön päätteeksi.",
+      "language": "fi",
+      "educationalmaterialid": "1901"
+    },
+    {
+      "id": "11913",
+      "description": "Mikkelin kaupunki ja seudun muut kunnat sekä Etelä-Savon maakuntaliitto ja Etelä-Savon ELY-keskus käynnistivät luomuinstituutin perustamisen selvitys-hankkeen. Tarja Cronberg aloitti selvitystyön 1.4.2011. Selvityksessä hän täsmensi luomuinstituutin tehtävänkuvausta, laati ehdotuksen organisoitumis- ja rahoitusmalliksi sekä loi instituutille lähivuosien toimintasuunnitelman.\nTämän raportin Tarja Cronberg laati selvitystyön päätteeksi.",
+      "language": "en",
+      "educationalmaterialid": "1901"
+    },
+    {
+      "id": "11912",
+      "description": "Mikkelin kaupunki ja seudun muut kunnat sekä Etelä-Savon maakuntaliitto ja Etelä-Savon ELY-keskus käynnistivät luomuinstituutin perustamisen selvitys-hankkeen. Tarja Cronberg aloitti selvitystyön 1.4.2011. Selvityksessä hän täsmensi luomuinstituutin tehtävänkuvausta, laati ehdotuksen organisoitumis- ja rahoitusmalliksi sekä loi instituutille lähivuosien toimintasuunnitelman.\nTämän raportin Tarja Cronberg laati selvitystyön päätteeksi.",
+      "language": "sv",
+      "educationalmaterialid": "1901"
+    }
+  ],
+  "keywords": [
+    {
+      "id": "19605",
+      "value": "luomu",
+      "educationalmaterialid": "1901",
+      "keywordkey": "luomu"
+    },
+    {
+      "id": "19606",
+      "value": "Cronberg Tarja",
+      "educationalmaterialid": "1901",
+      "keywordkey": "cronbergtarja"
+    },
+    {
+      "id": "19607",
+      "value": "luomuinstituutti",
+      "educationalmaterialid": "1901",
+      "keywordkey": "luomuinstituutti"
+    },
+    {
+      "id": "19608",
+      "value": "maabrändivaltuuskunta",
+      "educationalmaterialid": "1901",
+      "keywordkey": "maabrndivaltuuskunta"
+    },
+    {
+      "id": "19609",
+      "value": "tehtävä Suomelle",
+      "educationalmaterialid": "1901",
+      "keywordkey": "tehtvsuomelle"
+    },
+    {
+      "id": "19610",
+      "value": "Mikkeli",
+      "educationalmaterialid": "1901",
+      "keywordkey": "mikkeli"
+    },
+    {
+      "id": "19611",
+      "value": "luomutuotanto",
+      "educationalmaterialid": "1901",
+      "keywordkey": "luomutuotanto"
+    }
+  ],
+  "learningResourceTypes": [
+    {
+      "id": "6894",
+      "value": "teksti",
+      "educationalmaterialid": "1901",
+      "learningresourcetypekey": "cc1d00b0-b11f-4afe-a423-e43f96214f89"
+    }
+  ],
+  "timeRequired": "",
+  "expires": null,
+  "typicalAgeRange": {
+    "typicalAgeRangeMin": null,
+    "typicalAgeRangeMax": null
+  },
+  "educationalAlignment": [],
+  "educationalLevels": [
+    {
+      "id": "8681",
+      "value": "ammatillinen koulutus",
+      "educationalmaterialid": "1901",
+      "educationallevelkey": "010c6689-5021-4d8e-8c02-68a27cc5a87b"
+    }
+  ],
+  "educationalUses": [
+    {
+      "id": "7449",
+      "value": "Itsenäinen opiskelu",
+      "educationalmaterialid": "1901",
+      "educationalusekey": "916b4cd8-949b-4f47-aaf6-0fcaae7a9ac8"
+    },
+    {
+      "id": "7450",
+      "value": "Kurssimateriaali",
+      "educationalmaterialid": "1901",
+      "educationalusekey": "cdad2dd2-c075-4630-91fa-79233306ba25"
+    }
+  ],
+  "accessibilityFeatures": [],
+  "accessibilityHazards": [],
+  "license": {
+    "value": "CC BY-SA 4.0",
+    "key": "CCBYSA4.0"
+  },
+  "isBasedOn": [],
+  "educationalRoles": [
+    {
+      "id": "8236",
+      "educationalrole": "Kansalainen",
+      "educationalmaterialid": "1901",
+      "educationalrolekey": "2b7915eb-4df7-467e-a841-b0201b80dc9d"
+    },
+    {
+      "id": "8237",
+      "educationalrole": "Opettaja",
+      "educationalmaterialid": "1901",
+      "educationalrolekey": "9f3904bf-a09d-4dfd-bf46-15ae225b8941"
+    },
+    {
+      "id": "8238",
+      "educationalrole": "Oppija",
+      "educationalmaterialid": "1901",
+      "educationalrolekey": "582949cb-36a4-4053-9f2f-c53ae954a6ae"
+    }
+  ],
+  "thumbnail": {
+    "id": "1516",
+    "filepath": "https://aoe.fi/api/thumbnail/thumbnail-1643102622154.png",
+    "mimetype": "image/png",
+    "educationalmaterialid": "1901",
+    "filename": "thumbnail-1643102622154.png",
+    "obsoleted": 0,
+    "filekey": "thumbnail-1643102622154.png",
+    "filebucket": "aoethumbnail"
+  },
+  "attachments": [],
+  "versions": [
+    {
+      "publishedat": "2022-01-25T09:35:50.480Z"
+    }
+  ],
+  "hasDownloadableFiles": true,
+  "urn": null
+}

@@ -1,0 +1,73 @@
+events { }
+
+http {
+
+  map $http_upgrade $connection_upgrade {
+      default upgrade;
+      ''      close;
+    }
+
+  server {
+    listen 80;
+    server_name {{ domain }};
+    return 301 https://{{ domain }}$request_uri;
+  }
+
+  server {
+    listen 443 ssl;
+    server_name {{ domain }};
+
+    ssl_certificate /ssl/ssl.pem;
+    ssl_certificate_key /ssl/ssl.key;
+
+    access_log /var/log/nginx/data-access.log combined;
+
+    set $target "http://csc2022-app:8080";
+
+    location / {
+       proxy_pass $target;
+       resolver 127.0.0.11 valid=30s;
+       proxy_set_header X-Real-IP  $remote_addr;
+       proxy_set_header X-Forwarded-For $remote_addr;
+       proxy_set_header Host $host;
+       proxy_set_header X-Forwarded-Proto $scheme;
+       proxy_set_header X-Forwarded-Port 443;
+       proxy_set_header X-Forwarded-Host $http_host;
+       proxy_set_header Origin "";
+       proxy_redirect $target $scheme://$http_host;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection $connection_upgrade;
+       proxy_read_timeout 20d;
+       proxy_buffering off;
+    }
+    location /jenkins {
+       proxy_set_header Accept-Encoding "";
+       proxy_pass http://jenkins:8080;
+       proxy_redirect http://jenkins:8080 https://{{ domain }};
+       proxy_read_timeout 20d;
+       proxy_set_header X-Real-IP  $remote_addr;
+       proxy_set_header X-Forwarded-For $remote_addr;
+       proxy_set_header Host $host;
+       proxy_set_header X-Forwarded-Proto $scheme;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection $connection_upgrade;
+       proxy_buffering off;
+    }
+    location /sonar {
+       proxy_set_header Accept-Encoding "";
+       proxy_pass http://sonar:9000;
+       proxy_redirect http://sonar:9000 https://{{ domain }};
+       proxy_read_timeout 20d;
+       proxy_set_header X-Real-IP  $remote_addr;
+       proxy_set_header X-Forwarded-For $remote_addr;
+       proxy_set_header Host $host;
+       proxy_set_header X-Forwarded-Proto $scheme;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection $connection_upgrade;
+       proxy_buffering off;
+    }
+  }
+}

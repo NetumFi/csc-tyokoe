@@ -1,0 +1,63 @@
+version: '3.2'
+
+networks:
+  infra:
+    name: digivisio
+
+volumes:
+  jenkins: {}
+  sonar: {}
+  postgresql: {}
+
+services:
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl.key:/ssl/ssl.key
+      - ./ssl.pem:/ssl/ssl.pem
+    networks:
+      - infra
+
+  jenkins:
+    image: jenkins/jenkins
+    restart: unless-stopped
+    environment:
+      JENKINS_OPTS: "--prefix=/jenkins"
+    networks:
+      - infra
+    privileged: true
+    user: "jenkins:{{ docker_group }}"
+    volumes:
+      - jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    depends_on:
+      - sonar
+
+  sonar:
+    image: sonarqube:9.3.0-community
+    extra_hosts:
+      - host.docker.internal:172.17.0.1
+    environment:
+      sonar.forceAuthentication: "false"
+      SONAR_WEB_CONTEXT: "/sonar"
+    volumes:
+      - sonar:/opt/sonarqube/data
+    networks:
+      - infra
+
+  postgres:
+    image: postgres:14.2
+    volumes:
+      - postgresql:/var/lib/postgresql/data/
+    user: postgres
+    environment:
+      - POSTGRES_USER={{ postgres.application.user }}
+      - POSTGRES_PASSWORD={{ postgres.application.password }}
+    networks:
+      - infra
