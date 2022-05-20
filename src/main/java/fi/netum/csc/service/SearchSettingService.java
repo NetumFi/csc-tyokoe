@@ -1,5 +1,6 @@
 package fi.netum.csc.service;
 
+import fi.netum.csc.domain.User;
 import fi.netum.csc.service.dto.SearchSettingDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -63,4 +64,5 @@ public interface SearchSettingService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    Optional<SearchSettingDTO> findByUser(User user);
 }

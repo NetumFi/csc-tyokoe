@@ -1,6 +1,8 @@
 package fi.netum.csc.service;
 
+import fi.netum.csc.domain.User;
 import fi.netum.csc.service.dto.ReadingListDTO;
+
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,4 +65,6 @@ public interface ReadingListService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<ReadingListDTO> findAllByUser(User user, Pageable pageable);
 }

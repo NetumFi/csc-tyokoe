@@ -1,10 +1,12 @@
 package fi.netum.csc.service.impl;
 
 import fi.netum.csc.domain.ReadingList;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.ReadingListRepository;
 import fi.netum.csc.service.ReadingListService;
 import fi.netum.csc.service.dto.ReadingListDTO;
 import fi.netum.csc.service.mapper.ReadingListMapper;
+
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,5 +86,9 @@ public class ReadingListServiceImpl implements ReadingListService {
     public void delete(Long id) {
         log.debug("Request to delete ReadingList : {}", id);
         readingListRepository.deleteById(id);
+    }
+
+    public Page<ReadingListDTO> findAllByUser(User user, Pageable pageable) {
+        return readingListRepository.findAllByUser(user, pageable).map(readingListMapper::toDto);
     }
 }

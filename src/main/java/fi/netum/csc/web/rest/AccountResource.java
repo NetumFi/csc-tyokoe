@@ -4,9 +4,13 @@ import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.UserRepository;
 import fi.netum.csc.security.SecurityUtils;
 import fi.netum.csc.service.MailService;
+import fi.netum.csc.service.ReadingListService;
+import fi.netum.csc.service.SearchSettingService;
 import fi.netum.csc.service.UserService;
 import fi.netum.csc.service.dto.AdminUserDTO;
 import fi.netum.csc.service.dto.PasswordChangeDTO;
+import fi.netum.csc.service.dto.ReadingListDTO;
+import fi.netum.csc.service.dto.SearchSettingDTO;
 import fi.netum.csc.web.rest.errors.*;
 import fi.netum.csc.web.rest.vm.KeyAndPasswordVM;
 import fi.netum.csc.web.rest.vm.ManagedUserVM;
@@ -16,8 +20,15 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tech.jhipster.web.util.PaginationUtil;
+import tech.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing the current user's account.
@@ -41,10 +52,16 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final SearchSettingService searchSettingService;
+    private final ReadingListService readingListService;
+
+
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, SearchSettingService searchSettingService, ReadingListService readingListService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.searchSettingService = searchSettingService;
+        this.readingListService = readingListService;
     }
 
     /**
@@ -74,7 +91,7 @@ public class AccountResource {
     @GetMapping("/activate")
     public void activateAccount(@RequestParam(value = "key") String key) {
         Optional<User> user = userService.activateRegistration(key);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this activation key");
         }
     }
@@ -122,7 +139,7 @@ public class AccountResource {
             throw new EmailAlreadyUsedException();
         }
         Optional<User> user = userRepository.findOneByLogin(userLogin);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("User could not be found");
         }
         userService.updateUser(
@@ -179,7 +196,7 @@ public class AccountResource {
         }
         Optional<User> user = userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new AccountResourceException("No user was found for this reset key");
         }
     }
@@ -191,4 +208,36 @@ public class AccountResource {
             password.length() > ManagedUserVM.PASSWORD_MAX_LENGTH
         );
     }
+
+    @GetMapping("/account/searchsettings")
+    public ResponseEntity<SearchSettingDTO> getCurrentUserSearchSettings() {
+
+        Optional<User> optionalUser = userService.getUserWithAuthorities();
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            log.info("User: {} -> id: {}", user, user.getId());
+            Optional<SearchSettingDTO> searchSettingDTO = searchSettingService.findByUser(user);
+
+            log.info("searchSetting: {}", searchSettingDTO);
+            return ResponseUtil.wrapOrNotFound(searchSettingDTO);
+        }
+        throw new BadRequestAlertException("User is not logged in", "SEARCH_SETTING", "");
+    }
+
+    @GetMapping("/account/readinglist")
+    public ResponseEntity<List<ReadingListDTO>> getCurrentUserReadingList(@org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        Optional<User> optionalUser = userService.getUserWithAuthorities();
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            Page<ReadingListDTO> page = readingListService.findAllByUser(user, pageable);
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+            return ResponseEntity.ok().headers(headers).body(page.getContent());
+        }
+
+        throw new BadRequestAlertException("User is not logged in", "SEARCH_SETTING", "");
+
+    }
+
 }
