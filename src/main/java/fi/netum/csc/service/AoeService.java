@@ -57,7 +57,7 @@ public class AoeService {
 
     }
 
-    public ItemMetadata getMetadata(int id) throws IOException, InterruptedException {
+    public ItemMetadata getMetadata(String id) throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(aoeMetadataUrl + id))
