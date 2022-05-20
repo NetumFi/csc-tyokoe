@@ -54,6 +54,10 @@ http {
        proxy_set_header Upgrade $http_upgrade;
        proxy_set_header Connection $connection_upgrade;
        proxy_buffering off;
+
+       sub_filter_types text/html text/css text/xml application/json;
+       sub_filter http://sonar:9000 https://$http_host;
+       sub_filter_once off;
     }
     location /sonar {
        proxy_set_header Accept-Encoding "";
