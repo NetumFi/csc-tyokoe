@@ -1,0 +1,13 @@
+{
+  "materialsearch": {
+    "title": {
+      "welcome": "Tervetuloa, {{ name }}!"
+    },
+    "form": {
+      "searchterms": "Hakusanat",
+      "searchterms-placeholder": "Syötä hakusanat",
+      "filter": "Rajaa",
+      "button": "Hae"
+    }
+  }
+}
