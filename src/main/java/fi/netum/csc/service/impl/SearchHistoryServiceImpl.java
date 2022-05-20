@@ -1,6 +1,7 @@
 package fi.netum.csc.service.impl;
 
 import fi.netum.csc.domain.SearchHistory;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.SearchHistoryRepository;
 import fi.netum.csc.service.SearchHistoryService;
 import fi.netum.csc.service.dto.SearchHistoryDTO;
@@ -84,5 +85,12 @@ public class SearchHistoryServiceImpl implements SearchHistoryService {
     public void delete(Long id) {
         log.debug("Request to delete SearchHistory : {}", id);
         searchHistoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<SearchHistoryDTO> findAllByUser(User user, Pageable pageable) {
+        Page<SearchHistory> searchHistoryPage = searchHistoryRepository.findAllByUser(user, pageable);
+
+        return searchHistoryPage.map(searchHistoryMapper::toDto);
     }
 }

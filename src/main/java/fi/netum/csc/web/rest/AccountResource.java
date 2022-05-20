@@ -3,12 +3,11 @@ package fi.netum.csc.web.rest;
 import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.UserRepository;
 import fi.netum.csc.security.SecurityUtils;
-import fi.netum.csc.service.MailService;
-import fi.netum.csc.service.ReadingListService;
-import fi.netum.csc.service.SearchSettingService;
-import fi.netum.csc.service.UserService;
+import fi.netum.csc.service.*;
 import fi.netum.csc.service.dto.*;
 import fi.netum.csc.web.rest.errors.*;
+import fi.netum.csc.web.rest.errors.EmailAlreadyUsedException;
+import fi.netum.csc.web.rest.errors.InvalidPasswordException;
 import fi.netum.csc.web.rest.vm.KeyAndPasswordVM;
 import fi.netum.csc.web.rest.vm.ManagedUserVM;
 
@@ -40,6 +39,8 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api")
 public class AccountResource {
 
+    private final SearchHistoryService searchHistoryService;
+
     private static class AccountResourceException extends RuntimeException {
 
         private AccountResourceException(String message) {
@@ -63,12 +64,13 @@ public class AccountResource {
     private final ReadingListService readingListService;
 
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, SearchSettingService searchSettingService, ReadingListService readingListService) {
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, SearchSettingService searchSettingService, ReadingListService readingListService, SearchHistoryService searchHistoryService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
         this.searchSettingService = searchSettingService;
         this.readingListService = readingListService;
+        this.searchHistoryService = searchHistoryService;
     }
 
     /**
@@ -215,61 +217,4 @@ public class AccountResource {
             password.length() > ManagedUserVM.PASSWORD_MAX_LENGTH
         );
     }
-
-    @GetMapping("/account/searchsettings")
-    public ResponseEntity<SearchSettingDTO> getCurrentUserSearchSettings() {
-
-        Optional<User> optionalUser = userService.getUserWithAuthorities();
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            log.info("User: {} -> id: {}", user, user.getId());
-            Optional<SearchSettingDTO> searchSettingDTO = searchSettingService.findByUser(user);
-
-            log.info("searchSetting: {}", searchSettingDTO);
-            return ResponseUtil.wrapOrNotFound(searchSettingDTO);
-        }
-        throw new BadRequestAlertException("User is not logged in", "SEARCH_SETTING", "");
-    }
-
-    @GetMapping("/account/readinglist")
-    public ResponseEntity<List<ReadingListDTO>> getCurrentUserReadingList(@org.springdoc.api.annotations.ParameterObject Pageable pageable
-    ) {
-        Optional<User> optionalUser = userService.getUserWithAuthorities();
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-
-            Page<ReadingListDTO> page = readingListService.findAllByUser(user, pageable);
-            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-            return ResponseEntity.ok().headers(headers).body(page.getContent());
-        }
-
-        throw new BadRequestAlertException("User is not logged in", "SEARCH_SETTING", "");
-    }
-
-
-    @PostMapping("/account/readinglist")
-    public ResponseEntity<ReadingListDTO> createReadingList(@RequestBody ReadingListDTO readingListDTO) throws URISyntaxException {
-        log.debug("REST request to save ReadingList : {}", readingListDTO);
-        if (readingListDTO.getId() != null) {
-            throw new BadRequestAlertException("A new readingList cannot already have an ID", "READING_LIST", "idexists");
-        }
-
-        Optional<User> optionalUser = this.userService.getUserWithAuthorities();
-        if( optionalUser.isPresent() ) {
-            User user = optionalUser.get();
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-
-            readingListDTO.setUser(userDTO);
-            readingListDTO.setCreated(Instant.now());
-            ReadingListDTO result = readingListService.save(readingListDTO);
-            return ResponseEntity
-                .created(new URI("/api/reading-lists/" + result.getId()))
-                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, "READING_LIST", result.getId().toString()))
-                .body(result);
-        }
-        throw new BadRequestAlertException("User is not logged in", "SEARCH_SETTING", "");
-
-    }
-
 }
