@@ -73,5 +73,19 @@ http {
        proxy_set_header Connection $connection_upgrade;
        proxy_buffering off;
     }
+    location /kibana/ {
+       proxy_set_header Accept-Encoding "";
+       proxy_pass http://kibana:5601/;
+       proxy_redirect http://kibana:5601 https://{{ domain }};
+       proxy_read_timeout 20d;
+       proxy_set_header X-Real-IP  $remote_addr;
+       proxy_set_header X-Forwarded-For $remote_addr;
+       proxy_set_header Host $host;
+       proxy_set_header X-Forwarded-Proto $scheme;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection $connection_upgrade;
+       proxy_buffering off;
+    }
   }
 }

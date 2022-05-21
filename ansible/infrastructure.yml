@@ -5,6 +5,7 @@
   vars:
 
   tasks:
+# Users and groups
     - name: "Ensure group 'tyokoe' exists"
       group:
         name: tyokoe
@@ -33,6 +34,7 @@
       set_fact:
         docker_group: "{{ ansible_facts.getent_group.docker[1] }}"
 
+# Directories
     - name: "Ensure infra directory exists"
       become: true
       become_user: tyokoe
@@ -46,6 +48,7 @@
         path: "{{ appdir }}"
         state: directory
 
+# NGINX
     - name: "Create SSL key file"
       become: true
       copy:
@@ -76,6 +79,7 @@
         mode: '0644'
       notify: "Restart nginx"
 
+# Services docker-compose
     - name: "Create infra docker-compose.yml"
       become: true
       become_user: tyokoe
@@ -83,6 +87,7 @@
         src: 'docker-compose/docker-compose.yml.j2'
         dest: "{{ infradir }}/docker-compose.yml"
         mode: '0644'
+# Application docker-compose
     - name: "Create application docker-compose.yml"
       become: true
       become_user: tyokoe
@@ -90,6 +95,7 @@
         src: 'docker-compose/docker-compose-application.yml'
         dest: "{{ appdir }}/docker-compose.yml"
         mode: '0644'
+# Promotion
     - name: "Copy promotion scripts"
       become: true
       become_user: tyokoe
@@ -99,12 +105,96 @@
         mode: '0554'
       with_fileglob:
         - docker-compose/*.sh
+# ELK
+    - name: "Copy elasticsearch.yml"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: "docker-compose/elasticsearch.yml"
+        dest: "{{ infradir }}"
+        mode: '0644'
+    - name: "Create kibana.yml"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'docker-compose/kibana.yml.j2'
+        dest: "{{ infradir }}/kibana.yml"
+        mode: '0644'
+    - name: "Create logstash.yml"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'docker-compose/logstash.yml'
+        dest: "{{ infradir }}/logstash.yml"
+        mode: '0644'
+    - name: "Create logstash.conf"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'docker-compose/logstash.conf.j2'
+        dest: "{{ infradir }}/logstash.conf"
+        mode: '0644'
+
+# Run services
     - name: "Run docker compose"
       become: true
       become_user: tyokoe
       shell:
         chdir: "{{ infradir }}"
         cmd: docker compose up -d
+
+# Configure ELK (wait for elasticsearch)
+    - wait_for:
+        host: localhost
+        port: 9200
+        delay: 10
+        sleep: 1
+        timeout: 60
+    - name: "Set password for user kibana_system"
+      shell:
+        cmd: |
+          curl -XPOST -D- 'http://localhost:9200/_security/user/kibana_system/_password' -H 'Content-Type: application/json' -u "elastic:{{ monitoring.elastic.password }}" -d '{"password": "{{ monitoring.kibana.system_password }}"}'
+    - name: "Create role logstash_writer"
+      shell:
+        cmd: |
+          curl -XPOST -D- 'http://localhost:9200/_security/role/logstash_writer' -H 'Content-Type: application/json' -u "elastic:{{ monitoring.elastic.password }}" -d '
+          {
+            "cluster": [
+              "manage_index_templates",
+              "monitor",
+              "manage_ilm"
+            ],
+            "indices": [
+              {
+                "names": [
+                  "logs-generic-default",
+                  "logstash-*",
+                  "ecs-logstash-*"
+                ],
+                "privileges": [
+                  "write",
+                  "create",
+                  "create_index",
+                  "manage",
+                  "manage_ilm"
+                ]
+              },
+              {
+                "names": [
+                  "logstash",
+                  "ecs-logstash"
+                ],
+                "privileges": [
+                  "write",
+                  "manage"
+                ]
+              }
+            ]
+          }'
+    - name: "Create user logstash_internal"
+      shell:
+        cmd: |
+          curl -XPOST -D- 'http://localhost:9200/_security/user/logstash_internal' -H 'Content-Type: application/json' -u "elastic:{{ monitoring.elastic.password }}" -d '{ "password" : "{{ monitoring.logstash.internal_password }}", "roles" : ["logstash_writer"], "full_name" : "Internal Logstash User" }'
 
   handlers:
     - name: "Restart nginx"

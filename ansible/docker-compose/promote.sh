@@ -25,6 +25,6 @@ function listen {
   docker events --filter "type=image" | while read f1 f2 f3 f4 f5; do handle "$f3" "$f4" "$f5"; done
 }
 
-echo "Listening to docker events: tagging an image with $TAG shall restart docker compose services"
+echo "Listening to docker events: tagging an image with $TAG shall restart docker compose application"
 
 listen
