@@ -34,9 +34,6 @@ public class SearchResource {
     @PostMapping("/do-search")
     public SearchResults doSearch(@RequestBody AoeSearchParameters aoeSearchParameters) throws BadRequestAlertException, IOException, InterruptedException {
         log.debug("REST request to search: {}", aoeSearchParameters);
-        if (aoeSearchParameters.getFilters().isEmpty()) {
-            throw new BadRequestAlertException("Search filters cannot be empty", "AoeSearchParameters", "empty");
-        }
         return aoeService.doSearch(aoeSearchParameters);
     }
 

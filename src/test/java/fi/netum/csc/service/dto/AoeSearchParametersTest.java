@@ -26,4 +26,29 @@ public class AoeSearchParametersTest {
             + ":[\"73bed523-aa9b-4463-8bed-3b31ce3a927a\",\"c1256389-a47d-4a44-beb2-bdbbc79abb28\"]}}";
         JSONAssert.assertEquals(searchParametersExpected, aoeSearchParameters.toJson(), true);
     }
+
+    @Test
+    void testAoeSearchParametersWithoutFilters() throws Exception {
+
+        String keywords = "hakusana1, hakusana2, hakusana3";
+        Paging paging = new Paging(0, 3, "uusin");
+
+        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(null, keywords, paging);
+
+        String searchParametersExpected = "{\"size\":3,\"keywords\":\"hakusana1, hakusana2, hakusana3\",\"from\":0,\"sort\":" +
+            "\"uusin\"}";
+        JSONAssert.assertEquals(searchParametersExpected, aoeSearchParameters.toJson(), true);
+    }
+
+    @Test
+    void testAoeSearchParametersWithoutKeywordsAndFilters() throws Exception {
+        Paging paging = new Paging(0, 3, "uusin");
+
+        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(null, null, paging);
+
+        String searchParametersExpected = "{\"size\":3,\"from\":0,\"sort\":" +
+            "\"uusin\"}";
+        JSONAssert.assertEquals(searchParametersExpected, aoeSearchParameters.toJson(), true);
+    }
+
 }
