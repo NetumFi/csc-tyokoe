@@ -51,6 +51,9 @@ public interface ReadingListService {
      */
     Page<ReadingListDTO> findAllWithEagerRelationships(Pageable pageable);
 
+    Page<ReadingListDTO> findAllByUserWithEagerRelationships(User user, Pageable pageable);
+
+
     /**
      * Get the "id" readingList.
      *

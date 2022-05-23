@@ -1,7 +1,9 @@
 package fi.netum.csc.web.rest;
 
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.NoteRepository;
 import fi.netum.csc.service.NoteService;
+import fi.netum.csc.service.UserService;
 import fi.netum.csc.service.dto.NoteDTO;
 import fi.netum.csc.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -23,6 +25,8 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static fi.netum.csc.security.SecurityUtils.hasCurrentUserAnyOfAuthorities;
+
 /**
  * REST controller for managing {@link fi.netum.csc.domain.Note}.
  */
@@ -41,9 +45,12 @@ public class NoteResource {
 
     private final NoteRepository noteRepository;
 
-    public NoteResource(NoteService noteService, NoteRepository noteRepository) {
+    private final UserService userService;
+
+    public NoteResource(NoteService noteService, NoteRepository noteRepository, UserService userService) {
         this.noteService = noteService;
         this.noteRepository = noteRepository;
+        this.userService = userService;
     }
 
     /**
@@ -148,10 +155,24 @@ public class NoteResource {
     ) {
         log.debug("REST request to get a page of Notes");
         Page<NoteDTO> page;
+        boolean isAdminRole  = hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
+        Optional<User> optionalUser = userService.getUserWithAuthorities();
+
         if (eagerload) {
-            page = noteService.findAllWithEagerRelationships(pageable);
+            if( isAdminRole ) {
+                page = noteService.findAllWithEagerRelationships(pageable);
+            }
+            else {
+                page = noteService.findAllByUserWithEagerRelationships(optionalUser.get(), pageable);
+            }
         } else {
-            page = noteService.findAll(pageable);
+            if( isAdminRole ) {
+                page = noteService.findAll(pageable);
+            }
+            else {
+                page = noteService.findAllByUser(optionalUser.get(), pageable);
+            }
+
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

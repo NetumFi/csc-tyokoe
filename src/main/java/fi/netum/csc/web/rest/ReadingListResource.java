@@ -1,7 +1,9 @@
 package fi.netum.csc.web.rest;
 
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.ReadingListRepository;
 import fi.netum.csc.service.ReadingListService;
+import fi.netum.csc.service.UserService;
 import fi.netum.csc.service.dto.ReadingListDTO;
 import fi.netum.csc.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -23,6 +25,8 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static fi.netum.csc.security.SecurityUtils.hasCurrentUserAnyOfAuthorities;
+
 /**
  * REST controller for managing {@link fi.netum.csc.domain.ReadingList}.
  */
@@ -33,6 +37,7 @@ public class ReadingListResource {
     private final Logger log = LoggerFactory.getLogger(ReadingListResource.class);
 
     private static final String ENTITY_NAME = "readingList";
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -41,9 +46,10 @@ public class ReadingListResource {
 
     private final ReadingListRepository readingListRepository;
 
-    public ReadingListResource(ReadingListService readingListService, ReadingListRepository readingListRepository) {
+    public ReadingListResource(ReadingListService readingListService, ReadingListRepository readingListRepository, UserService userService) {
         this.readingListService = readingListService;
         this.readingListRepository = readingListRepository;
+        this.userService = userService;
     }
 
     /**
@@ -149,11 +155,27 @@ public class ReadingListResource {
         @RequestParam(required = false, defaultValue = "false") boolean eagerload
     ) {
         log.debug("REST request to get a page of ReadingLists");
+
+        List<String> authorities = this.userService.getAuthorities();
+        Optional<User> optionalUser = this.userService.getUserWithAuthorities();
         Page<ReadingListDTO> page;
+        User user  = optionalUser.get();
+        boolean isAdminRole  = hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
+
         if (eagerload) {
-            page = readingListService.findAllWithEagerRelationships(pageable);
+            if( isAdminRole ) {
+                page = readingListService.findAllWithEagerRelationships(pageable);
+            }
+            else {
+                page = readingListService.findAllByUserWithEagerRelationships(user, pageable);
+            }
         } else {
-            page = readingListService.findAll(pageable);
+            if (isAdminRole) {
+                page = readingListService.findAll(pageable);
+            } else {
+                page = readingListService.findAllByUser(user, pageable);
+            }
+
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

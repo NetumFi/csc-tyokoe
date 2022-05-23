@@ -92,4 +92,14 @@ public class SearchSettingServiceImpl implements SearchSettingService {
         Optional<SearchSetting> userSettingPage = searchSettingRepository.findOneByUser(user);
         return userSettingPage.map(searchSettingMapper::toDto);
     }
+
+    @Override
+    public Page<SearchSettingDTO> findAllByUserWithEagerRelationships(User user, Pageable pageable) {
+        return searchSettingRepository.findAllByUserWithEagerRelationships(user, pageable).map(searchSettingMapper::toDto);
+    }
+
+    @Override
+    public Page<SearchSettingDTO> findAllByUser(User user, Pageable pageable) {
+        return searchSettingRepository.findAllByUser(user, pageable).map(searchSettingMapper::toDto);
+    }
 }

@@ -27,6 +27,12 @@ public interface ReadingListRepository extends JpaRepository<ReadingList, Long> 
     default Page<ReadingList> findAllWithEagerRelationships(Pageable pageable) {
         return this.findAllWithToOneRelationships(pageable);
     }
+    @Query(
+        value = "select distinct readingList from ReadingList readingList left join fetch readingList.user where readingList.user = :user",
+        countQuery = "select count(distinct readingList) from ReadingList readingList where readingList.user = :user"
+    )
+    Page<ReadingList> findAllByUserWithEagerRelationships(@Param("user") User user, Pageable pageable);
+
 
     @Query(
         value = "select distinct readingList from ReadingList readingList left join fetch readingList.user",
@@ -41,4 +47,5 @@ public interface ReadingListRepository extends JpaRepository<ReadingList, Long> 
     Optional<ReadingList> findOneWithToOneRelationships(@Param("id") Long id);
 
     Page<ReadingList> findAllByUser(User user, Pageable pageable);
+
 }

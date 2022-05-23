@@ -3,6 +3,8 @@ package fi.netum.csc.repository;
 import fi.netum.csc.domain.Note;
 import java.util.List;
 import java.util.Optional;
+
+import fi.netum.csc.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -40,4 +42,15 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
 
     @Query("select note from Note note left join fetch note.user where note.id =:id")
     Optional<Note> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query(
+        value = "select distinct note from Note note where note.user = :user ",
+        countQuery = "select count(distinct note) from Note note where note.user = :user"
+    )
+    Page<Note> findAllByUser(@Param("user") User user, Pageable pageable);
+    @Query(
+        value = "select distinct note from Note note left join fetch note.user where note.user = :user ",
+        countQuery = "select count(distinct note) from Note note where note.user = :user"
+    )
+    Page<Note> findAllByUserWithEagerRelationships(@Param("user") User user, Pageable pageable);
 }

@@ -65,4 +65,8 @@ public interface SearchSettingService {
      */
     void delete(Long id);
     Optional<SearchSettingDTO> findByUser(User user);
+
+    Page<SearchSettingDTO> findAllByUserWithEagerRelationships(User user, Pageable pageable);
+
+    Page<SearchSettingDTO> findAllByUser(User user, Pageable pageable);
 }

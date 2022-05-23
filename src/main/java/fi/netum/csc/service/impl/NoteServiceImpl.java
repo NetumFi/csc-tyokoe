@@ -1,6 +1,7 @@
 package fi.netum.csc.service.impl;
 
 import fi.netum.csc.domain.Note;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.NoteRepository;
 import fi.netum.csc.service.NoteService;
 import fi.netum.csc.service.dto.NoteDTO;
@@ -69,10 +70,19 @@ public class NoteServiceImpl implements NoteService {
         return noteRepository.findAll(pageable).map(noteMapper::toDto);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Page<NoteDTO> findAllByUser(User user, Pageable pageable) {
+        log.debug("Request to get all Notes");
+        return noteRepository.findAllByUser(user, pageable).map(noteMapper::toDto);
+    }
     public Page<NoteDTO> findAllWithEagerRelationships(Pageable pageable) {
         return noteRepository.findAllWithEagerRelationships(pageable).map(noteMapper::toDto);
     }
-
+    @Override
+    public Page<NoteDTO> findAllByUserWithEagerRelationships(User user, Pageable pageable) {
+        return noteRepository.findAllByUserWithEagerRelationships(user, pageable).map(noteMapper::toDto);
+    }
     @Override
     @Transactional(readOnly = true)
     public Optional<NoteDTO> findOne(Long id) {
@@ -85,4 +95,6 @@ public class NoteServiceImpl implements NoteService {
         log.debug("Request to delete Note : {}", id);
         noteRepository.deleteById(id);
     }
+
+
 }

@@ -66,4 +66,6 @@ public interface SearchHistoryService {
     void delete(Long id);
 
     Page<SearchHistoryDTO> findAllByUser(User user, Pageable pageable);
+
+    Page<SearchHistoryDTO> findAllByUserWithEagerRelationships(User user, Pageable pageable);
 }

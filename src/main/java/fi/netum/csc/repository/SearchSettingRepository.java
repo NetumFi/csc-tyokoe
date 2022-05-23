@@ -43,4 +43,17 @@ public interface SearchSettingRepository extends JpaRepository<SearchSetting, Lo
 
     @Query("select searchSetting from SearchSetting searchSetting left join fetch searchSetting.user left join  fetch searchSetting.educationLevelCodeSet left join fetch  searchSetting.ageCodeSet where searchSetting.user =:user")
     Optional<SearchSetting> findOneByUser(@Param("user") User user);
+
+    @Query(
+        value = "select distinct searchSetting from SearchSetting searchSetting left join fetch searchSetting.user where searchSetting.user = :user",
+        countQuery = "select count(distinct searchSetting) from SearchSetting searchSetting where searchSetting.user = :user"
+    )
+
+    Page<SearchSetting> findAllByUserWithEagerRelationships(@Param("user") User user, Pageable pageable);
+
+    @Query(
+        value = "select distinct searchSetting from SearchSetting searchSetting where searchSetting.user = :user",
+        countQuery = "select count(distinct searchSetting) from SearchSetting searchSetting where searchSetting.user = :user"
+    )
+    Page<SearchSetting> findAllByUser(@Param("user") User user, Pageable pageable);
 }
