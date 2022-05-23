@@ -1,46 +1,49 @@
 import './search-material.scss';
 
 import React, {useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import {translate, Translate, ValidatedField, ValidatedForm} from 'react-jhipster';
+import {translate, Translate, ValidatedForm} from 'react-jhipster';
 import {
   Row,
   Col,
-  Alert,
   Button,
   Input,
   Badge,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
   Container
 } from 'reactstrap';
 
 import {useAppDispatch, useAppSelector} from 'app/config/store';
-import {toast} from "react-toastify";
 import {handleSearch, addFilter, deleteFilter} from "app/modules/search-material/search-material.reducer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {getEntities} from "app/entities/education-level-code-set/education-level-code-set.reducer";
 
 
-export const SearchMaterial = () => {
+export const SearchMaterial = (props) => {
   const account = useAppSelector(state => state.authentication.account);
   const searchparams = useAppSelector(state => state.searchMaterial);
+  const educationLevelCodeSets = useAppSelector(state => state.educationLevelCodeSet);
+  const currentLocale = useAppSelector(state => state.locale.currentLocale);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getEntities({page: 0, size: 100, sort: null}));
+  }, [props.location]);
+
+  const filterItems = educationLevelCodeSets.entities;
 
   const handleValidSubmit = ({searchterms, filter}) => {
     dispatch(handleSearch({searchTerms: searchterms, filters: filter}));
   };
 
   const handleAddFilter = (params) => {
-    dispatch(addFilter(params.target.value));
+    const rajaus = filterItems.filter(i => i.codeId === params.target.value)[0];
+    dispatch(addFilter(rajaus));
   };
 
   const handleDeleteFilter = (filter) => {
     dispatch(deleteFilter(filter));
   }
 
-  const rajausehdot = ["Abiturientti", "Alanvaihtaja", "Itsensä sivistäjä", "Työelämän tarpeista opiskeleva", "Yliopiston jatko-opiskelija"];
+  const codeLocales = {"fi": "labelFi", "en": "labelEn", "sv": "labelSv"};
 
   const sort = ["Suosituin ensin"];
 
@@ -72,7 +75,7 @@ export const SearchMaterial = () => {
           </Row>
           <Row>
             <Col
-              lg="2">
+              lg="3">
               <Input
                 name="filter"
                 label={translate('materialsearch.form.filter')}
@@ -84,24 +87,24 @@ export const SearchMaterial = () => {
                 defaultValue={null}>
                 {
                   [<option key="firstElement"> {translate('materialsearch.form.filter')} </option>]
-                    .concat(rajausehdot.filter(item => !searchparams.filters.includes(item)).map(rajaus => (
-                      <option value={rajaus} key={rajaus}>
-                        {rajaus}
+                    .concat(filterItems.filter(item => !searchparams.filters.includes(item)).map(filterItem => (
+                      <option value={filterItem.codeId} key={filterItem.codeId}>
+                        {filterItem[codeLocales[currentLocale]]}
                       </option>
                     )))
                 }
               </Input>
             </Col>
             <Col sm="10" className="filterList">
-              {searchparams.filters.map(filter =>
+              {searchparams.filters.map(filterItem =>
                 <Badge
-                  key={filter}
+                  key={filterItem.codeId}
                   className="filterChip"
-                  tabindex="0"
+                  tabIndex={0}
                   color="primary"
-                  onClick={() => handleDeleteFilter(filter)}
+                  onClick={() => handleDeleteFilter(filterItem)}
                   pill>
-                  {filter}
+                  {filterItem["labelFi"]}
                   <span className="icon">
                     <FontAwesomeIcon icon="x"/>
                   </span>
@@ -109,7 +112,7 @@ export const SearchMaterial = () => {
             </Col>
           </Row>
           <Row>
-            <Col sm="2">
+            <Col sm="3">
               <Input
                 type="select">
                 {sort.map(s => <option key={s}>{s}</option>)}
