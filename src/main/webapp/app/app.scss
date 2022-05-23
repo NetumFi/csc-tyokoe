@@ -339,6 +339,25 @@ Favorites Card style
 .fav-button {
   margin: 5px;
 }
+
+/* ==========================================================================
+Seach Card style
+========================================================================== */
+.cust_Badge {
+  padding: 0.5em 1em;
+  margin: 1em 0.5em;
+}
+
+.cust_card-title {
+  text-transform: none;
+  color: #3A7A10;
+}
+
+.date_text {
+  text-align:right;
+}
+
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   .example {background: red;}
