@@ -17,8 +17,6 @@ export const handleSearch = createAsyncThunk(
   'search-material/fetch-data',
   async (data: { searchterms: string }, { getState }) => {
     const {searchTerms, filters} = (getState() as any).searchMaterial as SearchState;
-    // eslint-disable-next-line no-console
-    console.log("#####", data);
     const postData = {
       keywords: searchTerms,
       filters: [{

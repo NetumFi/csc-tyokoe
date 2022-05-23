@@ -32,8 +32,6 @@ export const SearchMaterial = (props) => {
   const filterItems = educationLevelCodeSets.entities;
 
   const handleValidSubmit = (data) => {
-    // eslint-disable-next-line no-console
-    console.log("##### 11111", data);
     dispatch(handleSearch(data));
   };
 
