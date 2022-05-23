@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# This script is registered as service "promote".
+
+# Use "sudo journalctl -u promote -f" to see the service logs.
+
+cd $(dirname $0)
+
 TAG="$1"
 
 cleanup() {

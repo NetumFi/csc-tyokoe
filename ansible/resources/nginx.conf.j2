@@ -20,7 +20,7 @@ http {
     ssl_certificate /ssl/ssl.pem;
     ssl_certificate_key /ssl/ssl.key;
 
-    access_log /var/log/nginx/data-access.log combined;
+#    access_log /var/log/nginx/data-access.log combined;
 
     set $target "http://csc2022-app:8080";
 
@@ -55,7 +55,7 @@ http {
        proxy_set_header Connection $connection_upgrade;
        proxy_buffering off;
 
-       sub_filter_types text/css text/xml application/json;
+       sub_filter_types atext/css text/xml application/json;
        sub_filter http://sonar:9000 https://$http_host;
        sub_filter_once off;
     }
