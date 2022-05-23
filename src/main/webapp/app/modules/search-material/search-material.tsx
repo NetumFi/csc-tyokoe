@@ -3,7 +3,19 @@ import './search-material.scss';
 import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {translate, Translate, ValidatedField, ValidatedForm} from 'react-jhipster';
-import {Row, Col, Alert, Button, Input, Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+import {
+  Row,
+  Col,
+  Alert,
+  Button,
+  Input,
+  Badge,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Container
+} from 'reactstrap';
 
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {toast} from "react-toastify";
@@ -33,16 +45,16 @@ export const SearchMaterial = () => {
   const sort = ["Suosituin ensin"];
 
   return (
-    <Row>
-      <Col>
+    <Container>
         <h2>
-          <Translate contentKey="materialsearch.title.welcome" interpolate={{name: account.firstName}}>
-            Tervetuloa, {account.firstName}.
+          <Translate contentKey="materialsearch.title.welcome" interpolate={{name: account?.firstName}}>
+            Tervetuloa, {account?.firstName}.
           </Translate>
         </h2>
+        <Container>
         <ValidatedForm id="materialsearch-form" onSubmit={handleValidSubmit} defaultValues={searchparams}>
           <Row>
-            <Col>
+            <Col sm="10">
               <Input
                 type="text"
                 name="searchterms"
@@ -51,6 +63,8 @@ export const SearchMaterial = () => {
                 placeholder={translate('materialsearch.form.searchterms-placeholder')}
                 data-cy="searchterms"
               />
+            </Col>
+            <Col xs="1">
               <Button color="primary" type="submit" data-cy="submit">
                 <Translate contentKey="materialsearch.form.button">Search</Translate>
               </Button>
@@ -103,8 +117,8 @@ export const SearchMaterial = () => {
             </Col>
           </Row>
         </ValidatedForm>
-      </Col>
-    </Row>
+        </Container>
+    </Container>
   );
 };
 
