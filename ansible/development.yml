@@ -22,6 +22,8 @@ csc:
         system_password: 'kibanasala'
       logstash:
         internal_password: 'logstashsala'
+      grafana:
+        admin_password: 'katatoninen kehittäjä'
 #
     postgres:
       application:

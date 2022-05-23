@@ -8,6 +8,8 @@ volumes:
   jenkins: {}
   sonar: {}
   postgresql: {}
+  elasticsearch: {}
+  grafana: {}
 
 services:
   nginx:
@@ -113,3 +115,29 @@ services:
       - infra
     depends_on:
       - elasticsearch
+
+  prometheus:
+    image: prom/prometheus:v2.33.3
+    volumes:
+      - ./prometheus.yml/:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    networks:
+      - infra
+
+  grafana:
+    image: grafana/grafana:8.4.1
+    volumes:
+      - ./grafana/:/etc/grafana/provisioning/
+      - grafana:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD={{ monitoring.grafana.admin_password }}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+#    ports:
+#      - 3000:3000
+    networks:
+      - infra

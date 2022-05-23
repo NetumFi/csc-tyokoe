@@ -135,6 +135,28 @@
         dest: "{{ infradir }}/logstash.conf"
         mode: '0644'
 
+# Prometheus & Grafana
+    - name: "Create prometheus.yml"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: 'docker-compose/prometheus.yml'
+        dest: "{{ infradir }}/prometheus.yml"
+        mode: '0644'
+    - name: "Create grafana.ini"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'docker-compose/grafana.ini.j2'
+        dest: "{{ infradir }}/grafana.ini"
+        mode: '0644'
+    - name: "Create grafana directory"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: 'docker-compose/grafana'
+        dest: "{{ infradir }}/"
+
 # Run services
     - name: "Run docker compose"
       become: true
