@@ -16,6 +16,7 @@ export interface IHeaderProps {
   isInProduction: boolean;
   isOpenAPIEnabled: boolean;
   currentLocale: string;
+  userFullName: string;
 }
 
 const Header = (props: IHeaderProps) => {
@@ -62,7 +63,8 @@ const Header = (props: IHeaderProps) => {
                     admin={props.isAdmin}
                     showOpenAPI={props.isOpenAPIEnabled}
                     currentLocale={props.currentLocale}
-                    onClick1={handleLocaleChange}/>
+                    onClick1={handleLocaleChange}
+                    userFullName={props.userFullName}/>
       }
 
     </div>

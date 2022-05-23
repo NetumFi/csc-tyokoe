@@ -32,11 +32,11 @@ const accountMenuItems = () => (
   </>
 );
 
-export const AccountMenu = ({ isAuthenticated = false }) => {
-  const account = useAppSelector(state => state.authentication.account);
+export const AccountMenu = ({ isAuthenticated = false, userFullName = '' }) => {
 
+  const actualFullname = userFullName.indexOf('undefined') === -1 ? userFullName : translate('global.menu.account.notLoggedIn')
   return (
-  <NavDropdown name={translate('global.menu.account.main', {username: account.firstName + ' ' + account.lastName})} id="account-menu" data-cy="accountMenu">
+  <NavDropdown name={translate('global.menu.account.main', {username: actualFullname})} id="account-menu" data-cy="accountMenu">
     {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}
   </NavDropdown>
 );

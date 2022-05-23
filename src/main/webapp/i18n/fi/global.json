@@ -6,6 +6,7 @@
       "home": "Etusivu",
       "favorites": "Suosikit",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+
       "entities": {
         "main": "Entiteetit",
         "profile": "Profile",
@@ -20,6 +21,7 @@
       },
       "account": {
         "main": "{{username}}",
+        "notLoggedIn": "Tili",
         "settings": "Asetukset",
         "password": "Salasanat",
         "sessions": "Sessiot",
