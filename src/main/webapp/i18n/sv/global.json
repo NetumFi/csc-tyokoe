@@ -144,5 +144,8 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Detta är din footer"
+  "footer": {
+    "accessibility": "sv_Accessibility",
+    "registry-scan": "sv_Registry Scan"
+  }
 }

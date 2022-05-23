@@ -56,7 +56,9 @@ export const App = () => {
           <ErrorBoundary>
             <AppRoutes />
           </ErrorBoundary>
-          <Footer />
+          <div className={'cust-footer'}>
+            <Footer />
+          </div>
         </div>
       </div>
     </Router>
