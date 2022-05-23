@@ -2,7 +2,6 @@ import React from 'react';
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
 import {AccountMenu, LocaleMenu} from "app/shared/layout/menus";
 import {Translate} from "react-jhipster";
-import Favorites from "app/modules/favorites/favorites";
 
 const UserNavbar = (props: {
   onClick: () => void,
@@ -16,7 +15,7 @@ const UserNavbar = (props: {
 }) => {
 
   return (
-    <Navbar className="bg-primary" light expand="md" fixed="top">
+    <Navbar className="bg-primary" light expand="md" fixed="top" data-cy="navbar">
       <NavbarBrand href="https://digivisio2030.fi/">CSC2022</NavbarBrand>
       <NavbarToggler onClick={props.onClick}/>
       <Collapse isOpen={props.open} navbar>

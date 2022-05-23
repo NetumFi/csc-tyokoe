@@ -70,6 +70,10 @@ export const healthPageHeadingSelector = '[data-cy="healthPageHeading"]';
 export const logsPageHeadingSelector = '[data-cy="logsPageHeading"]';
 export const configurationPageHeadingSelector = '[data-cy="configurationPageHeading"]';
 
+// Footer
+export const footerRegistryScan = '[data-cy="registryScan"]';
+export const footerAccessibility = '[data-cy="accessibility"]';
+
 // ***********************************************
 // End Specific Selector Attributes for Cypress
 // ***********************************************

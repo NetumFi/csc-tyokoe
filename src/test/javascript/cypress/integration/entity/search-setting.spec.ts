@@ -14,8 +14,8 @@ import {
 describe('SearchSetting e2e test', () => {
   const searchSettingPageUrl = '/search-setting';
   const searchSettingPageUrlPattern = new RegExp('/search-setting(\\?.*)?$');
-  const username = Cypress.env('E2E_USERNAME') ?? 'user';
-  const password = Cypress.env('E2E_PASSWORD') ?? 'user';
+  const username = Cypress.env('E2E_USERNAME') ?? 'admin';
+  const password = Cypress.env('E2E_PASSWORD') ?? 'admin';
   const searchSettingSample = {};
 
   let searchSetting: any;
