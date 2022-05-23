@@ -1,0 +1,115 @@
+{
+  "hits": 284,
+  "results": [
+    {
+      "id": "205",
+      "createdAt": "2020-03-23T10:30:18.730Z",
+      "publishedAt": "2020-03-23T10:36:11.867Z",
+      "updatedAt": "2020-03-23T10:36:11.869Z",
+      "materialName": [
+        {
+          "materialname": "Digipedagogiikan perusteet sosiaali-, terveys- ja kuntoutusalan koulutuksessa",
+          "language": "fi"
+        },
+        {
+          "materialname": "Digipedagogiikan perusteet sosiaali-, terveys- ja kuntoutusalan koulutuksessa",
+          "language": "sv"
+        },
+        {
+          "materialname": "Digipedagogiikan perusteet sosiaali-, terveys- ja kuntoutusalan koulutuksessa",
+          "language": "en"
+        }
+      ],
+      "description": [
+        {
+          "description": "Digipedagogiikan perusteet sosiaali-, terveys- ja kuntoutusalan koulutuksessa -opintojaksolla paneudutaan opettajan digitaalisen osaamisen kuuteen moduuliin Euroopan komission tuottaman DigCompEdu-viitekehyksen (Redecker 2017) mukaisesti. Moduulit muodostuvat 22 kompetenssialueesta ja kuvaavat laajasti opettajan ammatillista toimintaa, opettamisen ja oppimisen digipedagogisia sisältöjä ja oppijan digiosaamisen vahvistamista.\n\nModuuleissa perehdytään muun muassa seuraaviin sisältöihin: miten hyödyntää digitaalisuutta vuorovaikutuksessa, yhteistyössä ja ammatillisessa kehittymisessä, miten tuottaa ja muokata mielekästä ja kiinnostavaa sisältöä digitaaliseen oppimisympäristöön sekä jakaa ja hallita sitä, pohtia minkälaisia haasteita ja etuja digitaalinen ympäristö tuo oppimiselle, opetukselle ja arvioinnille sekä minkälaisia digitaalisia keinoja opettajalla on tukea opiskelijoiden osallisuutta ja mitä informaatio- ja medialukutaito pitävät sisällään.\n\nDigipedagogiikan perusteet sosiaali-, terveys- ja kuntoutusalan koulutuksessa -opintojakso on kehitetty TerOpe-hankkeessa vuosina 2018-2019. Itä-Suomen yliopiston hoitotieteen laitos on ollut vastuussa verkko-opintojakson kokonaissuunnittelusta ja toteuttamisesta. Sisältöä on tuotettu yhteistyössä Turun yliopiston hoitotieteen laitoksen kanssa. \n",
+          "language": "fi"
+        },
+        {
+          "description": "Digipedagogiikan perusteet sosiaali-, terveys- ja kuntoutusalan koulutuksessa -opintojaksolla paneudutaan opettajan digitaalisen osaamisen kuuteen moduuliin Euroopan komission tuottaman DigCompEdu-viitekehyksen (Redecker 2017) mukaisesti. Moduulit muodostuvat 22 kompetenssialueesta ja kuvaavat laajasti opettajan ammatillista toimintaa, opettamisen ja oppimisen digipedagogisia sisältöjä ja oppijan digiosaamisen vahvistamista.\n\nModuuleissa perehdytään muun muassa seuraaviin sisältöihin: miten hyödyntää digitaalisuutta vuorovaikutuksessa, yhteistyössä ja ammatillisessa kehittymisessä, miten tuottaa ja muokata mielekästä ja kiinnostavaa sisältöä digitaaliseen oppimisympäristöön sekä jakaa ja hallita sitä, pohtia minkälaisia haasteita ja etuja digitaalinen ympäristö tuo oppimiselle, opetukselle ja arvioinnille sekä minkälaisia digitaalisia keinoja opettajalla on tukea opiskelijoiden osallisuutta ja mitä informaatio- ja medialukutaito pitävät sisällään.\n\nDigipedagogiikan perusteet sosiaali-, terveys- ja kuntoutusalan koulutuksessa -opintojakso on kehitetty TerOpe-hankkeessa vuosina 2018-2019. Itä-Suomen yliopiston hoitotieteen laitos on ollut vastuussa verkko-opintojakson kokonaissuunnittelusta ja toteuttamisesta. Sisältöä on tuotettu yhteistyössä Turun yliopiston hoitotieteen laitoksen kanssa. \n",
+          "language": "en"
+        },
+        {
+          "description": "Digipedagogiikan perusteet sosiaali-, terveys- ja kuntoutusalan koulutuksessa -opintojaksolla paneudutaan opettajan digitaalisen osaamisen kuuteen moduuliin Euroopan komission tuottaman DigCompEdu-viitekehyksen (Redecker 2017) mukaisesti. Moduulit muodostuvat 22 kompetenssialueesta ja kuvaavat laajasti opettajan ammatillista toimintaa, opettamisen ja oppimisen digipedagogisia sisältöjä ja oppijan digiosaamisen vahvistamista.\n\nModuuleissa perehdytään muun muassa seuraaviin sisältöihin: miten hyödyntää digitaalisuutta vuorovaikutuksessa, yhteistyössä ja ammatillisessa kehittymisessä, miten tuottaa ja muokata mielekästä ja kiinnostavaa sisältöä digitaaliseen oppimisympäristöön sekä jakaa ja hallita sitä, pohtia minkälaisia haasteita ja etuja digitaalinen ympäristö tuo oppimiselle, opetukselle ja arvioinnille sekä minkälaisia digitaalisia keinoja opettajalla on tukea opiskelijoiden osallisuutta ja mitä informaatio- ja medialukutaito pitävät sisällään.\n\nDigipedagogiikan perusteet sosiaali-, terveys- ja kuntoutusalan koulutuksessa -opintojakso on kehitetty TerOpe-hankkeessa vuosina 2018-2019. Itä-Suomen yliopiston hoitotieteen laitos on ollut vastuussa verkko-opintojakson kokonaissuunnittelusta ja toteuttamisesta. Sisältöä on tuotettu yhteistyössä Turun yliopiston hoitotieteen laitoksen kanssa. \n",
+          "language": "sv"
+        }
+      ],
+      "authors": [
+        {
+          "authorname": "",
+          "organization": "TerOpe-hanke",
+          "organizationkey": "teropehanke"
+        }
+      ],
+      "learningResourceTypes": [
+        {
+          "value": "teksti",
+          "learningresourcetypekey": "cc1d00b0-b11f-4afe-a423-e43f96214f89"
+        },
+        {
+          "value": "video",
+          "learningresourcetypekey": "c1256389-a47d-4a44-beb2-bdbbc79abb28"
+        },
+        {
+          "value": "luentotallenne",
+          "learningresourcetypekey": "73bed523-aa9b-4463-8bed-3b31ce3a927a"
+        }
+      ],
+      "license": {
+        "key": "CCBYNCSA4.0",
+        "value": "CC BY-NC-SA 4.0"
+      },
+      "educationalLevels": [
+        {
+          "value": "korkeakoulutus",
+          "educationallevelkey": "e5a48ada-3de0-4246-9b8f-32d4ff68e22f"
+        }
+      ],
+      "educationalRoles": [
+        {
+          "value": "Opettaja",
+          "educationalrolekey": "9f3904bf-a09d-4dfd-bf46-15ae225b8941"
+        }
+      ],
+      "keywords": [
+        {
+          "value": "digipedagogiikka",
+          "keywordkey": "digipedagogiikka"
+        },
+        {
+          "value": "digitaalinen oppimateriaali",
+          "keywordkey": "//www.yso.fi/onto/yso/p3597"
+        },
+        {
+          "value": "terveysala",
+          "keywordkey": "//www.yso.fi/onto/yso/p26126"
+        },
+        {
+          "value": "sosiaaliala",
+          "keywordkey": "//www.yso.fi/onto/yso/p13916"
+        },
+        {
+          "value": "kuntoutusala",
+          "keywordkey": "kuntoutusala"
+        }
+      ],
+      "languages": [
+        "fi"
+      ],
+      "educationalSubjects": [],
+      "teaches": [],
+      "hasDownloadableFiles": true,
+      "thumbnail": null,
+      "popularity": 0.1262848751835536,
+      "educationalUses": [
+        {
+          "value": "Opettajan materiaalit ja osaamisen kehittäminen",
+          "educationalusekey": "4f0a1a42-aa37-4275-9141-ef2e811dc8ff"
+        }
+      ],
+      "accessibilityFeatures": [],
+      "accessibilityHazards": []
+    }
+  ]
+}
+

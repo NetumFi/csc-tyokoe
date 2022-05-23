@@ -1,0 +1,29 @@
+{
+  "csc2022App": {
+    "educationLevelCodeSet": {
+      "home": {
+        "title": "Education Level Code Sets",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Luo Education Level Code Set",
+        "createOrEditLabel": "Luo tai muokkaa Education Level Code Set",
+        "notFound": "Education Level Code Set ei löytynyt"
+      },
+      "created": "Uusi Education Level Code Set on luotu, id: {{ param }}",
+      "updated": "Education Level Code Set on päivitetty, id: {{ param }}",
+      "deleted": "Education Level Code Set on päivitetty, id: {{ param }}",
+      "delete": {
+        "question": "Haluatko varmasti poistaa Education Level Code Set {{ id }}?"
+      },
+      "detail": {
+        "title": "Education Level Code Set"
+      },
+      "id": "ID",
+      "code": "Code",
+      "codeId": "Code Id",
+      "labelEn": "Label En",
+      "labelFi": "Label Fi",
+      "labelSv": "Label Sv",
+      "searchSetting": "Search Setting"
+    }
+  }
+}

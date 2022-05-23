@@ -1,0 +1,19 @@
+id;code_id;code;label_en;label_fi;label_sv
+1;8e7b8440-286d-4cc9-ad99-9fe288107535;earlyChildhoodEducation;early childhood education;varhaiskasvatus;småbarnspedagogik
+2;3ff553ba-a4d7-407c-ad00-80e54ecebd16;pre-primaryEducation;pre-primary education;esiopetus;förskoleundervisning
+3;8cb1a02f-54cb-499a-b470-4ee980519707;basicEducation;basic education;perusopetus;grundläggande utbildning
+4;5410475a-a2fb-46d7-9eb4-c572b5d92dbb;basicEducationGrades1-2;basic education grades 1-2;perusopetuksen vuosiluokat 1-2;grundläggande utbildning årskurs 1-2
+5;a2a70a14-b150-4f37-9e20-2bbb71731807;basicEducationGrades7-9;basic education grades 7-9;perusopetuksen vuosiluokat 7-9;grundläggande utbildning årskurs 7-91
+6;14fe3b08-8516-4999-946b-96eb90c2d563;voluntaryAdditionalBasicEducation;voluntary additional basic education;påbyggnadsundervisning efter den grundläggande utbildningen;perusopetuksen lisäopetus (10-luokka)
+7;fd362a80-9662-48b8-acd1-d8cef520530c;instructionPreparingForGeneralUpperSecondaryEducation;instruction preparing for general upper secondary education;lukiokoulutukseen valmistava koulutus, LUVA;utbildning som förbereder för gymnasieutbildning
+8;55c5d6a2-8415-47bc-9d15-7b976b0e999c;preparatoryEducationForVocationalTraining;preparatory education for vocational training;ammatilliseen koulutukseen valmentava koulutus, VALMA;utbildning som handleder för yrkesutbildning
+9;da5b8f43-5fc9-4681-812b-40846926f3fd;preparatoryEducationForWorkAndIndependentLiving;preparatory education for work and independent living;työhön ja itsenäiseen elämään valmentava koulutus, TELMA;utbildning som handleder för arbete och ett självständigt liv
+10;94f79e1e-10e6-483d-b651-27521f94f7bf;upperSecondarySchool;upper secondary school;lukiokoulutus;gymnasieutbildning
+11;010c6689-5021-4d8e-8c02-68a27cc5a87b;vocationalEducation;vocational education;ammatillinen koulutus;yrkesutbildning
+12;bc25d0e7-3c68-49a1-9329-239dae01fab7;self-motivatedCompetenceDevelopment;self-motivated competence development;omaehtoinen osaamisen kehittäminen;självständig utveckling av kompetens
+13;e5a48ada-3de0-4246-9b8f-32d4ff68e22f;higherEducation;higher education;korkeakoulutus;högskoleutbildning
+14;7eb3d5be-0575-44db-ab8a-883cf0ae2f26;basicEducationGrades3-4;basic education grades 3-4;perusopetuksen vuosiluokat 3-4;grundläggande utbildning årskurs 3-4
+15;75e8bed1-b965-483d-8ba4-48a5614c69ba;basicEducationGrades5-6;basic education grades 5-6;perusopetuksen vuosiluokat 5-6;grundläggande utbildning årskurs 5-6
+16;ff3334db-2a71-4459-8f0d-c42ce2b12a70;BachelorsDegree;bachelor's degree;alemman korkeakouluasteen tutkinto;lägre högskoleexamen
+17;9c14f097-68e3-4e6b-a772-71a44442f72f;MastersDegree;master's degree;ylemmän korkeakouluasteen tutkinto;högre högskoleexamen
+18;7c722ac4-f06c-4f2a-a41f-b0c5aa10070a;ThirdCycleDegree;third cycle degree;tutkijakoulutusasteen tutkinto;forskarutbildning

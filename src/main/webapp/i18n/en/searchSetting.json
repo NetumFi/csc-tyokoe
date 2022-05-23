@@ -1,0 +1,29 @@
+{
+  "csc2022App": {
+    "searchSetting": {
+      "home": {
+        "title": "Search Settings",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Search Setting",
+        "createOrEditLabel": "Create or edit a Search Setting",
+        "notFound": "No Search Settings found"
+      },
+      "created": "A new Search Setting is created with identifier {{ param }}",
+      "updated": "A Search Setting is updated with identifier {{ param }}",
+      "deleted": "A Search Setting is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Search Setting {{ id }}?"
+      },
+      "detail": {
+        "title": "Search Setting"
+      },
+      "id": "ID",
+      "searchTerm": "Search Term",
+      "role": "Role",
+      "age": "Age",
+      "user": "User",
+      "educationLevelCodeSet": "Education Level Code Set",
+      "ageCodeSet": "Age Code Set"
+    }
+  }
+}

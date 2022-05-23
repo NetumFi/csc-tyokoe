@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: csc2022
+      POSTGRES_DB: csc2022
+      POSTGRES_USER: csc2022
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - csc_db_data:/var/lib/postgresql/data
+volumes:
+  csc_db_data:
+    name: csc_db_data
+    external: true
+

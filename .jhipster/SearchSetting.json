@@ -1,0 +1,48 @@
+{
+  "applications": "*",
+  "changelogDate": "20220518090100",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "search_setting",
+  "fields": [
+    {
+      "fieldName": "searchTerm",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "role",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SearchSetting",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "educationLevelCodeSet",
+      "otherEntityRelationshipName": "searchSetting",
+      "relationshipName": "educationLevelCodeSet",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "ageCodeSet",
+      "otherEntityRelationshipName": "searchSetting",
+      "relationshipName": "ageCodeSet",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

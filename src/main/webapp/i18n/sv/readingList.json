@@ -1,0 +1,26 @@
+{
+  "csc2022App": {
+    "readingList": {
+      "home": {
+        "title": "Reading Lists",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Skapa en ny Reading List",
+        "createOrEditLabel": "Skapa eller ändra en Reading List",
+        "notFound": "No Reading Lists found"
+      },
+      "created": "En ny Reading List är skapad med id {{ param }}",
+      "updated": "En Reading List är uppdaterad med id  {{ param }}",
+      "deleted": "En Reading List är borttagen med id  {{ param }}",
+      "delete": {
+        "question": "Är du säker på att du vill ta bort Reading List {{ id }}?"
+      },
+      "detail": {
+        "title": "Reading List"
+      },
+      "id": "ID",
+      "materialId": "Material Id",
+      "created": "Created",
+      "user": "User"
+    }
+  }
+}

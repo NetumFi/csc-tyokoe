@@ -1,0 +1,60 @@
+entity Profile {
+	keywords String,
+    education String,
+    language String
+}
+
+entity SearchHistory {
+ 	searchTerm String
+}
+
+entity AgeCodeSet {
+	code String
+	codeId String
+    labelEn String
+    labelFi String
+    labelSv String
+}
+
+entity EducationLevelCodeSet {
+	code String
+	codeId String
+    labelEn String
+    labelFi String
+    labelSv String
+}
+
+entity SearchSetting {
+	searchTerm String
+    role String
+    age String  // --> enumeration
+}
+
+entity ReadingList {
+	materialId String
+    created Instant
+}
+
+entity Note {
+	content String
+    materialId String
+    created Instant
+}
+
+relationship OneToOne {
+    Profile{user(login)} to User
+    SearchSetting{user(login)} to User
+}
+
+relationship ManyToOne {
+ ReadingList{user(login)} to User
+ SearchHistory{user(login)} to User
+ Note{user(login)} to User
+ SearchSetting to EducationLevelCodeSet
+ SearchSetting to AgeCodeSet
+
+}
+
+use mapstruct, serviceImpl, pagination for *
+
+
