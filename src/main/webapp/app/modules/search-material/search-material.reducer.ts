@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, PayloadAction, current} from '@reduxjs/toolkit';
 
 import { serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 
@@ -30,8 +30,8 @@ export const SearchMaterialSlice = createSlice({
     addFilter(state, action: PayloadAction<string>) {
       state.filters.push(action.payload);
     },
-    deleteFilter(state, action: PayloadAction<string>) {
-      state.filters.splice(state.filters.indexOf(action.payload), 1);
+    deleteFilter(state, action: PayloadAction<any>) {
+      state.filters = state.filters.filter(i => i.codeId !== action.payload.codeId);
     }
   },
   extraReducers(builder) {
