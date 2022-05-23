@@ -66,10 +66,9 @@ class AoeServiceIT {
                 "c1256389-a47d-4a44-beb2-bdbbc79abb28")));
 
         String keywords = "hakusana1, hakusana2, hakusana3";
+        Paging paging = new Paging(0, 3, "uusin");
 
-        MyPageable myPageable = new MyPageable(0, 3, Sort.by("uusin").descending());
-
-        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(filters, keywords, myPageable);
+        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(filters, keywords, paging);
 
         SearchResults searchResults = aoeService.doSearch(aoeSearchParameters);
         assertThat(searchResults.getHits()).isEqualTo(284);

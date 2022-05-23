@@ -9,6 +9,7 @@ import fi.netum.csc.service.AoeService;
 import fi.netum.csc.service.dto.aoe.AoeSearchParameters;
 import fi.netum.csc.service.dto.aoe.Filter;
 import fi.netum.csc.service.dto.aoe.MyPageable;
+import fi.netum.csc.service.dto.aoe.Paging;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -56,13 +57,14 @@ class SearchResourceIT {
     /**
      * Test doSearch
      */
+    @Test
     void testDoSearch() throws Exception {
 
         List<Filter> filters = List.of(new Filter("educationalLevels", List.of("e5a48ada-3de0-4246-9b8f-32d4ff68e22f")));
         String keywords = "sana1, sana2, sana3";
-        MyPageable myPageable = new MyPageable(0, 3, Sort.by("uusin"));
+        Paging paging = new Paging(0, 3, "uusin");
 
-        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(filters, keywords, myPageable);
+        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(filters, keywords, paging);
         restMockMvc.perform(post("/api/search/do-search").contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(aoeSearchParameters))).andExpect(status().isOk());
     }

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @JsonPropertyOrder({
     "filters",
     "keywords",
-    "pageable"
+    "paging"
 })
 
 public class AoeSearchParameters implements Serializable {
@@ -26,15 +26,15 @@ public class AoeSearchParameters implements Serializable {
     @JsonProperty("keywords")
     private String keywords;
 
-    @JsonProperty("pageable")
-    private MyPageable pageable;
+    @JsonProperty("paging")
+    private Paging paging;
 
     public AoeSearchParameters() {};
 
-    public AoeSearchParameters (List<Filter> filters, String keywords, MyPageable pageable) {
+    public AoeSearchParameters (List<Filter> filters, String keywords, Paging paging) {
         this.filters = filters;
         this.keywords = keywords;
-        this.pageable = pageable;
+        this.paging = paging;
     }
 
     @JsonProperty("filters")
@@ -47,9 +47,9 @@ public class AoeSearchParameters implements Serializable {
         return keywords;
     }
 
-    @JsonProperty("pageable")
-    public Pageable getPageable() {
-        return pageable;
+    @JsonProperty("paging")
+    public Paging getPaging() {
+        return paging;
     }
 
     public void setFilters(List<Filter> filters) {
@@ -58,8 +58,8 @@ public class AoeSearchParameters implements Serializable {
     public void setKeywords(String keywords) {
         this.keywords = keywords;
     }
-    public void setPageable(MyPageable pageable) {
-        this.pageable = pageable;
+    public void setPaging(Paging paging) {
+        this.paging = paging;
     }
 
     public String toJson() throws JsonProcessingException {
@@ -67,8 +67,8 @@ public class AoeSearchParameters implements Serializable {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(Map.of("filters", filters.stream().collect(Collectors.toMap(Filter::getFilter, Filter::getValues)),
             "keywords", keywords,
-            "from", pageable.getOffset(),
-            "size", pageable.getPageSize(),
-            "sort", pageable.getSort().iterator().next().getProperty()));
+            "from", paging.getFrom(),
+            "size", paging.getSize(),
+            "sort", paging.getSort()));
     }
 }
