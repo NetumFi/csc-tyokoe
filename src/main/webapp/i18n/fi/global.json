@@ -6,6 +6,8 @@
       "home": "Etusivu",
       "favorites": "Suosikit",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+      "accountMenu": "Tili",
+
       "entities": {
         "main": "Entiteetit",
         "profile": "Profile",
@@ -25,7 +27,10 @@
         "sessions": "Sessiot",
         "login": "Kirjaudu sisään",
         "logout": "Kirjaudu ulos",
-        "register": "Rekisteröidy"
+        "register": "Rekisteröidy",
+        "searchistory": "Hakuhistoria",
+        "profile": "Profiili"
+
       },
       "admin": {
         "main": "Hallinto",
@@ -146,5 +151,6 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Tämä on footer teksti"
+  "footer": "Tämä on footer teksti",
+  "logout": "Sinut on kirjattu ulos onnistuneesti!"
 }

@@ -2,24 +2,24 @@
   "csc2022App": {
     "searchHistory": {
       "home": {
-        "title": "Search Histories",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Luo Search History",
-        "createOrEditLabel": "Luo tai muokkaa Search History",
-        "notFound": "Search History ei löytynyt"
+        "title": "Hakuhistoria",
+        "refreshListLabel": "Päivitä",
+        "createLabel": "Luo Hakuhistoria",
+        "createOrEditLabel": "Luo tai muokkaa hakuhistoria",
+        "notFound": "Hakuhistoria ei löytynyt"
       },
-      "created": "Uusi Search History on luotu, id: {{ param }}",
-      "updated": "Search History on päivitetty, id: {{ param }}",
-      "deleted": "Search History on päivitetty, id: {{ param }}",
+      "created": "Uusi hakuhistoria on luotu, id: {{ param }}",
+      "updated": "Hakuhistoria on päivitetty, id: {{ param }}",
+      "deleted": "Hakuhistoria on päivitetty, id: {{ param }}",
       "delete": {
-        "question": "Haluatko varmasti poistaa Search History {{ id }}?"
+        "question": "Haluatko varmasti poistaa hakuhistoria {{ id }}?"
       },
       "detail": {
-        "title": "Search History"
+        "title": "Hakuhistoria"
       },
       "id": "ID",
-      "searchTerm": "Search Term",
-      "user": "User"
+      "searchTerm": "Haku",
+      "user": "Käyttäjä"
     }
   }
 }

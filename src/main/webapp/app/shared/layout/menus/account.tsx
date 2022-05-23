@@ -12,7 +12,11 @@ const accountMenuItemsAuthenticated = () => (
     <MenuItem icon="lock" to="/account/password" data-cy="passwordItem">
       <Translate contentKey="global.menu.account.password">Password</Translate>
     </MenuItem>
-    <MenuItem icon="sign-out-alt" to="/search-history" data-cy="searchhistory">
+    <MenuItem icon="clock-rotate-left" to="/user-search-settings" data-cy="profiili">
+      <Translate contentKey="global.menu.account.profile">User profile</Translate>
+    </MenuItem>
+
+    <MenuItem icon="clock-rotate-left" to="/user-search-history" data-cy="searchhistory">
       <Translate contentKey="global.menu.account.searchistory">Search history</Translate>
     </MenuItem>
     <MenuItem icon="sign-out-alt" to="/logout" data-cy="logout">
@@ -34,9 +38,9 @@ const accountMenuItems = () => (
 
 export const AccountMenu = ({ isAuthenticated = false }) => {
   const account = useAppSelector(state => state.authentication.account);
-
+  const userFullName = account.firstName !== undefined ? account.firstName + ' ' + account.lastName: translate('global.menu.accountMenu');
   return (
-  <NavDropdown name={translate('global.menu.account.main', {username: account.firstName + ' ' + account.lastName})} id="account-menu" data-cy="accountMenu">
+  <NavDropdown name={translate('global.menu.account.main', {username: userFullName})} id="account-menu" data-cy="accountMenu">
     {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}
   </NavDropdown>
 );

@@ -1,4 +1,5 @@
 import React, { useLayoutEffect } from 'react';
+import { Translate, translate } from 'react-jhipster';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { logout } from 'app/shared/reducers/authentication';
@@ -16,7 +17,7 @@ export const Logout = () => {
 
   return (
     <div className="p-5">
-      <h4>Logged out successfully!</h4>
+      <h4><Translate contentKey="logout">Logged out successfully!</Translate></h4>
     </div>
   );
 };
