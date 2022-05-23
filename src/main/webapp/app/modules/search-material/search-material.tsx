@@ -95,7 +95,7 @@ export const SearchMaterial = (props) => {
                 }
               </Input>
             </Col>
-            <Col sm="10" className="filterList">
+            <Col sm="9" className="filterList">
               {searchparams.filters.map(filterItem =>
                 <Badge
                   key={filterItem.codeId}
