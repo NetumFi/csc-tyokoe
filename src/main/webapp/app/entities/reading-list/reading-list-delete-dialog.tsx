@@ -18,9 +18,15 @@ export const ReadingListDeleteDialog = (props: RouteComponentProps<{ id: string 
 
   const readingListEntity = useAppSelector(state => state.readingList.entity);
   const updateSuccess = useAppSelector(state => state.readingList.updateSuccess);
+  const account = useAppSelector(state => state.authentication.account);
 
   const handleClose = () => {
-    props.history.push('/reading-list' + props.location.search);
+    if (account && account.authorities.includes('ROLE_ADMIN')) {
+      props.history.push('/reading-list' + props.location.search);
+    } else {
+      props.history.push('/favorites' + props.location.search);
+    }
+
   };
 
   useEffect(() => {

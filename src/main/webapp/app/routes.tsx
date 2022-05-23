@@ -15,6 +15,7 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 import SearchMaterial from "app/modules/search-material/search-material";
+import Favorites from "app/modules/favorites/favorites";
 
 const loading = <div>loading ...</div>;
 
@@ -42,6 +43,7 @@ const Routes = () => {
         <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
         <PrivateRoute path="/search-material" component={SearchMaterial} />
         <ErrorBoundaryRoute path="/" exact component={Home} />
+        <ErrorBoundaryRoute path="/favorites" component={Favorites}/>
         <PrivateRoute path="/" component={EntitiesRoutes} hasAnyAuthorities={[AUTHORITIES.USER]} />
         <ErrorBoundaryRoute component={PageNotFound} />
       </Switch>

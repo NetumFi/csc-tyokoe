@@ -11,12 +11,16 @@ import { getEntity } from './reading-list.reducer';
 
 export const ReadingListDetail = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
+  const account = useAppSelector(state => state.authentication.account);
 
   useEffect(() => {
     dispatch(getEntity(props.match.params.id));
   }, []);
 
   const readingListEntity = useAppSelector(state => state.readingList.entity);
+
+  const accountComponent =  account && account.authorities.includes('ROLE_ADMIN') ? '/reading-list' : '/favorites'
+
   return (
     <Row>
       <Col md="8">
@@ -49,19 +53,21 @@ export const ReadingListDetail = (props: RouteComponentProps<{ id: string }>) =>
           </dt>
           <dd>{readingListEntity.user ? readingListEntity.user.login : ''}</dd>
         </dl>
-        <Button tag={Link} to="/reading-list" replace color="info" data-cy="entityDetailsBackButton">
+        <Button tag={Link} to={accountComponent} replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>
           </span>
         </Button>
         &nbsp;
+        {account && account.authorities.includes('ROLE_ADMIN') ?
         <Button tag={Link} to={`/reading-list/${readingListEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>
           </span>
-        </Button>
+        </Button> : <></>
+        }
       </Col>
     </Row>
   );

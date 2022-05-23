@@ -10,6 +10,7 @@
       "entities": {
         "main": "Entiteetit",
         "profile": "Profile",
+        "favorites": "Suosikit",
         "searchHistory": "Search History",
         "age": "Age",
         "searchSetting": "Search Setting",

@@ -2,6 +2,7 @@ import React from 'react';
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
 import {AccountMenu, LocaleMenu} from "app/shared/layout/menus";
 import {Translate} from "react-jhipster";
+import Favorites from "app/modules/favorites/favorites";
 
 const UserNavbar = (props: {
   onClick: () => void,
@@ -21,7 +22,6 @@ const UserNavbar = (props: {
       <Collapse isOpen={props.open} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-
             <NavLink href="/">
               <span>
                 <Translate contentKey="global.menu.home">Home</Translate>
@@ -29,7 +29,7 @@ const UserNavbar = (props: {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/user-favourites">
+            <NavLink href="/favorites">
               <span>
                 <Translate contentKey="global.menu.favorites">Favorites</Translate>
               </span>
