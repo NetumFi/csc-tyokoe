@@ -107,12 +107,6 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                 <th className="hand" onClick={sort('searchTerm')}>
                   <Translate contentKey="csc2022App.searchSetting.searchTerm">Search Term</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('role')}>
-                  <Translate contentKey="csc2022App.searchSetting.role">Role</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('age')}>
-                  <Translate contentKey="csc2022App.searchSetting.age">Age</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th>
                   <Translate contentKey="csc2022App.searchSetting.user">User</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -135,13 +129,11 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                     </Button>
                   </td>
                   <td>{searchSetting.searchTerm}</td>
-                  <td>{searchSetting.role}</td>
-                  <td>{searchSetting.age}</td>
                   <td>{searchSetting.user ? searchSetting.user.login : ''}</td>
                   <td>
                     {searchSetting.educationLevelCodeSet ? (
                       <Link to={`/education-level-code-set/${searchSetting.educationLevelCodeSet.id}`}>
-                        {searchSetting.educationLevelCodeSet.id}
+                        {searchSetting.educationLevelCodeSet.labelFi}
                       </Link>
                     ) : (
                       ''
@@ -149,7 +141,7 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                   </td>
                   <td>
                     {searchSetting.ageCodeSet ? (
-                      <Link to={`/age-code-set/${searchSetting.ageCodeSet.id}`}>{searchSetting.ageCodeSet.id}</Link>
+                      <Link to={`/age-code-set/${searchSetting.ageCodeSet.id}`}>{searchSetting.ageCodeSet.labelFi}</Link>
                     ) : (
                       ''
                     )}

@@ -110,20 +110,6 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
                 type="text"
               />
               <ValidatedField
-                label={translate('csc2022App.searchSetting.role')}
-                id="search-setting-role"
-                name="role"
-                data-cy="role"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('csc2022App.searchSetting.age')}
-                id="search-setting-age"
-                name="age"
-                data-cy="age"
-                type="text"
-              />
-              <ValidatedField
                 id="search-setting-user"
                 name="user"
                 data-cy="user"
@@ -150,7 +136,7 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
                 {educationLevelCodeSets
                   ? educationLevelCodeSets.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.labelFi}
                       </option>
                     ))
                   : null}
@@ -166,7 +152,7 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
                 {ageCodeSets
                   ? ageCodeSets.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.labelFi}
                       </option>
                     ))
                   : null}
