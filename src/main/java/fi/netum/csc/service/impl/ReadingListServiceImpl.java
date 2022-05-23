@@ -76,6 +76,11 @@ public class ReadingListServiceImpl implements ReadingListService {
     }
 
     @Override
+    public Page<ReadingListDTO> findAllByUserWithEagerRelationships(User user, Pageable pageable) {
+        return readingListRepository.findAllByUserWithEagerRelationships(user, pageable).map(readingListMapper::toDto);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<ReadingListDTO> findOne(Long id) {
         log.debug("Request to get ReadingList : {}", id);

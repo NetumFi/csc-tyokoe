@@ -28,7 +28,7 @@ const UserNavbar = (props: {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://github.com/reactstrap/reactstrap">
+            <NavLink href="/user-favourites">
               <span>
                 <Translate contentKey="global.menu.favorites">Favorites</Translate>
               </span>

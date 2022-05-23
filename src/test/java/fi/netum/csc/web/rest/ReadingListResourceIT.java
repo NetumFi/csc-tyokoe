@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import fi.netum.csc.IntegrationTest;
 import fi.netum.csc.domain.ReadingList;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.ReadingListRepository;
+import fi.netum.csc.repository.UserRepository;
 import fi.netum.csc.service.ReadingListService;
 import fi.netum.csc.service.dto.ReadingListDTO;
 import fi.netum.csc.service.mapper.ReadingListMapper;
@@ -19,6 +21,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,7 +77,12 @@ class ReadingListResourceIT {
     @Autowired
     private MockMvc restReadingListMockMvc;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private ReadingList readingList;
+
+    private User savedUser;
 
     /**
      * Create an entity for this test.
@@ -81,8 +90,8 @@ class ReadingListResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static ReadingList createEntity(EntityManager em) {
-        ReadingList readingList = new ReadingList().materialId(DEFAULT_MATERIAL_ID).created(DEFAULT_CREATED);
+    public ReadingList createEntity(EntityManager em) {
+        ReadingList readingList = new ReadingList().materialId(DEFAULT_MATERIAL_ID).created(DEFAULT_CREATED).user(savedUser);
         return readingList;
     }
 
@@ -99,7 +108,15 @@ class ReadingListResourceIT {
 
     @BeforeEach
     public void initTest() {
+        User user = new User();
+        user.setLogin("juuso");
+        user.setEmail("junit-juuso@localhost");
+        user.setPassword(RandomStringUtils.random(60));
+        user.setActivated(true);
+        savedUser = userRepository.saveAndFlush(user);
+
         readingList = createEntity(em);
+
     }
 
     @Test
@@ -145,6 +162,7 @@ class ReadingListResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("juuso")
     void getAllReadingLists() throws Exception {
         // Initialize the database
         readingListRepository.saveAndFlush(readingList);

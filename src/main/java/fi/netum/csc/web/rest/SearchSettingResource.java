@@ -1,7 +1,9 @@
 package fi.netum.csc.web.rest;
 
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.SearchSettingRepository;
 import fi.netum.csc.service.SearchSettingService;
+import fi.netum.csc.service.UserService;
 import fi.netum.csc.service.dto.SearchSettingDTO;
 import fi.netum.csc.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -23,6 +25,8 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static fi.netum.csc.security.SecurityUtils.hasCurrentUserAnyOfAuthorities;
+
 /**
  * REST controller for managing {@link fi.netum.csc.domain.SearchSetting}.
  */
@@ -33,6 +37,7 @@ public class SearchSettingResource {
     private final Logger log = LoggerFactory.getLogger(SearchSettingResource.class);
 
     private static final String ENTITY_NAME = "searchSetting";
+    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -41,9 +46,10 @@ public class SearchSettingResource {
 
     private final SearchSettingRepository searchSettingRepository;
 
-    public SearchSettingResource(SearchSettingService searchSettingService, SearchSettingRepository searchSettingRepository) {
+    public SearchSettingResource(SearchSettingService searchSettingService, SearchSettingRepository searchSettingRepository, UserService userService) {
         this.searchSettingService = searchSettingService;
         this.searchSettingRepository = searchSettingRepository;
+        this.userService = userService;
     }
 
     /**
@@ -150,10 +156,23 @@ public class SearchSettingResource {
     ) {
         log.debug("REST request to get a page of SearchSettings");
         Page<SearchSettingDTO> page;
+        boolean isAdminRole  = hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
+        Optional<User> optionalUser = userService.getUserWithAuthorities();
+        User user = optionalUser.get();
         if (eagerload) {
-            page = searchSettingService.findAllWithEagerRelationships(pageable);
+            if( isAdminRole ) {
+                page = searchSettingService.findAllWithEagerRelationships(pageable);
+            }
+            else {
+                page = searchSettingService.findAllByUserWithEagerRelationships(user, pageable);
+            }
         } else {
-            page = searchSettingService.findAll(pageable);
+            if( isAdminRole ) {
+                page = searchSettingService.findAll(pageable);
+            }
+            else {
+                page = searchSettingService.findAllByUser(user, pageable);
+            }
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

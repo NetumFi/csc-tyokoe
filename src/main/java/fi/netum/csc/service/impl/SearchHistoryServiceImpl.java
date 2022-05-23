@@ -93,4 +93,9 @@ public class SearchHistoryServiceImpl implements SearchHistoryService {
 
         return searchHistoryPage.map(searchHistoryMapper::toDto);
     }
+
+    @Override
+    public Page<SearchHistoryDTO> findAllByUserWithEagerRelationships(User user, Pageable pageable) {
+        return searchHistoryRepository.findAllByUserWithEagerRelationships(user, pageable).map(searchHistoryMapper::toDto);
+    }
 }

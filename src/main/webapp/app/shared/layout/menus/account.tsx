@@ -2,6 +2,7 @@ import React from 'react';
 import MenuItem from 'app/shared/layout/menus/menu-item';
 import { Translate, translate } from 'react-jhipster';
 import { NavDropdown } from './menu-components';
+import {useAppSelector} from "app/config/store";
 
 const accountMenuItemsAuthenticated = () => (
   <>
@@ -10,6 +11,9 @@ const accountMenuItemsAuthenticated = () => (
     </MenuItem>
     <MenuItem icon="lock" to="/account/password" data-cy="passwordItem">
       <Translate contentKey="global.menu.account.password">Password</Translate>
+    </MenuItem>
+    <MenuItem icon="sign-out-alt" to="/search-history" data-cy="searchhistory">
+      <Translate contentKey="global.menu.account.searchistory">Search history</Translate>
     </MenuItem>
     <MenuItem icon="sign-out-alt" to="/logout" data-cy="logout">
       <Translate contentKey="global.menu.account.logout">Sign out</Translate>
@@ -28,10 +32,13 @@ const accountMenuItems = () => (
   </>
 );
 
-export const AccountMenu = ({ isAuthenticated = false }) => (
-  <NavDropdown name={translate('global.menu.account.main')} id="account-menu" data-cy="accountMenu">
+export const AccountMenu = ({ isAuthenticated = false }) => {
+  const account = useAppSelector(state => state.authentication.account);
+
+  return (
+  <NavDropdown name={translate('global.menu.account.main', {username: account.firstName + ' ' + account.lastName})} id="account-menu" data-cy="accountMenu">
     {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}
   </NavDropdown>
 );
-
+}
 export default AccountMenu;

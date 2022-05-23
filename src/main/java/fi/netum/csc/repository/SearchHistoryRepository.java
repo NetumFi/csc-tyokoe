@@ -38,13 +38,23 @@ public interface SearchHistoryRepository extends JpaRepository<SearchHistory, Lo
     )
     Page<SearchHistory> findAllWithToOneRelationships(Pageable pageable);
 
+    @Query(
+        value = "select distinct searchHistory from SearchHistory searchHistory left join fetch searchHistory.user where searchHistory.user =:user",
+        countQuery = "select count(distinct searchHistory) from SearchHistory searchHistory where searchHistory.user = :user"
+    )
+    Page<SearchHistory> findAllByUserWithToOneRelationships(@Param("user") Pageable pageable);
+
     @Query("select distinct searchHistory from SearchHistory searchHistory left join fetch searchHistory.user")
     List<SearchHistory> findAllWithToOneRelationships();
 
     @Query("select searchHistory from SearchHistory searchHistory left join fetch searchHistory.user where searchHistory.id =:id")
     Optional<SearchHistory> findOneWithToOneRelationships(@Param("id") Long id);
 
-    @Query(value="select searchHistory from SearchHistory searchHistory left join fetch searchHistory.user where searchHistory.user =:user",
+    @Query(value="select searchHistory from SearchHistory searchHistory where searchHistory.user =:user",
         countQuery = "select count(distinct searchHistory) from SearchHistory searchHistory where searchHistory.user =:user")
     Page<SearchHistory> findAllByUser(@Param("user") User user, Pageable pageable);
+
+    @Query(value="select searchHistory from SearchHistory searchHistory left join fetch searchHistory.user where searchHistory.user =:user",
+        countQuery = "select count(distinct searchHistory) from SearchHistory searchHistory where searchHistory.user =:user")
+    Page<SearchHistory> findAllByUserWithEagerRelationships(@Param("user") User user, Pageable pageable);
 }

@@ -1,5 +1,6 @@
 package fi.netum.csc.web.rest;
 
+import static fi.netum.csc.web.rest.UserTestUtil.createUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
@@ -8,7 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import fi.netum.csc.IntegrationTest;
 import fi.netum.csc.domain.SearchHistory;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.SearchHistoryRepository;
+import fi.netum.csc.repository.UserRepository;
 import fi.netum.csc.service.SearchHistoryService;
 import fi.netum.csc.service.dto.SearchHistoryDTO;
 import fi.netum.csc.service.mapper.SearchHistoryMapper;
@@ -17,6 +20,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
+
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,14 +75,18 @@ class SearchHistoryResourceIT {
 
     private SearchHistory searchHistory;
 
+    @Autowired
+    private UserRepository userRepository;
+    private User savedUser;
+
     /**
      * Create an entity for this test.
      *
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static SearchHistory createEntity(EntityManager em) {
-        SearchHistory searchHistory = new SearchHistory().searchTerm(DEFAULT_SEARCH_TERM);
+    public SearchHistory createEntity(EntityManager em) {
+        SearchHistory searchHistory = new SearchHistory().searchTerm(DEFAULT_SEARCH_TERM).user(savedUser);
         return searchHistory;
     }
 
@@ -94,6 +103,8 @@ class SearchHistoryResourceIT {
 
     @BeforeEach
     public void initTest() {
+        User user = createUser();
+        savedUser = userRepository.save(user);
         searchHistory = createEntity(em);
     }
 
@@ -139,6 +150,7 @@ class SearchHistoryResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("juuso")
     void getAllSearchHistories() throws Exception {
         // Initialize the database
         searchHistoryRepository.saveAndFlush(searchHistory);

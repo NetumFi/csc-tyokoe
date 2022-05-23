@@ -1,5 +1,6 @@
 package fi.netum.csc.web.rest;
 
+import static fi.netum.csc.web.rest.UserTestUtil.createUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
@@ -8,7 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import fi.netum.csc.IntegrationTest;
 import fi.netum.csc.domain.Note;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.NoteRepository;
+import fi.netum.csc.repository.UserRepository;
 import fi.netum.csc.service.NoteService;
 import fi.netum.csc.service.dto.NoteDTO;
 import fi.netum.csc.service.mapper.NoteMapper;
@@ -76,7 +79,11 @@ class NoteResourceIT {
     @Autowired
     private MockMvc restNoteMockMvc;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private Note note;
+    private User savedUser;
 
     /**
      * Create an entity for this test.
@@ -84,8 +91,8 @@ class NoteResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Note createEntity(EntityManager em) {
-        Note note = new Note().content(DEFAULT_CONTENT).materialId(DEFAULT_MATERIAL_ID).created(DEFAULT_CREATED);
+    public Note createEntity(EntityManager em) {
+        Note note = new Note().content(DEFAULT_CONTENT).materialId(DEFAULT_MATERIAL_ID).created(DEFAULT_CREATED).user(savedUser);
         return note;
     }
 
@@ -102,6 +109,9 @@ class NoteResourceIT {
 
     @BeforeEach
     public void initTest() {
+
+        User user = createUser();
+        savedUser =userRepository.save(user);
         note = createEntity(em);
     }
 
@@ -145,6 +155,7 @@ class NoteResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("juuso")
     void getAllNotes() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);

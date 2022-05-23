@@ -1,5 +1,6 @@
 package fi.netum.csc.web.rest;
 
+import static fi.netum.csc.web.rest.UserTestUtil.createUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
@@ -8,7 +9,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import fi.netum.csc.IntegrationTest;
 import fi.netum.csc.domain.SearchSetting;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.SearchSettingRepository;
+import fi.netum.csc.repository.UserRepository;
+import fi.netum.csc.service.SearchHistoryService;
 import fi.netum.csc.service.SearchSettingService;
 import fi.netum.csc.service.dto.SearchSettingDTO;
 import fi.netum.csc.service.mapper.SearchSettingMapper;
@@ -17,6 +21,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
+
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -75,6 +81,9 @@ class SearchSettingResourceIT {
     private MockMvc restSearchSettingMockMvc;
 
     private SearchSetting searchSetting;
+    @Autowired
+    private UserRepository userRepository;
+    private User savedUser;
 
     /**
      * Create an entity for this test.
@@ -82,8 +91,8 @@ class SearchSettingResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static SearchSetting createEntity(EntityManager em) {
-        SearchSetting searchSetting = new SearchSetting().searchTerm(DEFAULT_SEARCH_TERM).role(DEFAULT_ROLE).age(DEFAULT_AGE);
+    public SearchSetting createEntity(EntityManager em) {
+        SearchSetting searchSetting = new SearchSetting().searchTerm(DEFAULT_SEARCH_TERM).role(DEFAULT_ROLE).age(DEFAULT_AGE).user(savedUser);
         return searchSetting;
     }
 
@@ -100,6 +109,9 @@ class SearchSettingResourceIT {
 
     @BeforeEach
     public void initTest() {
+        User user = createUser();
+        savedUser = userRepository.save(user);
+
         searchSetting = createEntity(em);
     }
 
@@ -147,6 +159,7 @@ class SearchSettingResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("juuso")
     void getAllSearchSettings() throws Exception {
         // Initialize the database
         searchSettingRepository.saveAndFlush(searchSetting);
