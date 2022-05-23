@@ -16,7 +16,7 @@ import {handleSearch, addFilter, deleteFilter, setSearchTerms} from "app/modules
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getEntities} from "app/entities/education-level-code-set/education-level-code-set.reducer";
 import {Link} from "react-router-dom";
-import SearchCard from "app/shared/layout/favorites/searc-card";
+import SearchCard from "app/shared/layout/search-card/search-card";
 
 export const SearchMaterial = (props) => {
   const account = useAppSelector(state => state.authentication.account);
