@@ -6,16 +6,33 @@ import { serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 const initialState = {
   searchTerms: null,
   filters: [],
-  loading: false
+  loading: false,
+  material: {hits: null, results: []}
 };
 
 export type SearchState = Readonly<typeof initialState>;
 
 // Actions
-
 export const handleSearch = createAsyncThunk(
   'search-material/fetch-data',
-  async (data: { searchTerms: string; filters: string[] }) => axios.post<any>('api/search', data),
+  async (data: { searchterms: string }, { getState }) => {
+    const {searchTerms, filters} = (getState() as any).searchMaterial as SearchState;
+    // eslint-disable-next-line no-console
+    console.log("#####", data);
+    const postData = {
+      keywords: searchTerms,
+      filters: [{
+        filter: "educationalLevels",
+        values: (filters || []).map(i => i.codeId)
+      }],
+      paging: {
+        from: 0,
+        size: 10,
+        sort: "relevance"
+      }
+    };
+    return axios.post<any>('api/search/do-search', postData);
+  },
   { serializeError: serializeAxiosError }
 );
 
@@ -32,6 +49,9 @@ export const SearchMaterialSlice = createSlice({
     },
     deleteFilter(state, action: PayloadAction<any>) {
       state.filters = state.filters.filter(i => i.codeId !== action.payload.codeId);
+    },
+    setSearchTerms(state, action: PayloadAction<string>) {
+      state.searchTerms = action.payload;
     }
   },
   extraReducers(builder) {
@@ -43,13 +63,14 @@ export const SearchMaterialSlice = createSlice({
         state.loading = false;
         // state.errorMessage = action.error.message;
       })
-      .addCase(handleSearch.fulfilled, (state) => {
+      .addCase(handleSearch.fulfilled, (state, action) => {
           state.loading = false;
+          state.material = action.payload.data;
       });
   },
 });
 
-export const { reset, addFilter, deleteFilter } = SearchMaterialSlice.actions;
+export const { reset, addFilter, deleteFilter, setSearchTerms } = SearchMaterialSlice.actions;
 
 // Reducer
 export default SearchMaterialSlice.reducer;

@@ -1,20 +1,21 @@
 import './search-material.scss';
 
 import React, {useEffect} from 'react';
-import {translate, Translate, ValidatedForm} from 'react-jhipster';
+import {translate, Translate, ValidatedForm, ValidatedField} from 'react-jhipster';
 import {
   Row,
   Col,
   Button,
   Input,
   Badge,
-  Container
+  Container, Table, Card, CardImg, CardBody, CardTitle, CardFooter, CardText
 } from 'reactstrap';
 
 import {useAppDispatch, useAppSelector} from 'app/config/store';
-import {handleSearch, addFilter, deleteFilter} from "app/modules/search-material/search-material.reducer";
+import {handleSearch, addFilter, deleteFilter, setSearchTerms} from "app/modules/search-material/search-material.reducer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getEntities} from "app/entities/education-level-code-set/education-level-code-set.reducer";
+import {Link} from "react-router-dom";
 
 
 export const SearchMaterial = (props) => {
@@ -30,8 +31,10 @@ export const SearchMaterial = (props) => {
 
   const filterItems = educationLevelCodeSets.entities;
 
-  const handleValidSubmit = ({searchterms, filter}) => {
-    dispatch(handleSearch({searchTerms: searchterms, filters: filter}));
+  const handleValidSubmit = (data) => {
+    // eslint-disable-next-line no-console
+    console.log("##### 11111", data);
+    dispatch(handleSearch(data));
   };
 
   const handleAddFilter = (params) => {
@@ -41,6 +44,10 @@ export const SearchMaterial = (props) => {
 
   const handleDeleteFilter = (filter) => {
     dispatch(deleteFilter(filter));
+  }
+
+  const setInputSearchTerms = (value) => {
+    dispatch(setSearchTerms(value.target.value));
   }
 
   const codeLocales = {"fi": "labelFi", "en": "labelEn", "sv": "labelSv"};
@@ -60,11 +67,11 @@ export const SearchMaterial = (props) => {
             <Col sm="10">
               <Input
                 type="text"
-                name="searchterms"
+                name="searchTerms"
                 label={translate('materialsearch.form.searchterms')}
-                id="searchterms"
                 placeholder={translate('materialsearch.form.searchterms-placeholder')}
-                data-cy="searchterms"
+                data-cy="searchTerms"
+                onChange={setInputSearchTerms}
               />
             </Col>
             <Col xs="1">
@@ -121,6 +128,43 @@ export const SearchMaterial = (props) => {
           </Row>
         </ValidatedForm>
         </Container>
+
+      {searchparams.material?.hits && <p>Hakutuloksia {searchparams.material?.hits}</p>}
+      <div className="results">
+        {searchparams.material?.results.map(result => {
+          return (
+            <div key={result.key} className="card">
+              <div className="row no-gutters">
+                <div className="col-auto">
+                  {result.thumbnail?.filepath &&
+                    <img src={result.thumbnail?.filepath} className="img-fluid" alt="img"/>}
+                </div>
+                <div className="col">
+                  <div className="card-block px-2">
+                    <h4 className="card-title">
+                      {result.materialName.filter(m => m.language === currentLocale).map(m => m.materialname)[0]}
+                    </h4>
+                    <p className="card-text">
+                      {result.description.filter(d => d.language === currentLocale).map(d => d.description)[0]}
+                    </p>
+                    <div>
+                      {result.learningResourceTypes.map(t =>
+                        <Badge
+                          key={t.learningresourcetypekey}
+                          color="primary"
+                          pill>
+                          {t.value}
+                        </Badge>)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="card-footer w-100 text-muted">
+                {result.updatedAt}
+              </div>
+            </div>)
+        })}
+      </div>
     </Container>
   );
 };
