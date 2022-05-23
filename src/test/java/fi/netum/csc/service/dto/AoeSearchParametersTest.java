@@ -2,11 +2,9 @@ package fi.netum.csc.service.dto;
 
 import fi.netum.csc.service.dto.aoe.AoeSearchParameters;
 import fi.netum.csc.service.dto.aoe.Filter;
-import fi.netum.csc.service.dto.aoe.MyPageable;
 import fi.netum.csc.service.dto.aoe.Paging;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
