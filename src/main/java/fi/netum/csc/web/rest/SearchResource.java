@@ -61,7 +61,7 @@ public class SearchResource {
      * @return ItemMetadata
      */
     @GetMapping("/get-metadatas/{ids}")
-    public List getMetadatas(@PathVariable ArrayList<String> ids) throws IOException, InterruptedException {
+    public List<ItemMetadata> getMetadatas(@PathVariable ArrayList<String> ids) throws IOException, InterruptedException {
         log.debug("REST request metadata to ids: {}", ids);
         if (ids == null) {
             throw new BadRequestAlertException("Ids cannot be empty", "ids", "empty");
