@@ -1,0 +1,25 @@
+{
+  "csc2022App": {
+    "userResultKeyword": {
+      "home": {
+        "title": "User Result Keywords",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Luo User Result Keyword",
+        "createOrEditLabel": "Luo tai muokkaa User Result Keyword",
+        "notFound": "User Result Keyword ei löytynyt"
+      },
+      "created": "Uusi User Result Keyword on luotu, id: {{ param }}",
+      "updated": "User Result Keyword on päivitetty, id: {{ param }}",
+      "deleted": "User Result Keyword on päivitetty, id: {{ param }}",
+      "delete": {
+        "question": "Haluatko varmasti poistaa User Result Keyword {{ id }}?"
+      },
+      "detail": {
+        "title": "User Result Keyword"
+      },
+      "id": "ID",
+      "resultKeyword": "Result Keyword",
+      "user": "User"
+    }
+  }
+}

@@ -35,6 +35,10 @@ entity ReadingList {
     created Instant
 }
 
+entity UserResultKeyword {
+	resultKeyword String
+}
+
 entity Note {
 	content String
     materialId String
@@ -44,6 +48,7 @@ entity Note {
 relationship OneToOne {
     Profile{user(login)} to User
     SearchSetting{user(login)} to User
+    UserResultKeyword{user(login)} to User
 }
 
 relationship ManyToOne {
@@ -56,5 +61,6 @@ relationship ManyToOne {
 }
 
 use mapstruct, serviceImpl, pagination for *
+
 
 
