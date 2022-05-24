@@ -1,8 +1,10 @@
 package fi.netum.csc.service.impl;
 
+import fi.netum.csc.domain.User;
 import fi.netum.csc.domain.UserResultKeyword;
 import fi.netum.csc.repository.UserResultKeywordRepository;
 import fi.netum.csc.service.UserResultKeywordService;
+import fi.netum.csc.service.dto.SearchSettingDTO;
 import fi.netum.csc.service.dto.UserResultKeywordDTO;
 import fi.netum.csc.service.mapper.UserResultKeywordMapper;
 import java.util.Optional;
@@ -87,5 +89,10 @@ public class UserResultKeywordServiceImpl implements UserResultKeywordService {
     public void delete(Long id) {
         log.debug("Request to delete UserResultKeyword : {}", id);
         userResultKeywordRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<UserResultKeywordDTO> findAllByUser(User user, Pageable pageable) {
+        return userResultKeywordRepository.findAllByUser(user, pageable).map(userResultKeywordMapper::toDto);
     }
 }

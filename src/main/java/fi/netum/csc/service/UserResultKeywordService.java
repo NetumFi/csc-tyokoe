@@ -1,5 +1,7 @@
 package fi.netum.csc.service;
 
+import fi.netum.csc.domain.User;
+import fi.netum.csc.service.dto.SearchSettingDTO;
 import fi.netum.csc.service.dto.UserResultKeywordDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -63,4 +65,6 @@ public interface UserResultKeywordService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<UserResultKeywordDTO> findAllByUser(User user, Pageable pageable);
 }

@@ -51,7 +51,7 @@ public class AoeService {
             .POST(HttpRequest.BodyPublishers.ofString(requestBody))
             .build();
 
-        log.debug("Kutsutaan hakua urlille: " + aoeSearchUrl + ", kutsutta käytetty data: " + requestBody);
+        log.info("Kutsutaan hakua urlille: " + aoeSearchUrl + ", kutsutta käytetty data: " + requestBody);
         apiLogger.info(aoeSearchParameters.toJson());
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -68,7 +68,7 @@ public class AoeService {
             .GET()
             .build();
 
-        log.debug("Kutsutaan metadatahakua urlille: " + aoeMetadataUrl
+        log.info("Kutsutaan metadatahakua urlille: " + aoeMetadataUrl
             + ", kutsutta käytetty id: " + id);
 
         HttpResponse<String> response = httpClient.send(request,
