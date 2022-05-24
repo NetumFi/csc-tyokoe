@@ -120,3 +120,7 @@ jhipster:
 # ===================================================================
 
 # application:
+proxy:
+  aoe:
+    servlet_url: /aoe/*
+    target_url: https://aoe.fi
