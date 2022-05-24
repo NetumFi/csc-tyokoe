@@ -70,6 +70,9 @@ public class SearchResource {
         return ids.stream().map(i -> {
             try {
                 return aoeService.getMetadata(i);
+            } catch (InterruptedException e) {
+                log.warn("Metadatan hakeminen epäonnistui, id: " + i, e);
+                Thread.currentThread().interrupt();
             } catch (Exception e) {
                 log.warn("Metadatan hakeminen epäonnistui, id: " + i, e);
             }
