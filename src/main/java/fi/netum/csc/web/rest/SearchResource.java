@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * SearchResource controller
@@ -50,5 +53,27 @@ public class SearchResource {
         }
 
         return aoeService.getMetadata(id);
+    }
+
+    /**
+     * GET getMetadata for array of ids
+     * @param ids
+     * @return ItemMetadata
+     */
+    @GetMapping("/get-metadatas/{ids}")
+    public List getMetadatas(@PathVariable ArrayList<String> ids) throws IOException, InterruptedException {
+        log.debug("REST request metadata to ids: {}", ids);
+        if (ids == null) {
+            throw new BadRequestAlertException("Ids cannot be empty", "ids", "empty");
+        }
+
+        return ids.stream().map(i -> {
+            try {
+                return aoeService.getMetadata(i);
+            } catch (Exception e) {
+                log.warn("Metadatan hakeminen epäonnistui, id: " + i, e);
+            }
+            return null;
+        }).collect(Collectors.toList());
     }
 }

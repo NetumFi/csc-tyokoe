@@ -53,6 +53,14 @@ class SearchResourceIT {
     }
 
     /**
+     * Test getMetadatas
+     */
+    @Test
+    void testGetMetadatas() throws Exception {
+        restMockMvc.perform(get("/api/search/get-metadatas/{ids}", "100", "200")).andExpect(status().isOk());
+    }
+
+    /**
      * Test doSearch
      */
     @Test
