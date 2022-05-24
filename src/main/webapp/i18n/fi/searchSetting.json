@@ -2,28 +2,28 @@
   "csc2022App": {
     "searchSetting": {
       "home": {
-        "title": "Search Settings",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Luo Search Setting",
-        "createOrEditLabel": "Luo tai muokkaa Search Setting",
-        "notFound": "Search Setting ei löytynyt"
+        "title": "Käyttäjäprofiili",
+        "refreshListLabel": "Päivitä",
+        "createLabel": "Luo käyttäjäprofiili",
+        "createOrEditLabel": "Luo tai muokkaa käyttäjäprofiili",
+        "notFound": "Käyttäjäprofiilia ei löydy"
       },
-      "created": "Uusi Search Setting on luotu, id: {{ param }}",
-      "updated": "Search Setting on päivitetty, id: {{ param }}",
-      "deleted": "Search Setting on päivitetty, id: {{ param }}",
+      "created": "Uusi käyttäjäprofiil on luotu, id: {{ param }}",
+      "updated": "Käyttäjäprofiili on päivitetty, id: {{ param }}",
+      "deleted": "Käyttäjäprofiili on päivitetty, id: {{ param }}",
       "delete": {
-        "question": "Haluatko varmasti poistaa Search Setting {{ id }}?"
+        "question": "Haluatko varmasti poistaa käyttäjäprofiilim  {{ id }}?"
       },
       "detail": {
         "title": "Search Setting"
       },
       "id": "ID",
-      "searchTerm": "Search Term",
+      "searchTerm": "Hakusanat",
       "role": "Role",
       "age": "Age",
-      "user": "User",
-      "educationLevelCodeSet": "Education Level Code Set",
-      "ageCodeSet": "Age Code Set"
+      "user": "Käyttäjä",
+      "educationLevelCodeSet": "Koulutustaso",
+      "ageCodeSet": "Ikäryhmä"
     }
   }
 }

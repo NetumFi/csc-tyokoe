@@ -9,19 +9,19 @@ import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.cons
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { ISearchSetting } from 'app/shared/model/search-setting.model';
-import { getEntities } from './search-setting.reducer';
+import { ISearchHistory } from 'app/shared/model/search-history.model';
+import { getEntities } from './search-history.reducer';
 
-export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
+export const UserSearchHistory = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(props.location, ITEMS_PER_PAGE, 'id'), props.location.search)
   );
 
-  const searchSettingList = useAppSelector(state => state.searchSetting.entities);
-  const loading = useAppSelector(state => state.searchSetting.loading);
-  const totalItems = useAppSelector(state => state.searchSetting.totalItems);
+  const searchHistoryList = useAppSelector(state => state.searchHistory.entities);
+  const loading = useAppSelector(state => state.searchHistory.loading);
+  const totalItems = useAppSelector(state => state.searchHistory.totalItems);
 
   const getAllEntities = () => {
     dispatch(
@@ -82,73 +82,41 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
 
   return (
     <div>
-      <h2 id="search-setting-heading" data-cy="SearchSettingHeading">
-        <Translate contentKey="csc2022App.searchSetting.home.title">Search Settings</Translate>
+      <h2 id="search-history-heading" data-cy="SearchHistoryHeading">
+        <Translate contentKey="csc2022App.searchHistory.home.title">Search Histories</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="csc2022App.searchSetting.home.refreshListLabel">Refresh List</Translate>
+            <Translate contentKey="csc2022App.searchHistory.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/search-setting/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="csc2022App.searchSetting.home.createLabel">Create new Search Setting</Translate>
-          </Link>
         </div>
       </h2>
       <div className="table-responsive">
-        {searchSettingList && searchSettingList.length > 0 ? (
+        {searchHistoryList && searchHistoryList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="csc2022App.searchSetting.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="csc2022App.searchHistory.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('searchTerm')}>
-                  <Translate contentKey="csc2022App.searchSetting.searchTerm">Search Term</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="csc2022App.searchSetting.user">User</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="csc2022App.searchSetting.educationLevelCodeSet">Education Level Code Set</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="csc2022App.searchSetting.ageCodeSet">Age Code Set</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="csc2022App.searchHistory.searchTerm">Search Term</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {searchSettingList.map((searchSetting, i) => (
+              {searchHistoryList.map((searchHistory, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/search-setting/${searchSetting.id}`} color="link" size="sm">
-                      {searchSetting.id}
+                    <Button tag={Link} to={`/search-history/${searchHistory.id}`} color="link" size="sm">
+                      {searchHistory.id}
                     </Button>
                   </td>
-                  <td>{searchSetting.searchTerm}</td>
-                  <td>{searchSetting.user ? searchSetting.user.login : ''}</td>
-                  <td>
-                    {searchSetting.educationLevelCodeSet ? (
-                      <Link to={`/education-level-code-set/${searchSetting.educationLevelCodeSet.id}`}>
-                        {searchSetting.educationLevelCodeSet.labelFi}
-                      </Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {searchSetting.ageCodeSet ? (
-                      <Link to={`/age-code-set/${searchSetting.ageCodeSet.id}`}>{searchSetting.ageCodeSet.labelFi}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
+                  <td>{searchHistory.searchTerm}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/search-setting/${searchSetting.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/search-history/${searchHistory.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
@@ -156,7 +124,7 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/search-setting/${searchSetting.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/search-history/${searchHistory.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                         data-cy="entityEditButton"
@@ -168,7 +136,7 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/search-setting/${searchSetting.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/search-history/${searchHistory.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
                         size="sm"
                         data-cy="entityDeleteButton"
@@ -187,13 +155,13 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
         ) : (
           !loading && (
             <div className="alert alert-warning">
-              <Translate contentKey="csc2022App.searchSetting.home.notFound">No Search Settings found</Translate>
+              <Translate contentKey="csc2022App.searchHistory.home.notFound">No Search Histories found</Translate>
             </div>
           )
         )}
       </div>
       {totalItems ? (
-        <div className={searchSettingList && searchSettingList.length > 0 ? '' : 'd-none'}>
+        <div className={searchHistoryList && searchHistoryList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
             <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
           </div>
@@ -214,4 +182,4 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
   );
 };
 
-export default SearchSetting;
+export default UserSearchHistory;

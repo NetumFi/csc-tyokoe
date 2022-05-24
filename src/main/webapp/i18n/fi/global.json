@@ -28,7 +28,10 @@
         "sessions": "Sessiot",
         "login": "Kirjaudu sisään",
         "logout": "Kirjaudu ulos",
-        "register": "Rekisteröidy"
+        "register": "Rekisteröidy",
+        "searchistory": "Hakuhistoria",
+        "profile": "Profiili"
+
       },
       "admin": {
         "main": "Hallinto",

@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { ISearchSetting } from 'app/shared/model/search-setting.model';
 import { getEntities } from './search-setting.reducer';
 
-export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
+export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
   const [paginationState, setPaginationState] = useState(
@@ -214,4 +214,4 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
   );
 };
 
-export default SearchSetting;
+export default UserSearchSetting;
