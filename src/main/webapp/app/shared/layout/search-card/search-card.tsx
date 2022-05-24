@@ -15,7 +15,7 @@ const SearchCard = (props: {
     <div className="row no-gutters">
       <div className="col-auto">
         {props.result.thumbnail?.filepath &&
-          <img src={props.result.thumbnail?.filepath} className="img-fluid" alt={props.result.id.toString() + "aoe kuva"} />}
+          <img src={props.result.thumbnail?.filepath.replace(/^https:[/][/]aoe.fi/, '/aoe')} className="img-fluid" alt="img"/>}
       </div>
       <div className="col">
         <div className="card-block px-2">
@@ -33,6 +33,7 @@ const SearchCard = (props: {
               <Badge
                 className={'cust_Badge'}
                 key={t.learningresourcetypekey}
+                color="secondery"
                 pill>
                 {t.value}
               </Badge>)}
