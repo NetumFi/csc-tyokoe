@@ -37,7 +37,6 @@ public class ReadingListResource {
     private final Logger log = LoggerFactory.getLogger(ReadingListResource.class);
 
     private static final String ENTITY_NAME = "readingList";
-    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -45,11 +44,12 @@ public class ReadingListResource {
     private final ReadingListService readingListService;
 
     private final ReadingListRepository readingListRepository;
+    private SecurityUtilComponent securityUtilComponent;
 
-    public ReadingListResource(ReadingListService readingListService, ReadingListRepository readingListRepository, UserService userService) {
+    public ReadingListResource(ReadingListService readingListService, ReadingListRepository readingListRepository, SecurityUtilComponent securityUtilComponent) {
         this.readingListService = readingListService;
         this.readingListRepository = readingListRepository;
-        this.userService = userService;
+        this.securityUtilComponent = securityUtilComponent;
     }
 
     /**
@@ -65,6 +65,9 @@ public class ReadingListResource {
         if (readingListDTO.getId() != null) {
             throw new BadRequestAlertException("A new readingList cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        readingListDTO = (ReadingListDTO) securityUtilComponent.verifyOwner(readingListDTO);
+
         ReadingListDTO result = readingListService.save(readingListDTO);
         return ResponseEntity
             .created(new URI("/api/reading-lists/" + result.getId()))
@@ -98,6 +101,8 @@ public class ReadingListResource {
         if (!readingListRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
+
+        readingListDTO = (ReadingListDTO) securityUtilComponent.verifyOwner(readingListDTO);
 
         ReadingListDTO result = readingListService.update(readingListDTO);
         return ResponseEntity
@@ -156,10 +161,8 @@ public class ReadingListResource {
     ) {
         log.debug("REST request to get a page of ReadingLists");
 
-        List<String> authorities = this.userService.getAuthorities();
-        Optional<User> optionalUser = this.userService.getUserWithAuthorities();
         Page<ReadingListDTO> page;
-        User user  = optionalUser.get();
+        User user  = securityUtilComponent.getLoggedUser();
         boolean isAdminRole  = hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
 
         if (eagerload) {

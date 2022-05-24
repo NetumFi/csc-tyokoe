@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * A DTO for the {@link fi.netum.csc.domain.SearchHistory} entity.
  */
-public class SearchHistoryDTO implements Serializable {
+public class SearchHistoryDTO implements Serializable, UserRelatable {
 
     private Long id;
 
