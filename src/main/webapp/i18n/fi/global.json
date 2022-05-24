@@ -152,6 +152,9 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
+  "search": {
+    "cardseacrhresult": "hakutuloksia"
+  },
   "footer": {
     "accessibility": "Saavutettavuusseloste",
     "registry-scan": "Rekisteriseloste"
