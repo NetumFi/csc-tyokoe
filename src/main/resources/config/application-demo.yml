@@ -27,10 +27,6 @@ jhipster:
       host: logstash
       port: 5000
 
-  security:
-    content-security-policy: "default-src 'none'; connect-src 'self'; font-src https://fonts.gstatic.com; img-src 'self' https://aoe.fi; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
-
-
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
