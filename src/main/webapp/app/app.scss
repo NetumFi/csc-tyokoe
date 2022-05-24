@@ -25,6 +25,9 @@ a {
 .app-container {
   box-sizing: border-box;
   .view-container {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
     width: 100%;
     height: calc(100% - 40px);
     overflow-y: auto;
@@ -310,4 +313,77 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   width: 1% !important;
 }
 
+
+.cust-footer {
+  margin-top: 80px;
+}
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+/* ==========================================================================
+custom general styles
+========================================================================== */
+.cus-button {
+  margin: 5px;
+  min-width: 80px;
+  border-radius: 5px;
+}
+/* ==========================================================================
+Favorites styles
+========================================================================== */
+.fav-level1{
+  margin: auto;
+}
+
+/* ==========================================================================
+Favorites Card style
+========================================================================== */
+
+.fav-icon-heart {
+  float: end;
+}
+.fav-button {
+  margin: 5px;
+}
+
+/* ==========================================================================
+Seach Card style
+========================================================================== */
+.cust_Badge {
+  padding: 0.5em 1em;
+  margin: 1em 0.5em;
+}
+
+.cust_card-title {
+  text-transform: none;
+  color: #3A7A10;
+}
+
+.date_text {
+  text-align:right;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .example {background: red;}
+}
+
+/* Small devices (portrait tablets and large phones, between 600px and 767px) */
+@media only screen and (min-width: 600px) and (max-width: 767px){
+  .example {background: green;}
+}
+
+/* Medium devices (landscape tablets, between 768px and 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px){
+  .example {background: blue;}
+}
+
+/* Large devices (laptops/desktops,between 992px and 1199px) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .example {background: orange;}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .example {background: pink;}
+}

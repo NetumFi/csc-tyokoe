@@ -5,9 +5,11 @@
     "menu": {
       "home": "Home",
       "favorites": "Favorites",
+
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "favorites": "Favorites",
         "profile": "Profile",
         "searchHistory": "Search History",
         "age": "Age",
@@ -146,5 +148,8 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "This is your footer"
+  "footer": {
+    "accessibility": "Accessibility",
+    "registry-scan": "Registry Scan"
+  }
 }

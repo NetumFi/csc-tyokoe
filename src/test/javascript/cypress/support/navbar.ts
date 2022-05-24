@@ -40,6 +40,9 @@ Cypress.Commands.add('clickOnAdminMenuItem', (item: string) => {
 Cypress.Commands.add('clickOnEntityMenuItem', (entityName: string) => {
   return cy.get(navbarSelector).get(entityItemSelector).click().get(`.dropdown-item[href="/${entityName}"]`).click();
 });
+Cypress.Commands.add('clickOnEntityMenuItemMulti', (entityName: string) => {
+  return cy.get(navbarSelector).get(entityItemSelector).click().get(`.dropdown-item[href="/${entityName}"]`).eq(0).click();
+});
 
 declare global {
   namespace Cypress {
@@ -51,6 +54,7 @@ declare global {
       clickOnPasswordItem(): Cypress.Chainable;
       clickOnAdminMenuItem(item: string): Cypress.Chainable;
       clickOnEntityMenuItem(entityName: string): Cypress.Chainable;
+      clickOnEntityMenuItemMulti(entityName: string): Cypress.Chainable;
     }
   }
 }
