@@ -6,11 +6,13 @@ import fi.netum.csc.service.SearchSettingService;
 import fi.netum.csc.service.UserService;
 import fi.netum.csc.service.dto.SearchSettingDTO;
 import fi.netum.csc.web.rest.errors.BadRequestAlertException;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,19 +39,18 @@ public class SearchSettingResource {
     private final Logger log = LoggerFactory.getLogger(SearchSettingResource.class);
 
     private static final String ENTITY_NAME = "searchSetting";
-    private final UserService userService;
-
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final SearchSettingService searchSettingService;
 
     private final SearchSettingRepository searchSettingRepository;
+    private SecurityUtilComponent securityUtilComponent;
 
-    public SearchSettingResource(SearchSettingService searchSettingService, SearchSettingRepository searchSettingRepository, UserService userService) {
+    public SearchSettingResource(SearchSettingService searchSettingService, SearchSettingRepository searchSettingRepository, SecurityUtilComponent securityUtilComponent) {
         this.searchSettingService = searchSettingService;
         this.searchSettingRepository = searchSettingRepository;
-        this.userService = userService;
+        this.securityUtilComponent = securityUtilComponent;
     }
 
     /**
@@ -65,6 +66,9 @@ public class SearchSettingResource {
         if (searchSettingDTO.getId() != null) {
             throw new BadRequestAlertException("A new searchSetting cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        searchSettingDTO = (SearchSettingDTO) securityUtilComponent.verifyOwner(searchSettingDTO);
+
         SearchSettingDTO result = searchSettingService.save(searchSettingDTO);
         return ResponseEntity
             .created(new URI("/api/search-settings/" + result.getId()))
@@ -75,7 +79,7 @@ public class SearchSettingResource {
     /**
      * {@code PUT  /search-settings/:id} : Updates an existing searchSetting.
      *
-     * @param id the id of the searchSettingDTO to save.
+     * @param id               the id of the searchSettingDTO to save.
      * @param searchSettingDTO the searchSettingDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated searchSettingDTO,
      * or with status {@code 400 (Bad Request)} if the searchSettingDTO is not valid,
@@ -99,6 +103,8 @@ public class SearchSettingResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        searchSettingDTO = (SearchSettingDTO) securityUtilComponent.verifyOwner(searchSettingDTO);
+
         SearchSettingDTO result = searchSettingService.update(searchSettingDTO);
         return ResponseEntity
             .ok()
@@ -109,7 +115,7 @@ public class SearchSettingResource {
     /**
      * {@code PATCH  /search-settings/:id} : Partial updates given fields of an existing searchSetting, field will ignore if it is null
      *
-     * @param id the id of the searchSettingDTO to save.
+     * @param id               the id of the searchSettingDTO to save.
      * @param searchSettingDTO the searchSettingDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated searchSettingDTO,
      * or with status {@code 400 (Bad Request)} if the searchSettingDTO is not valid,
@@ -117,7 +123,7 @@ public class SearchSettingResource {
      * or with status {@code 500 (Internal Server Error)} if the searchSettingDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/search-settings/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/search-settings/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<SearchSettingDTO> partialUpdateSearchSetting(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody SearchSettingDTO searchSettingDTO
@@ -145,7 +151,7 @@ public class SearchSettingResource {
     /**
      * {@code GET  /search-settings} : get all the searchSettings.
      *
-     * @param pageable the pagination information.
+     * @param pageable  the pagination information.
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of searchSettings in body.
      */
@@ -156,21 +162,18 @@ public class SearchSettingResource {
     ) {
         log.debug("REST request to get a page of SearchSettings");
         Page<SearchSettingDTO> page;
-        boolean isAdminRole  = hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
-        Optional<User> optionalUser = userService.getUserWithAuthorities();
-        User user = optionalUser.get();
+        boolean isAdminRole = hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
+        User user = securityUtilComponent.getLoggedUser();
         if (eagerload) {
-            if( isAdminRole ) {
+            if (isAdminRole) {
                 page = searchSettingService.findAllWithEagerRelationships(pageable);
-            }
-            else {
+            } else {
                 page = searchSettingService.findAllByUserWithEagerRelationships(user, pageable);
             }
         } else {
-            if( isAdminRole ) {
+            if (isAdminRole) {
                 page = searchSettingService.findAll(pageable);
-            }
-            else {
+            } else {
                 page = searchSettingService.findAllByUser(user, pageable);
             }
         }

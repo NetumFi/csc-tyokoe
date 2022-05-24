@@ -37,7 +37,6 @@ public class SearchHistoryResource {
     private final Logger log = LoggerFactory.getLogger(SearchHistoryResource.class);
 
     private static final String ENTITY_NAME = "searchHistory";
-    private final UserService userService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -45,11 +44,12 @@ public class SearchHistoryResource {
     private final SearchHistoryService searchHistoryService;
 
     private final SearchHistoryRepository searchHistoryRepository;
+    private SecurityUtilComponent securityUtilComponent;
 
-    public SearchHistoryResource(SearchHistoryService searchHistoryService, SearchHistoryRepository searchHistoryRepository, UserService userService) {
+    public SearchHistoryResource(SearchHistoryService searchHistoryService, SearchHistoryRepository searchHistoryRepository, SecurityUtilComponent securityUtilComponent) {
         this.searchHistoryService = searchHistoryService;
         this.searchHistoryRepository = searchHistoryRepository;
-        this.userService = userService;
+        this.securityUtilComponent = securityUtilComponent;
     }
 
     /**
@@ -65,6 +65,7 @@ public class SearchHistoryResource {
         if (searchHistoryDTO.getId() != null) {
             throw new BadRequestAlertException("A new searchHistory cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        searchHistoryDTO = (SearchHistoryDTO) securityUtilComponent.verifyOwner(searchHistoryDTO);
         SearchHistoryDTO result = searchHistoryService.save(searchHistoryDTO);
         return ResponseEntity
             .created(new URI("/api/search-histories/" + result.getId()))
@@ -98,7 +99,7 @@ public class SearchHistoryResource {
         if (!searchHistoryRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
+        searchHistoryDTO = (SearchHistoryDTO) securityUtilComponent.verifyOwner(searchHistoryDTO);
         SearchHistoryDTO result = searchHistoryService.update(searchHistoryDTO);
         return ResponseEntity
             .ok()
@@ -156,9 +157,8 @@ public class SearchHistoryResource {
     ) {
         log.debug("REST request to get a page of SearchHistories");
         Page<SearchHistoryDTO> page;
-        boolean isAdminRole  = hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
-        Optional<User> optionalUser = userService.getUserWithAuthorities();
-        User user = optionalUser.get();
+        boolean isAdminRole = hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
+        User user = securityUtilComponent.getLoggedUser();
 
 
         if (eagerload) {

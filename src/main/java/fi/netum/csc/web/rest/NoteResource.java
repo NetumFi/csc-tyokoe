@@ -5,6 +5,7 @@ import fi.netum.csc.repository.NoteRepository;
 import fi.netum.csc.service.NoteService;
 import fi.netum.csc.service.UserService;
 import fi.netum.csc.service.dto.NoteDTO;
+import fi.netum.csc.service.dto.UserDTO;
 import fi.netum.csc.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,10 +48,12 @@ public class NoteResource {
 
     private final UserService userService;
 
-    public NoteResource(NoteService noteService, NoteRepository noteRepository, UserService userService) {
+    private final SecurityUtilComponent securityUtilComponent;
+    public NoteResource(NoteService noteService, NoteRepository noteRepository, UserService userService, SecurityUtilComponent securityUtilComponent) {
         this.noteService = noteService;
         this.noteRepository = noteRepository;
         this.userService = userService;
+        this.securityUtilComponent = securityUtilComponent;
     }
 
     /**
@@ -66,6 +69,13 @@ public class NoteResource {
         if (noteDTO.getId() != null) {
             throw new BadRequestAlertException("A new note cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        // If user is not member of admin, then force the user to current user.
+        if( !hasCurrentUserAnyOfAuthorities("ROLE_ADMIN") ) {
+            UserDTO userDto = securityUtilComponent.getUserDTO();
+            noteDTO.setUser(userDto);
+        }
+
         NoteDTO result = noteService.save(noteDTO);
         return ResponseEntity
             .created(new URI("/api/notes/" + result.getId()))
@@ -97,6 +107,12 @@ public class NoteResource {
         if (!noteRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
+
+        if( !hasCurrentUserAnyOfAuthorities("ROLE_ADMIN") ) {
+            UserDTO userDto = securityUtilComponent.getUserDTO();
+            noteDTO.setUser(userDto);
+        }
+
 
         NoteDTO result = noteService.update(noteDTO);
         return ResponseEntity
@@ -156,21 +172,21 @@ public class NoteResource {
         log.debug("REST request to get a page of Notes");
         Page<NoteDTO> page;
         boolean isAdminRole  = hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
-        Optional<User> optionalUser = userService.getUserWithAuthorities();
+        User user = this.securityUtilComponent.getLoggedUser();
 
         if (eagerload) {
             if( isAdminRole ) {
                 page = noteService.findAllWithEagerRelationships(pageable);
             }
             else {
-                page = noteService.findAllByUserWithEagerRelationships(optionalUser.get(), pageable);
+                page = noteService.findAllByUserWithEagerRelationships(user, pageable);
             }
         } else {
             if( isAdminRole ) {
                 page = noteService.findAll(pageable);
             }
             else {
-                page = noteService.findAllByUser(optionalUser.get(), pageable);
+                page = noteService.findAllByUser(user, pageable);
             }
 
         }

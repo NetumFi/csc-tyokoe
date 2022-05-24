@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * A DTO for the {@link fi.netum.csc.domain.ReadingList} entity.
  */
-public class ReadingListDTO implements Serializable {
+public class ReadingListDTO implements Serializable, UserRelatable {
 
     private Long id;
 
