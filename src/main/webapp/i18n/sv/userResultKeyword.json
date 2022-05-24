@@ -1,0 +1,25 @@
+{
+  "csc2022App": {
+    "userResultKeyword": {
+      "home": {
+        "title": "User Result Keywords",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Skapa en ny User Result Keyword",
+        "createOrEditLabel": "Skapa eller ändra en User Result Keyword",
+        "notFound": "No User Result Keywords found"
+      },
+      "created": "En ny User Result Keyword är skapad med id {{ param }}",
+      "updated": "En User Result Keyword är uppdaterad med id  {{ param }}",
+      "deleted": "En User Result Keyword är borttagen med id  {{ param }}",
+      "delete": {
+        "question": "Är du säker på att du vill ta bort User Result Keyword {{ id }}?"
+      },
+      "detail": {
+        "title": "User Result Keyword"
+      },
+      "id": "ID",
+      "resultKeyword": "Result Keyword",
+      "user": "User"
+    }
+  }
+}

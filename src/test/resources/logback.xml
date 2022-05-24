@@ -4,12 +4,12 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <logger name="fi.netum.csc" level="INFO"/>
+    <logger name="fi.netum.csc" level="DEBUG"/>
 
     <logger name="tech.jhipster" level="WARN"/>
 
     <!-- https://www.testcontainers.org/supported_docker_environment/logging_config/ -->
-    <logger name="org.testcontainers" level="INFO"/>
+    <logger name="org.testcontainers" level="DEBUG"/>
     <logger name="com.github.dockerjava" level="WARN"/>
 
     <logger name="javax.activation" level="WARN"/>
