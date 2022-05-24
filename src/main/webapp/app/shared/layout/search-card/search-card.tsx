@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Badge} from "reactstrap";
 import {TextFormat} from "react-jhipster";
 import {APP_SUOMI_DATE_FORMAT} from "app/config/constants";
 import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const SearchCard = (props: {
   result: any,
@@ -10,6 +11,12 @@ const SearchCard = (props: {
   lang: (d) => string,
   description: (d) => string}) => {
   const aoeurl = 'https://aoe.fi/#/materiaali/';
+
+  const [favorite, setFavorite] = useState(false);
+
+  function handleFavorite(e: boolean) {
+    setFavorite(!e)
+  }
 
   return <div className="card">
     <div className="row no-gutters">
@@ -19,11 +26,21 @@ const SearchCard = (props: {
       </div>
       <div className="col">
         <div className="card-block px-2">
+          <div >
+            <FontAwesomeIcon icon={'heart'}
+                             fixedWidth={true}
+                             size="2x"
+                             className={'fav-icon-heart'}
+                             color={ favorite ? '#3A7A10' : '#D3D3D3'}
+                             onClick={() => handleFavorite(favorite)}/>
+          </div>
+          <div className={'search-link-title'}>
             <Link to={{ pathname: aoeurl + props.result.id}} target="_blank" className={'cust-link'}>
               <h4 className="cust_card-title">
                 {props.result.materialName.filter(m => m.language === props.lang).map(x => x.materialname)[0]}
               </h4>
             </Link>
+          </div>
 
           <p className="card-text">
             {props.result.description.filter(d => d.language === props.lang).map(d => d.description)[0]}

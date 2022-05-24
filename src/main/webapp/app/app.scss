@@ -353,7 +353,7 @@ Favorites Card style
 ========================================================================== */
 
 .fav-icon-heart {
-  float: end;
+  float: right;
 }
 .fav-button {
   margin: 5px;
@@ -377,6 +377,7 @@ Seach Card style
 
 .cust-link {
   text-decoration: none;
+  width: 90%;
 }
 
 .cust-link:hover {
