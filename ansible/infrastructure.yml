@@ -124,6 +124,20 @@
         src: 'resources/logstash.conf.j2'
         dest: "{{ infradir }}/logstash.conf"
         mode: '0644'
+    - name: "Copy filebeat.docker.yml"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: "resources/filebeat.docker.yml"
+        dest: "{{ infradir }}"
+        mode: '0644'
+    - name: "Copy metricbeat.docker.yml"
+      copy:
+        src: "resources/metricbeat.docker.yml"
+        dest: "{{ infradir }}"
+        mode: '0644'
+        group: tyokoe
+        owner: root
 
 # Prometheus & Grafana
     - name: "Create prometheus.yml"
@@ -226,6 +240,9 @@
         name: promote
         state: started
         enabled: yes
+
+# docker run --network host docker.elastic.co/beats/filebeat:8.2.0 setup   -E setup.kibana.host=localhost:5601 -E output.elasticsearch.hosts=["localhost:9200"] -E output.elasticsearch.username=elastic -E 'output.elasticsearch.password=katatoninen kehittäjä'
+# docker run --network host docker.elastic.co/beats/metricbeat:8.2.0 setup -E setup.kibana.host=localhost:5601 -E output.elasticsearch.hosts=["localhost:9200"] -E output.elasticsearch.username=elastic -E 'output.elasticsearch.password=katatoninen kehittäjä'
 
   handlers:
     - name: "Restart nginx"

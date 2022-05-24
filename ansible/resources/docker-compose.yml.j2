@@ -24,6 +24,10 @@ services:
       - ./ssl.pem:/ssl/ssl.pem
     networks:
       - infra
+#    labels:
+#      - co.elastic.logs/module=nginx
+#      - co.elastic.logs/fileset.stdout=access
+#      - co.elastic.logs/fileset.stderr=error
 
   jenkins:
     image: jenkins/jenkins
@@ -111,6 +115,40 @@ services:
       - KIBANA_SYSTEM_PASSWORD={{ monitoring.kibana.system_password }}
       - SERVER_BASEPATH=/kibana
       - SERVER_PUBLICBASEURL=https://{{ domain }}/kibana
+    networks:
+      - infra
+    depends_on:
+      - elasticsearch
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.2.0
+    command: filebeat -e --strict.perms=false -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    user: root
+    volumes:
+      - ./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD={{ monitoring.elastic.password }}
+    networks:
+      - infra
+    depends_on:
+      - elasticsearch
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:8.2.0
+    user: root
+    volumes:
+      - ./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro
+    command: metricbeat -e -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    environment:
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD={{ monitoring.elastic.password }}
     networks:
       - infra
     depends_on:

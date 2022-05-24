@@ -100,5 +100,9 @@ http {
         proxy_set_header Host $http_host;
         proxy_pass http://grafana:3000/;
     }
+    location /aoe {
+        proxy_pass https://aoe.fi/;
+        proxy_set_header Host aoe.fi;
+    }
   }
 }
