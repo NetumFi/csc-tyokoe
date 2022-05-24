@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Link, RouteComponentProps} from "react-router-dom";
+import {RouteComponentProps} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {overridePaginationStateWithQueryParams} from "app/shared/util/entity-utils";
-import {getSortState, JhiItemCount, JhiPagination, TextFormat, Translate} from "react-jhipster";
+import {getSortState, JhiItemCount, JhiPagination, Translate} from "react-jhipster";
 import {ASC, DESC, ITEMS_PER_PAGE, SORT} from "app/shared/util/pagination.constants";
 import {getEntities} from "app/entities/reading-list/reading-list.reducer";
-import {Button, Table} from "reactstrap";
+import {getEntities as getFavoritesEntities} from "app/modules/favorites/favorites.reducer"
+import {Button} from "reactstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {APP_SUOMI_DATE_FORMAT} from "app/config/constants";
+import SearchCard from "app/shared/layout/search-card/search-card";
 
 const FavoritesCardList = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,8 @@ const FavoritesCardList = (props: RouteComponentProps<{ url: string }>) => {
   const readingListList = useAppSelector(state => state.readingList.entities);
   const loading = useAppSelector(state => state.readingList.loading);
   const totalItems = useAppSelector(state => state.readingList.totalItems);
+  const favoriteListResult = useAppSelector(state => state.FavoritesList)
+  const currentLocale = useAppSelector(state => state.locale.currentLocale);
 
   const getAllEntities = () => {
     dispatch(
@@ -26,8 +29,11 @@ const FavoritesCardList = (props: RouteComponentProps<{ url: string }>) => {
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
-      })
-    );
+      }))
+      .then((x: any) => x.payload.data.map(y => y.materialId))
+      .then(z => dispatch(getFavoritesEntities(z)))
+
+
   };
 
   const sortEntities = () => {
@@ -75,69 +81,37 @@ const FavoritesCardList = (props: RouteComponentProps<{ url: string }>) => {
     sortEntities();
   };
 
-  const { match } = props;
+  const {match} = props;
 
   return (
     <div>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="csc2022App.readingList.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-        </div>
+      <div className="d-flex justify-content-end">
+        <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+          <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
+          <Translate contentKey="csc2022App.readingList.home.refreshListLabel">Refresh List</Translate>
+        </Button>
+      </div>
+      <div>
 
-      <div className="table-responsive">
-        {readingListList && readingListList.length > 0 ? (
-          <Table responsive>
-            <thead>
-            </thead>
-            <tbody>
-            {readingListList.map((readingList, i) => (
-              <tr key={`entity-${i}`} data-cy="entityTable">
+        {
+          <div className="results">
+            {favoriteListResult && favoriteListResult?.entities.length > 0 && favoriteListResult?.entities.map(result => {
+              return (
+                <SearchCard key={result.id}
+                            result={result}
+                            readingListList={readingListList}
+                            component={'favorites'}
+                            handleSyncList={handleSyncList}
+                            lang={currentLocale}/>)
+            })}
+          </div>}
 
-                <Button tag={Link} to={`/reading-list/${readingList.id}`} color="link" size="md">
-                  <td>{readingList.materialId}</td>
-                </Button>
-
-                <td>{readingList.created ? <TextFormat type="date" value={readingList.created} format={APP_SUOMI_DATE_FORMAT} /> : null}</td>
-                <td className="text-end">
-                  <div>
-                    <Button className={"cus-button"} tag={Link} to={`/reading-list/${readingList.id}`} color="primary" size="sm" data-cy="entityDetailsButton">
-                      <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                    </Button>
-
-                    <Button
-                      tag={Link}
-                      to={`/reading-list/${readingList.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                      color="danger"
-                      size="sm"
-                      className={"cus-button"}
-                      data-cy="entityDeleteButton"
-                    >
-                      <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            </tbody>
-          </Table>
-        ) : (
-          !loading && (
-            <div className="alert alert-warning">
-              <Translate contentKey="csc2022App.readingList.home.notFound">No Reading Lists found</Translate>
-            </div>
-          )
-        )}
       </div>
       {totalItems ? (
         <div className={readingListList && readingListList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
+            <JhiItemCount page={paginationState.activePage} total={totalItems}
+                          itemsPerPage={paginationState.itemsPerPage} i18nEnabled/>
           </div>
           <div className="justify-content-center d-flex">
             <JhiPagination

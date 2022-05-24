@@ -9,10 +9,10 @@ import {useAppDispatch, useAppSelector} from "app/config/store";
 
 const SearchCard = (props: {
   result: any,
+  component: string,
   readingListList: any,
-  materialName: (m) => string,
-  lang: (d) => string,
-  description: (d) => string}) => {
+  handleSyncList: () => void,
+  lang: (d) => string}) => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(state => state.authentication.account);
 
@@ -47,9 +47,10 @@ const SearchCard = (props: {
         }
       }
       dispatch(createEntity(entity)).then( (x: any) => {
-        setFavorite( x.payload.status === 201)
+        setFavorite( x.payload.status === 201);
       })
     }
+    props.handleSyncList();
   };
 
   return <div className="card">
@@ -71,7 +72,11 @@ const SearchCard = (props: {
           <div className={'search-link-title'}>
             <Link to={{ pathname: aoeurl + props.result.id}} target="_blank" className={'cust-link'}>
               <h4 className="cust_card-title">
-                {props.result.materialName.filter(m => m.language === props.lang).map(x => x.materialname)[0]}
+                {
+                  props.component === 'search' ?
+                    props.result.materialName.filter(m => m.language === props.lang).map(x => x.materialname)[0]
+                    : props.result.name.filter(m => m.language === props.lang).map(x => x.materialname)[0]
+                }
               </h4>
             </Link>
           </div>
@@ -101,3 +106,5 @@ const SearchCard = (props: {
 }
 
 export default SearchCard;
+{/* props.result.thumbnail?.filepath &&
+          <img src={props.result.thumbnail?.filepath} className="img-fluid" alt="img"/>*/}

@@ -106,6 +106,10 @@ export const SearchMaterial = (props) => {
 
   const sort = ["Suosituin ensin"];
 
+  function handleSyncList() {
+    return;
+  }
+
   return (
     <Container>
         <h2>
@@ -189,9 +193,10 @@ export const SearchMaterial = (props) => {
             <SearchCard key={result.key}
                         result={result}
                         readingListList={readingListList}
-                        materialName={m => m.materialname}
                         lang={currentLocale}
-                        description={d => d.description} />)
+                        handleSyncList={() => handleSyncList()}
+                        component={'search'}
+                         />)
         })}
       </div>
       {searchparams.material?.results && searchparams.material?.results?.length > 0 &&

@@ -13,6 +13,7 @@ import password from 'app/modules/account/password/password.reducer';
 import settings from 'app/modules/account/settings/settings.reducer';
 import searchMaterial from 'app/modules/search-material/search-material.reducer';
 import passwordReset from 'app/modules/account/password-reset/password-reset.reducer';
+import FavoritesList from 'app/modules/favorites/favorites.reducer'
 import entitiesReducers from 'app/entities/reducers';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
@@ -28,6 +29,7 @@ const rootReducer: ReducersMapObject = {
   password,
   settings,
   searchMaterial,
+  FavoritesList,
   loadingBar,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   ...entitiesReducers,

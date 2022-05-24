@@ -8,7 +8,10 @@ const Favorites = (props) => {
       <h1>
         <Translate contentKey="global.menu.favorites">Favorties</Translate>
       </h1>
-      <FavoritesCardList history={props.history} location={props.location} match={props.match} />
+      <div className='container'>
+        <FavoritesCardList history={props.history} location={props.location} match={props.match} />
+      </div>
+
     </div>
   );
 };
