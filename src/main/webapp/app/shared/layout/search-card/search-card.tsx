@@ -33,7 +33,6 @@ const SearchCard = (props: {
               <Badge
                 className={'cust_Badge'}
                 key={t.learningresourcetypekey}
-                color="secondery"
                 pill>
                 {t.value}
               </Badge>)}
