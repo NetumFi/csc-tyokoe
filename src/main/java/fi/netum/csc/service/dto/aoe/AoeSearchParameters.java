@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -64,10 +65,25 @@ public class AoeSearchParameters implements Serializable {
     public String toJson() throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(Map.of("filters", filters.stream().collect(Collectors.toMap(Filter::getFilter, Filter::getValues)),
-            "keywords", keywords,
-            "from", paging.getFrom(),
-            "size", paging.getSize(),
-            "sort", paging.getSort()));
+        Map<String, Object> params = new HashMap<>();
+
+        if (filters != null)
+            params.put("filters",
+                filters.stream().collect(Collectors.toMap(Filter::getFilter, Filter::getValues)));
+
+        if (paging != null)
+        {
+            params.put(
+                "from", paging.getFrom());
+            params.put(
+                "size", paging.getSize());
+            params.put(
+                "sort", paging.getSort());
+        }
+
+        if (keywords != null)
+            params.put("keywords", keywords);
+
+        return objectMapper.writeValueAsString(params);
     }
 }

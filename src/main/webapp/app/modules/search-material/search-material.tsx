@@ -16,7 +16,7 @@ import {handleSearch, addFilter, deleteFilter, setSearchTerms} from "app/modules
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getEntities} from "app/entities/education-level-code-set/education-level-code-set.reducer";
 import {Link} from "react-router-dom";
-
+import SearchCard from "app/shared/layout/search-card/search-card";
 
 export const SearchMaterial = (props) => {
   const account = useAppSelector(state => state.authentication.account);
@@ -131,36 +131,11 @@ export const SearchMaterial = (props) => {
       <div className="results">
         {searchparams.material?.results.map(result => {
           return (
-            <div key={result.key} className="card">
-              <div className="row no-gutters">
-                <div className="col-auto">
-                  {result.thumbnail?.filepath &&
-                    <img src={result.thumbnail?.filepath} className="img-fluid" alt="img"/>}
-                </div>
-                <div className="col">
-                  <div className="card-block px-2">
-                    <h4 className="card-title">
-                      {result.materialName.filter(m => m.language === currentLocale).map(m => m.materialname)[0]}
-                    </h4>
-                    <p className="card-text">
-                      {result.description.filter(d => d.language === currentLocale).map(d => d.description)[0]}
-                    </p>
-                    <div>
-                      {result.learningResourceTypes.map(t =>
-                        <Badge
-                          key={t.learningresourcetypekey}
-                          color="primary"
-                          pill>
-                          {t.value}
-                        </Badge>)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="card-footer w-100 text-muted">
-                {result.updatedAt}
-              </div>
-            </div>)
+            <SearchCard key={result.key}
+                        result={result}
+                        materialName={m => m.materialname}
+                        lang={currentLocale}
+                        description={d => d.description} />)
         })}
       </div>
     </Container>

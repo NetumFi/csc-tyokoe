@@ -13,7 +13,7 @@ function AdminNavbar(props: {
   currentLocale: string,
   onClick1: (event) => void }) {
 
-  return <Navbar className="bg-primary" light expand="md" fixed="top">
+  return <Navbar className="bg-primary" light expand="md" fixed="top" data-cy="navbar">
     <NavbarBrand href="https://digivisio2030.fi/" >CSC2022</NavbarBrand>
     <NavbarToggler onClick={props.onClick}/>
     <Collapse isOpen={props.open} navbar>

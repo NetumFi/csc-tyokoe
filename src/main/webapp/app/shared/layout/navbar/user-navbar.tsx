@@ -15,13 +15,12 @@ const UserNavbar = (props: {
 }) => {
 
   return (
-    <Navbar className="bg-primary" light expand="md" fixed="top">
+    <Navbar className="bg-primary" light expand="md" fixed="top" data-cy="navbar">
       <NavbarBrand href="https://digivisio2030.fi/">CSC2022</NavbarBrand>
       <NavbarToggler onClick={props.onClick}/>
       <Collapse isOpen={props.open} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-
             <NavLink href="/">
               <span>
                 <Translate contentKey="global.menu.home">Home</Translate>
@@ -29,7 +28,7 @@ const UserNavbar = (props: {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/user-favourites">
+            <NavLink href="/favorites">
               <span>
                 <Translate contentKey="global.menu.favorites">Favorites</Translate>
               </span>

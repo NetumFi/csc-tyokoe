@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
-import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
-import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { IAgeCodeSet } from 'app/shared/model/age-code-set.model';
-import { getEntities } from './age-code-set.reducer';
+import React, {useEffect, useState} from 'react';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {getSortState, JhiItemCount, JhiPagination, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {ASC, DESC, ITEMS_PER_PAGE, SORT} from 'app/shared/util/pagination.constants';
+import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {getEntities} from './age-code-set.reducer';
 
 export const AgeCodeSet = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();

@@ -10,6 +10,7 @@
       "entities": {
         "main": "Entiteetit",
         "profile": "Profile",
+        "favorites": "Suosikit",
         "searchHistory": "Search History",
         "age": "Age",
         "searchSetting": "Search Setting",
@@ -151,6 +152,8 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Tämä on footer teksti",
-  "logout": "Sinut on kirjattu ulos onnistuneesti!"
+  "footer": {
+    "accessibility": "Saavutettavuusseloste",
+    "registry-scan": "Rekisteriseloste"
+  }
 }

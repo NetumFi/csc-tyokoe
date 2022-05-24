@@ -182,6 +182,17 @@ npm test
 UI end-to-end tests are powered by [Cypress][]. They're located in [src/test/javascript/cypress](src/test/javascript/cypress)
 and can be run by starting Spring Boot in one terminal (`./mvnw spring-boot:run`) and running the tests (`npm run e2e`) in a second one.
 
+### e2e test running 
+```
+npm run e2e
+```
+
+for running only one file of tests run:
+
+```
+npm run cypress --spec
+```
+will cypress visual page, from the browser could choose the file that wanted for test
 #### Lighthouse audits
 
 You can execute automated [lighthouse audits][https://developers.google.com/web/tools/lighthouse/] with [cypress audits][https://github.com/mfrachet/cypress-audit] by running `npm run e2e:cypress:audits`.
