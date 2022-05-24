@@ -148,6 +148,9 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
+  "search": {
+    "cardseacrhresult": "search results"
+  },
   "footer": {
     "accessibility": "Accessibility",
     "registry-scan": "Registry Scan"

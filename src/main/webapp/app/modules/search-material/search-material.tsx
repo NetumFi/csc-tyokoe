@@ -1,21 +1,18 @@
 import './search-material.scss';
 
 import React, {useEffect} from 'react';
-import {translate, Translate, ValidatedForm, ValidatedField} from 'react-jhipster';
-import {
-  Row,
-  Col,
-  Button,
-  Input,
-  Badge,
-  Container, Table, Card, CardImg, CardBody, CardTitle, CardFooter, CardText
-} from 'reactstrap';
+import {translate, Translate, ValidatedForm} from 'react-jhipster';
+import {Badge, Button, Col, Container, Input, Row} from 'reactstrap';
 
 import {useAppDispatch, useAppSelector} from 'app/config/store';
-import {handleSearch, addFilter, deleteFilter, setSearchTerms} from "app/modules/search-material/search-material.reducer";
+import {
+  addFilter,
+  deleteFilter,
+  handleSearch,
+  setSearchTerms
+} from "app/modules/search-material/search-material.reducer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getEntities} from "app/entities/education-level-code-set/education-level-code-set.reducer";
-import {Link} from "react-router-dom";
 import SearchCard from "app/shared/layout/search-card/search-card";
 
 export const SearchMaterial = (props) => {
@@ -63,10 +60,12 @@ export const SearchMaterial = (props) => {
         <ValidatedForm id="materialsearch-form" onSubmit={handleValidSubmit} defaultValues={searchparams}>
           <Row>
             <Col sm="10">
+              <label className={'not-visible-label'}>
+                hakusana:
+              </label>
               <Input
                 type="text"
                 name="searchTerms"
-                label={translate('materialsearch.form.searchterms')}
                 placeholder={translate('materialsearch.form.searchterms-placeholder')}
                 data-cy="searchTerms"
                 onChange={setInputSearchTerms}
@@ -78,9 +77,11 @@ export const SearchMaterial = (props) => {
               </Button>
             </Col>
           </Row>
-          <Row>
-            <Col
-              lg="3">
+          <Row className={'cust-select-limit'}>
+            <Col lg="3">
+              <label className={'not-visible-label'}>
+                raja:
+              </label>
               <Input
                 name="filter"
                 label={translate('materialsearch.form.filter')}
@@ -91,8 +92,10 @@ export const SearchMaterial = (props) => {
                 onChange={handleAddFilter}
                 defaultValue={null}>
                 {
-                  [<option key="firstElement"> {translate('materialsearch.form.filter')} </option>]
-                    .concat(filterItems.filter(item => !searchparams.filters.includes(item)).map(filterItem => (
+                  [
+                    <option key="firstElement"> {
+                    translate('materialsearch.form.filter')} </option>
+                  ].concat(filterItems.filter(item => !searchparams.filters.includes(item)).map(filterItem => (
                       <option value={filterItem.codeId} key={filterItem.codeId}>
                         {filterItem[codeLocales[currentLocale]]}
                       </option>
@@ -116,19 +119,30 @@ export const SearchMaterial = (props) => {
                 </Badge>)}
             </Col>
           </Row>
-          <Row>
-            <Col sm="3">
-              <Input
-                type="select">
-                {sort.map(s => <option key={s}>{s}</option>)}
-              </Input>
-            </Col>
-          </Row>
         </ValidatedForm>
         </Container>
 
-      {searchparams.material?.hits && <p>Hakutuloksia {searchparams.material?.hits}</p>}
-      <div className="results">
+      <div >
+        <Container className={'cust-seacrh-component'}>
+          <Row>
+            <Col>{searchparams.material?.hits &&
+              <h3 className={"cust-results"}>
+                {searchparams.material?.hits} <Translate contentKey="search.cardseacrhresult"> search results</Translate>
+            </h3>}</Col>
+            {/* eslint-disable-next-line no-console */}
+            {searchparams.material?.hits
+              && searchparams.material?.hits >= 2
+              && <Col className={'cust-select-input'}>
+                <label className={'not-visible-label'}>
+                  Sorting:
+                </label>
+                <Input type="select" name="select" id="selectSorting" data-cy="selectSorting">
+                  {sort.map(s => <option key={s}>{s}</option>)}
+                </Input>
+              </Col>}
+          </Row>
+
+        </Container>
         {searchparams.material?.results.map(result => {
           return (
             <SearchCard key={result.key}

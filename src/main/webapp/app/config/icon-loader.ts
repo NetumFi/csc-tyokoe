@@ -32,8 +32,9 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers';
 import { faUsersCog } from '@fortawesome/free-solid-svg-icons/faUsersCog';
 import { faWrench } from '@fortawesome/free-solid-svg-icons/faWrench';
-
+import { faClock} from "@fortawesome/free-solid-svg-icons/faClock";
 import { library } from '@fortawesome/fontawesome-svg-core';
+import {faClockRotateLeft} from "@fortawesome/free-solid-svg-icons/faClockRotateLeft";
 
 export const loadIcons = () => {
   library.add(
@@ -70,6 +71,8 @@ export const loadIcons = () => {
     faUsers,
     faUsersCog,
     faWrench,
-    faX
+    faX,
+    faClock,
+    faClockRotateLeft
   );
 };
