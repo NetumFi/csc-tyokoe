@@ -13,7 +13,7 @@ const SearchCard = (props: {
     <div className="row no-gutters">
       <div className="col-auto">
         {props.result.thumbnail?.filepath &&
-          <img src={props.result.thumbnail?.filepath} className="img-fluid" alt="img"/>}
+          <img src={props.result.thumbnail?.filepath.replace(/^https:[/][/]aoe.fi/, '/aoe')} className="img-fluid" alt="img"/>}
       </div>
       <div className="col">
         <div className="card-block px-2">

@@ -26,6 +26,7 @@ public class AoeService {
     private final String aoeMetadataUrl = "https://aoe.fi/api/v2/metadata/";
 
     private final Logger log = LoggerFactory.getLogger(AoeService.class);
+    private final Logger apiLogger = LoggerFactory.getLogger("AOEAPI");
 
     public void setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
@@ -51,6 +52,7 @@ public class AoeService {
             .build();
 
         log.debug("Kutsutaan hakua urlille: " + aoeSearchUrl + ", kutsutta käytetty data: " + requestBody);
+        apiLogger.info(aoeSearchParameters.toJson());
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
