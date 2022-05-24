@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 
 @Service
 @Transactional
@@ -30,7 +31,7 @@ public class AoeService {
         this.httpClient = httpClient;
     }
 
-    private HttpClient httpClient = HttpClient.newBuilder().build();
+    private HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(30)).build();
     private final JHipsterProperties jHipsterProperties;
 
     public AoeService(
@@ -45,6 +46,7 @@ public class AoeService {
 
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(aoeSearchUrl))
+            .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(requestBody))
             .build();
 
@@ -57,7 +59,7 @@ public class AoeService {
 
     }
 
-    public ItemMetadata getMetadata(int id) throws IOException, InterruptedException {
+    public ItemMetadata getMetadata(String id) throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(aoeMetadataUrl + id))

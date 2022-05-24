@@ -10,7 +10,8 @@ const UserNavbar = (props: {
   admin: boolean,
   showOpenAPI: boolean,
   currentLocale: string,
-  onClick1: (event) => void
+  onClick1: (event) => void,
+  userFullName: string,
 }) => {
 
   return (
@@ -37,7 +38,7 @@ const UserNavbar = (props: {
         </Nav>
         <Nav>
           <LocaleMenu currentLocale={props.currentLocale} onClick={props.onClick1}/>
-          <AccountMenu isAuthenticated={props.authenticated}/>
+          <AccountMenu isAuthenticated={props.authenticated} userFullName={props.userFullName}/>
         </Nav>
       </Collapse>
     </Navbar>

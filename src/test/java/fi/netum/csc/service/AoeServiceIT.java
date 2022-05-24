@@ -1,10 +1,7 @@
 package fi.netum.csc.service;
 
 import fi.netum.csc.IntegrationTest;
-import fi.netum.csc.service.dto.aoe.AoeSearchParameters;
-import fi.netum.csc.service.dto.aoe.Filter;
-import fi.netum.csc.service.dto.aoe.ItemMetadata;
-import fi.netum.csc.service.dto.aoe.SearchResults;
+import fi.netum.csc.service.dto.aoe.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -69,9 +66,9 @@ class AoeServiceIT {
                 "c1256389-a47d-4a44-beb2-bdbbc79abb28")));
 
         String keywords = "hakusana1, hakusana2, hakusana3";
-        PageRequest pageRequest = PageRequest.of(0, 3, Sort.by("uusin").descending());
+        Paging paging = new Paging(0, 3, "uusin");
 
-        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(filters, keywords, pageRequest);
+        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(filters, keywords, paging);
 
         SearchResults searchResults = aoeService.doSearch(aoeSearchParameters);
         assertThat(searchResults.getHits()).isEqualTo(284);
@@ -91,7 +88,7 @@ class AoeServiceIT {
 
         when(httpResponse.body()).thenReturn(answer);
         when(httpResponse.statusCode()).thenReturn(200);
-        ItemMetadata itemMetadata = aoeService.getMetadata(100);
+        ItemMetadata itemMetadata = aoeService.getMetadata("100");
         assertThat(itemMetadata.getDownloadCounter()).isEqualTo("333");
         assertThat(itemMetadata.getId()).isEqualTo("1901");
 

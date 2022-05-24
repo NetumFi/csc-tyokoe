@@ -26,7 +26,6 @@ export default ({ match }) => {
         <ErrorBoundaryRoute path={`${match.url}user-favourites`} component={UserFavourites} />
         <ErrorBoundaryRoute path={`${match.url}user-search-settings`} component={UserSearchSetting} />
         <ErrorBoundaryRoute path={`${match.url}user-search-history`} component={UserSearchHistory} />
-
         <ErrorBoundaryRoute path={`${match.url}note`} component={Note} />
         <ErrorBoundaryRoute path={`${match.url}age-code-set`} component={AgeCodeSet} />
         <ErrorBoundaryRoute path={`${match.url}education-level-code-set`} component={EducationLevelCodeSet} />
