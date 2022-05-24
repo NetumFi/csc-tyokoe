@@ -1,5 +1,7 @@
 package fi.netum.csc.repository;
 
+import fi.netum.csc.domain.SearchSetting;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.domain.UserResultKeyword;
 import java.util.List;
 import java.util.Optional;
@@ -39,4 +41,6 @@ public interface UserResultKeywordRepository extends JpaRepository<UserResultKey
         "select userResultKeyword from UserResultKeyword userResultKeyword left join fetch userResultKeyword.user where userResultKeyword.id =:id"
     )
     Optional<UserResultKeyword> findOneWithToOneRelationships(@Param("id") Long id);
+
+    Page<UserResultKeyword> findAllByUser(@Param("user") User user, Pageable pageable);
 }

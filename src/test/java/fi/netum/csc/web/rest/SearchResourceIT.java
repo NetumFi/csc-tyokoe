@@ -6,12 +6,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import fi.netum.csc.IntegrationTest;
 import fi.netum.csc.service.AoeService;
+import fi.netum.csc.service.SearchSettingService;
+import fi.netum.csc.service.UserResultKeywordService;
+import fi.netum.csc.service.UserService;
 import fi.netum.csc.service.dto.aoe.AoeSearchParameters;
 import fi.netum.csc.service.dto.aoe.Filter;
 import fi.netum.csc.service.dto.aoe.Paging;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,14 +35,20 @@ class SearchResourceIT {
     @Autowired
     private AoeService aoeService;
 
-    @Mock
-    private AoeService aoeServiceMock;
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private SearchSettingService searchSettingService;
+
+    @Autowired
+    private UserResultKeywordService userResultKeywordService;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        SearchResource searchResource = new SearchResource(aoeService);
+        SearchResource searchResource = new SearchResource(aoeService, userService, userResultKeywordService, searchSettingService);
         restMockMvc = MockMvcBuilders.standaloneSetup(searchResource).build();
     }
 
@@ -66,4 +74,13 @@ class SearchResourceIT {
         restMockMvc.perform(post("/api/search/do-search").contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(aoeSearchParameters))).andExpect(status().isOk());
     }
+
+    /**
+     * Test getMetadata
+     */
+    @Test
+    void testGetRecommendations() throws Exception {
+        restMockMvc.perform(get("/api/search/get-recommendations/")).andExpect(status().isOk());
+    }
+
 }
