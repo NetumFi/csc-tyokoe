@@ -3,7 +3,7 @@
     "profile": {
       "home": {
         "title": "Profiles",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Päivitä",
         "createLabel": "Luo Profile",
         "createOrEditLabel": "Luo tai muokkaa Profile",
         "notFound": "Profile ei löytynyt"

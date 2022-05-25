@@ -3,7 +3,7 @@
     "age": {
       "home": {
         "title": "Ages",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Päivitä",
         "createLabel": "Luo Age",
         "createOrEditLabel": "Luo tai muokkaa Age",
         "notFound": "Age ei löytynyt"

@@ -3,7 +3,7 @@
     "ageCodeSet": {
       "home": {
         "title": "Age Code Sets",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Päivitä",
         "createLabel": "Luo Age Code Set",
         "createOrEditLabel": "Luo tai muokkaa Age Code Set",
         "notFound": "Age Code Set ei löytynyt"

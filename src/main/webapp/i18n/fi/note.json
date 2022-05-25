@@ -3,7 +3,7 @@
     "note": {
       "home": {
         "title": "Notes",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Päivitä",
         "createLabel": "Luo Note",
         "createOrEditLabel": "Luo tai muokkaa Note",
         "notFound": "Note ei löytynyt"

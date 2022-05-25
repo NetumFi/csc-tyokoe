@@ -3,7 +3,7 @@
     "educationLevelCodeSet": {
       "home": {
         "title": "Education Level Code Sets",
-        "refreshListLabel": "Refresh list",
+        "refreshListLabel": "Päivitä",
         "createLabel": "Luo Education Level Code Set",
         "createOrEditLabel": "Luo tai muokkaa Education Level Code Set",
         "notFound": "Education Level Code Set ei löytynyt"
