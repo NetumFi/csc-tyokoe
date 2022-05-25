@@ -3,17 +3,63 @@ import React from 'react';
 const RegistryScan = () => {
   return (
     <div>
-      <h1>RegistryScan</h1>
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
-        qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-        sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
-        vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-      </p>
+
+      <h1 className="h4">Rekisteriseloste</h1>
+      <p>Rekisteri- ja tietosuojaseloste
+      Julkaistu 24.5.2022
+        Netumin tietosuojailmoitus rekisteröidylle</p>
+      <h2 className="h5">Yleistä</h2>
+      <p>Tämä tietosuojailmoitus sisältää EU:n tietosuoja-asetuksen (EU) 679/2016 13 ja 14 artiklan mukaiset tiedot rekisteröidylle (luonnolliselle henkilölle). Tämä ilmoitus annetaan rekisteröidylle henkilötietoja kerättäessä.</p>
+      <h2 className="h5">Rekisterinpitäjä ja rekisterinpitäjän yhteystiedot</h2>
+      <address>
+        <strong>Netum Oy</strong> <br />
+        Yliopistonkatu 58 B<br />
+        33100 TAMPERE
+        </address>
+
+      <h2 className="h5">Tietosuojavastaavan yhteystiedot</h2>
+      <address>
+        Erkki Esimerkki<br />
+        esimerkki@netum.fi
+      </address>
+
+
+      <h2 className="h5">Henkilötietojen käsittelyn tarkoitukset, henkilötietoryhmät ja oikeusperusteet</h2>
+      Henkilötietojen käyttötarkoitukset ovat:
+      <ul>
+        <li>Rekisteröityjen käyttäjien tietojen sekä kirjautumis- ja käyttölokitietojen hallinta, käyttäjätilastointi ja palvelun käytössä tarvittavien evästeiden hallinta</li>
+        <li>Palvelun käyttöön ja kehittämiseen liittyvä tilastointi, analytiikka ja hallinta</li>
+        <li>Palvelun rekisteröitymättömien käyttäjien käyttölokitietojen hallinta, käyttäjätilastointi sekä palvelun käytössä tarvittavien evästeiden hallinta.</li>
+      </ul>
+      Henkilötietojen käsittelyn oikeusperusteet:
+      <ul>
+        <li>Laki valtioneuvostosta (175/2003)</li>
+        <li>Valtioneuvoston ohjesääntö (262/2003)</li>
+        <li>Valtioneuvoston asetus opetus- ja kulttuuriministeriöstä (310/2010)</li>
+      </ul>
+      <h2 className="h5">Henkilötietojen käsittelijät</h2>
+      Henkilötietojen käsittelijöitä ovat
+      <ul>
+        <li>Netum</li>
+      </ul>
+
+      <h2 className="h5">Henkilötietojen säilyttämisajat</h2>
+      <p>Palveluun sisältyvät materiaalit, kommentit ja muu sisältö ja näiden käsittelyyn liittyvät henkilötiedot säilytetään ja poistetaan palvelun käyttöehtojen mukaisesti, ellei arkistointia koskevasta lainsäädännöstä tai muista säädöksistä muuta johdu.</p>
+      <h2 className="h5">Rekisteröidyn oikeudet</h2>
+      <p>Rekisteröidyllä on oikeus saada rekisterinpitäjältä tieto siitä, käsitelläänkö hänenhenkilötietojaan.
+      Rekisteröidyllä on myös oikeus pyytää:
+        <ul>
+      <li>itseään koskevat henkilötiedot</li>
+      <li>rekisterinpitäjää oikaisemaan tai poistamaan virheelliset tai vanhentuneet tiedot</li>
+          <li>henkilötietojen käsittelyn rajoittamista</li>
+          </ul>
+      Mikäli rekisteröity katsoo, ettei hänen henkilötietojensa käsittely ole lainmukaista, rekisteröidyllä on oikeus tehdä asiasta valitus tietosuojavaltuutetulle.
+        </p>
+      <h2 className="h5">Henkilötietojen lähde/lähteet</h2>
+      <p>Palvelun keräämät tiedot.</p>
+
+      <h2 className="h5">Henkilötietojen käsittelyn suojaaminen</h2>
+      <p>Netum  rekisterinpitäjänä on toteuttanut tarvittavat tekniset ja organisatoriset toimet sekä vaatii sitä myös henkilötietojen käsittelijöiltä.</p>
     </div>
   );
 };
