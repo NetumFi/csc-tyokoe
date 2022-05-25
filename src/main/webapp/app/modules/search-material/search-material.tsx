@@ -15,6 +15,7 @@ import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {reset, handleSearch, addFilter, deleteFilter, setSearchTerms, getDefaultSearchParams} from "app/modules/search-material/search-material.reducer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getEntities} from "app/entities/education-level-code-set/education-level-code-set.reducer";
+import {getEntities as getReadingListEntities} from "app/entities/reading-list/reading-list.reducer";
 import {overridePaginationStateWithQueryParams} from "app/shared/util/entity-utils";
 import {ITEMS_PER_PAGE, SORT} from "app/shared/util/pagination.constants";
 import SearchCard from "app/shared/layout/search-card/search-card";
@@ -24,6 +25,7 @@ export const SearchMaterial = (props) => {
   const searchparams = useAppSelector(state => state.searchMaterial);
   const educationLevelCodeSets = useAppSelector(state => state.educationLevelCodeSet);
   const currentLocale = useAppSelector(state => state.locale.currentLocale);
+  const readingListList = useAppSelector(state => state.readingList.entities);
   const dispatch = useAppDispatch();
 
   const [paginationState, setPaginationState] = useState(
@@ -36,6 +38,7 @@ export const SearchMaterial = (props) => {
       size: paginationState.itemsPerPage,
       sort: `${paginationState.sort},${paginationState.order}`,
     }));
+    dispatch(getReadingListEntities({}));
   };
 
   useEffect(() => {
@@ -102,6 +105,10 @@ export const SearchMaterial = (props) => {
   const codeLocales = {"fi": "labelFi", "en": "labelEn", "sv": "labelSv"};
 
   const sort = ["Suosituin ensin"];
+
+  function handleSyncList() {
+    return;
+  }
 
   return (
     <Container>
@@ -185,9 +192,11 @@ export const SearchMaterial = (props) => {
           return (
             <SearchCard key={result.key}
                         result={result}
-                        materialName={m => m.materialname}
+                        readingListList={readingListList}
                         lang={currentLocale}
-                        description={d => d.description} />)
+                        handleSyncList={() => handleSyncList()}
+                        component={'search'}
+                         />)
         })}
       </div>
       {searchparams.material?.results && searchparams.material?.results?.length > 0 &&

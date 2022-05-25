@@ -16,6 +16,7 @@ const Accessibility = () => {
     <h5>Anna palautetta</h5>
 
     <p>Jos löydät sivustolta ongelmia joita ei ole kuvattu tässä selosteessa, ilmoita niistä meille. Otamme mielellämme vastaan myös muita huomioita ja parannusehdotuksia sivuston saavutettavuuteen liittyen. Voit lähettää palautteesi sähköpostilla myynti(at)netum. Kerro palautteessasi, millä sivulla/sivuilla havaitsit ongelman ja kuvaa ongelma mahdollisimman tarkasti.</p>
+
   </div>
   );
 };

@@ -327,6 +327,20 @@ custom general styles
   min-width: 80px;
   border-radius: 5px;
 }
+
+.not-visible-label {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+.badge.bg-secondary {
+  color: #fcfcfc;
+}
 /* ==========================================================================
 Favorites styles
 ========================================================================== */
@@ -339,7 +353,7 @@ Favorites Card style
 ========================================================================== */
 
 .fav-icon-heart {
-  float: end;
+  float: right;
 }
 .fav-button {
   margin: 5px;
@@ -351,6 +365,9 @@ Seach Card style
 .cust_Badge {
   padding: 0.5em 1em;
   margin: 1em 0.5em;
+  min-font-size: 18px;
+  font-size: 1.1em;
+  color: #fcfcfc;
 }
 
 .cust_card-title {
@@ -358,10 +375,24 @@ Seach Card style
   color: #3A7A10;
 }
 
-.date_text {
-  text-align:right;
+.cust-link {
+  text-decoration: none;
+  width: 90%;
 }
 
+.cust-link:hover {
+  text-decoration: underline #3A7A10!important;
+}
+.cust-select-input {
+  max-width: 300px;
+  margin-bottom: 20px;
+  float: right;
+}
+
+.date_text {
+  font-min-size: 18px;
+  text-align:right;
+}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
