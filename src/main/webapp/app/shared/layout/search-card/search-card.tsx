@@ -59,23 +59,30 @@ const SearchCard = (props: {
     }
   };
 
+  const img = () => {
+    return <img src={props.result.thumbnail?.filepath} className="img-fluid" alt={'img ' + props.result?.thumbnail?.filebucket + props.result.id}/>
+  }
+
+  const imgProduction = () => {
+    return <img src={props.result.thumbnail?.filepath.replace(/^https:[/][/]aoe.fi/, '/aoe')} className="img-fluid" alt={'img ' + props.result?.thumbnail?.filebucket + props.result.id}/>
+  }
+
   return <div className="card">
     <div className="row no-gutters">
       <div className="col-auto">
-        {props.result.thumbnail?.filepath &&
-          <img src={props.result.thumbnail?.filepath.replace(/^https:[/][/]aoe.fi/, '/aoe')} className="img-fluid" alt="img"/>}
+        {props.result.thumbnail?.filepath && imgProduction()}
       </div>
       <div className="col">
         <div className="card-block px-4">
           <div className={'search-link-title'}>
             <Link to={{ pathname: aoeurl + props.result.id}} target="_blank" className={'cust-link'}>
-              <h4 className="cust_card-title">
+              <h2 className="cust_card-title h3">
                 {
                   props.component === 'search' ?
                     props.result.materialName.filter(m => m.language === props.lang).map(x => x.materialname)[0]
                     : props.result.name.filter(m => m.language === props.lang).map(x => x.materialname)[0]
                 }
-              </h4>
+              </h2>
             </Link>
           </div>
           <div >
@@ -116,5 +123,3 @@ const SearchCard = (props: {
 }
 
 export default SearchCard;
-{/* props.result.thumbnail?.filepath &&
-          <img src={props.result.thumbnail?.filepath} className="img-fluid" alt="img"/>*/}
