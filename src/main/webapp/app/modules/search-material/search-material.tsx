@@ -190,7 +190,7 @@ export const SearchMaterial = (props) => {
       <div className="results">
         {searchparams.material?.results.map(result => {
           return (
-            <SearchCard key={result.key}
+            <SearchCard key={result.id}
                         result={result}
                         readingListList={readingListList}
                         lang={currentLocale}
