@@ -52,7 +52,10 @@ public class SearchResource {
     @PostMapping("/do-search")
     public SearchResults doSearch(@RequestBody AoeSearchParameters aoeSearchParameters) throws BadRequestAlertException, IOException, InterruptedException {
         log.debug("REST request to search: {}", aoeSearchParameters);
-        return aoeService.doSearch(aoeSearchParameters);
+        Optional<User> optionalUser = this.userService.getUserWithAuthorities();
+        User user  = null;
+        if (optionalUser.isPresent()) user = optionalUser.get();
+        return aoeService.doSearch(aoeSearchParameters, user);
     }
 
     /**
@@ -99,23 +102,25 @@ public class SearchResource {
     @GetMapping("/get-recommendations")
     public SearchResults getRecommendations() throws IOException, InterruptedException {
         Optional<User> optionalUser = this.userService.getUserWithAuthorities();
-        User user  = optionalUser.get();
+        User user  = null;
+
+        if (optionalUser.isPresent()) user = optionalUser.get();
         log.debug("REST request recommendations to user: {}", user);
 
         String educationUuid = "";
         List<Filter> filters = null;
         Page<SearchSettingDTO> searchSettingDTO = searchSettingService.findAllByUser(user, PageRequest.of(0,1));
-        if (searchSettingDTO.get().findFirst().isPresent()) {
+        if (searchSettingDTO != null && searchSettingDTO.get().findFirst().isPresent()) {
             educationUuid = searchSettingDTO.get().findFirst().get().getEducationLevelCodeSet().getCodeId();
             filters = List.of(new Filter("educationalLevels", List.of(
                 educationUuid)));
         }
         Page<UserResultKeywordDTO> userResultKeywords = userResultKeywordService.findAllByUser(user, PageRequest.of(0,1));
-        String resultKeywords = userResultKeywords.get().findFirst().toString();
+        UserResultKeywordDTO resultKeywords = userResultKeywords.get().findFirst().get();
 
         Paging paging = new Paging(0, 10, "relevance");
-        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(filters, resultKeywords, paging);
+        AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(filters, resultKeywords.getResultKeyword(), paging);
 
-        return aoeService.doSearch(aoeSearchParameters);
+        return aoeService.doSearch(aoeSearchParameters, user);
     }
 }

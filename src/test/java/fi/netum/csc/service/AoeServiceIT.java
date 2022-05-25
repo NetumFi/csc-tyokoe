@@ -1,6 +1,7 @@
 package fi.netum.csc.service;
 
 import fi.netum.csc.IntegrationTest;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.service.dto.aoe.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import tech.jhipster.config.JHipsterProperties;
 
 import java.io.InputStream;
@@ -43,10 +42,13 @@ class AoeServiceIT {
 
     private AoeService aoeService;
 
+    @Autowired
+    private UserResultKeywordService userResultKeywordService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        aoeService = new AoeService(jHipsterProperties);
+        aoeService = new AoeService(userResultKeywordService, jHipsterProperties);
         aoeService.setHttpClient(httpClient);
     }
 
@@ -54,6 +56,8 @@ class AoeServiceIT {
     void testDoSearch() throws Exception {
         HttpResponse httpResponse = mock(HttpResponse.class);
         when(httpClient.send(any(), any())).thenReturn(httpResponse);
+
+        User user = null;
 
         InputStream is = Test.class.getResourceAsStream("/searchResultMetadata.json");
         String answer = new String(is.readAllBytes(), StandardCharsets.UTF_8);
@@ -70,7 +74,7 @@ class AoeServiceIT {
 
         AoeSearchParameters aoeSearchParameters = new AoeSearchParameters(filters, keywords, paging);
 
-        SearchResults searchResults = aoeService.doSearch(aoeSearchParameters);
+        SearchResults searchResults = aoeService.doSearch(aoeSearchParameters, user);
         assertThat(searchResults.getHits()).isEqualTo(284);
         assertThat(searchResults.getResults().stream().count()).isEqualTo(1);
         verify(httpClient).send(messageCaptorHttpRequest.capture(), any());

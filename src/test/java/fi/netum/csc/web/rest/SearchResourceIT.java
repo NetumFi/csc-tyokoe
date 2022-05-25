@@ -1,6 +1,7 @@
 package fi.netum.csc.web.rest;
 
 import fi.netum.csc.IntegrationTest;
+import fi.netum.csc.domain.User;
 import fi.netum.csc.service.AoeService;
 import fi.netum.csc.service.SearchSettingService;
 import fi.netum.csc.service.UserResultKeywordService;
@@ -17,7 +18,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,11 +40,9 @@ class SearchResourceIT {
     @Autowired
     private AoeService aoeService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService = mock(UserService.class);
 
-    @Autowired
-    private SearchSettingService searchSettingService;
+    private final SearchSettingService searchSettingService = mock(SearchSettingService.class);
 
     @Autowired
     private UserResultKeywordService userResultKeywordService;
@@ -74,6 +77,8 @@ class SearchResourceIT {
     @Test
     void testDoSearch() throws Exception {
 
+        when(userService.getUserWithAuthorities()).thenReturn(Optional.empty());
+
         List<Filter> filters = List.of(new Filter("educationalLevels", List.of("e5a48ada-3de0-4246-9b8f-32d4ff68e22f")));
         String keywords = "sana1, sana2, sana3";
         Paging paging = new Paging(0, 3, "uusin");
@@ -88,6 +93,10 @@ class SearchResourceIT {
      */
     @Test
     void testGetRecommendations() throws Exception {
+        var optionalUser = Optional.of(new User());
+        optionalUser.get().setLogin("akseli");
+        when(userService.getUserWithAuthorities()).thenReturn(Optional.empty());
+        when(searchSettingService.findAllByUser(any(), any())).thenReturn(null);
         restMockMvc.perform(get("/api/search/get-recommendations/")).andExpect(status().isOk());
     }
 
