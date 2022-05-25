@@ -322,6 +322,10 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 /* ==========================================================================
 custom general styles
 ========================================================================== */
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  text-transform: none!important;
+}
 .cus-button {
   margin: 5px;
   min-width: 80px;

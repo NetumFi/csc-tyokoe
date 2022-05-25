@@ -15,9 +15,18 @@ export const Logout = () => {
     }
   });
 
+  const toHomePage = () => {
+    setTimeout(() => {
+      window.location.href = "/"
+    }, 3000);
+
+
+  }
+
   return (
     <div className="p-5">
       <h4><Translate contentKey="global.menu.account.logout">Logged out successfully!</Translate></h4>
+      <>{toHomePage()}</>
     </div>
   );
 };

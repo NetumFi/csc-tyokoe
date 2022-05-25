@@ -2,7 +2,7 @@ import React from 'react';
 
 const RegistryScan = () => {
   return (
-    <div>
+    <div className={'container'}>
 
       <h1 className="h4">Rekisteriseloste</h1>
       <p>Rekisteri- ja tietosuojaseloste

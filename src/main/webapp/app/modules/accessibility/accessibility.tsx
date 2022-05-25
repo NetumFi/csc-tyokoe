@@ -2,7 +2,7 @@ import React from 'react';
 
 const Accessibility = () => {
   return (
-  <div className={"fav-level1"}>
+  <div className={"container"}>
 
     <h1 className="h3">Saavutettavuusseloste</h1>
     <p>Palvelun saavutettavuuden arviointi on suoritettu itsearviointina.

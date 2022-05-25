@@ -88,14 +88,17 @@ const FavoritesCardList = (props: RouteComponentProps<{ url: string }>) => {
       <div className="d-flex justify-content-end">
         <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
           <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
-          <Translate contentKey="csc2022App.readingList.home.refreshListLabel">Refresh List</Translate>
+          <Translate contentKey="csc2022App.readingList.home.refreshListLabel">Päivitä</Translate>
         </Button>
       </div>
       <div>
 
         {
           <div className="results">
-            {favoriteListResult && favoriteListResult?.entities.length > 0 && favoriteListResult?.entities.map(result => {
+            {favoriteListResult
+              && Array.isArray(favoriteListResult?.entities)
+              &&  favoriteListResult?.entities.length > 0
+              && favoriteListResult?.entities.map(result => {
               return (
                 <SearchCard key={result.id}
                             result={result}
