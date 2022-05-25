@@ -39,11 +39,11 @@ export const SettingsPage = () => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="settings-title">
+          <h1 className={'h2'} id="settings-title">
             <Translate contentKey="settings.title" interpolate={{ username: account.login }}>
               User settings for {account.login}
             </Translate>
-          </h2>
+          </h1>
           <ValidatedForm id="settings-form" onSubmit={handleValidSubmit} defaultValues={account}>
             <ValidatedField
               name="firstName"
@@ -71,6 +71,7 @@ export const SettingsPage = () => {
             />
             <ValidatedField
               name="email"
+              id="email"
               label={translate('global.form.email.label')}
               placeholder={translate('global.form.email.placeholder')}
               type="email"

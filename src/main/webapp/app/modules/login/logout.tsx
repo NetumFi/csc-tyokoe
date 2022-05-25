@@ -17,7 +17,7 @@ export const Logout = () => {
 
   return (
     <div className="p-5">
-      <h4><Translate contentKey="logout">Logged out successfully!</Translate></h4>
+      <h4><Translate contentKey="global.menu.account.logout">Logged out successfully!</Translate></h4>
     </div>
   );
 };

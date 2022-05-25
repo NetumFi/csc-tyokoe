@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import {Translate, getSortState, JhiPagination, JhiItemCount, translate} from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -82,7 +82,7 @@ export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) =
 
   return (
     <div>
-      <h2 id="search-setting-heading" data-cy="SearchSettingHeading">
+      <h1 id="search-setting-heading" data-cy="SearchSettingHeading" className={'h2'}>
         <Translate contentKey="csc2022App.searchSetting.home.title">Search Settings</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
@@ -95,7 +95,7 @@ export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) =
             <Translate contentKey="csc2022App.searchSetting.home.createLabel">Create new Search Setting</Translate>
           </Link>
         </div>
-      </h2>
+      </h1>
       <div className="table-responsive">
         {searchSettingList && searchSettingList.length > 0 ? (
           <Table responsive>
@@ -117,7 +117,7 @@ export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) =
                 <th>
                   <Translate contentKey="csc2022App.searchSetting.ageCodeSet">Age Code Set</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th />
+
               </tr>
             </thead>
             <tbody>
@@ -148,7 +148,7 @@ export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) =
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/search-setting/${searchSetting.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/search-setting/${searchSetting.id}`} color="info" size="md" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
@@ -158,7 +158,7 @@ export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) =
                         tag={Link}
                         to={`/search-setting/${searchSetting.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
-                        size="sm"
+                        size="md"
                         data-cy="entityEditButton"
                       >
                         <FontAwesomeIcon icon="pencil-alt" />{' '}
@@ -170,7 +170,7 @@ export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) =
                         tag={Link}
                         to={`/search-setting/${searchSetting.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
-                        size="sm"
+                        size="md"
                         data-cy="entityDeleteButton"
                       >
                         <FontAwesomeIcon icon="trash" />{' '}

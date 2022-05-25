@@ -31,9 +31,9 @@ const LoginModal = (props: ILoginModalProps) => {
   return (
     <Modal isOpen={props.showModal} toggle={handleClose} backdrop="static" id="login-page" autoFocus={false}>
       <Form onSubmit={handleLoginSubmit}>
-        <ModalHeader id="login-title" data-cy="loginTitle" toggle={handleClose}>
+        <h1 id="login-title" data-cy="loginTitle" className={'h5'} >
           <Translate contentKey="login.title">Sign in</Translate>
-        </ModalHeader>
+        </h1>
         <ModalBody>
           <Row>
             <Col md="12">
@@ -47,6 +47,7 @@ const LoginModal = (props: ILoginModalProps) => {
             </Col>
             <Col md="12">
               <ValidatedField
+                id={"username-LoginModal"}
                 name="username"
                 label={translate('global.form.username.label')}
                 placeholder={translate('global.form.username.placeholder')}
@@ -59,6 +60,7 @@ const LoginModal = (props: ILoginModalProps) => {
                 isTouched={touchedFields.username}
               />
               <ValidatedField
+                id={"password-LoginModal"}
                 name="password"
                 type="password"
                 label={translate('login.form.password')}
@@ -71,6 +73,7 @@ const LoginModal = (props: ILoginModalProps) => {
                 isTouched={touchedFields.password}
               />
               <ValidatedField
+                id={"rememberMe-LoginModal"}
                 name="rememberMe"
                 type="checkbox"
                 check
@@ -96,7 +99,7 @@ const LoginModal = (props: ILoginModalProps) => {
           </Alert>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={handleClose} tabIndex={1}>
+          <Button color="secondary" onClick={handleClose} tabIndex={0}>
             <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>{' '}
           <Button color="primary" type="submit" data-cy="submit">

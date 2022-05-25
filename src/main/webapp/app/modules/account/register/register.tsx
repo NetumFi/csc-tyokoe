@@ -47,6 +47,7 @@ export const RegisterPage = () => {
         <Col md="8">
           <ValidatedForm id="register-form" onSubmit={handleValidSubmit}>
             <ValidatedField
+              id={"username-RegisterPage"}
               name="username"
               label={translate('global.form.username.label')}
               placeholder={translate('global.form.username.placeholder')}
@@ -62,6 +63,7 @@ export const RegisterPage = () => {
               data-cy="username"
             />
             <ValidatedField
+              id={"email-RegisterPage"}
               name="email"
               label={translate('global.form.email.label')}
               placeholder={translate('global.form.email.placeholder')}
@@ -75,6 +77,7 @@ export const RegisterPage = () => {
               data-cy="email"
             />
             <ValidatedField
+              id={"firstPassword-RegisterPage"}
               name="firstPassword"
               label={translate('global.form.newpassword.label')}
               placeholder={translate('global.form.newpassword.placeholder')}
@@ -89,6 +92,7 @@ export const RegisterPage = () => {
             />
             <PasswordStrengthBar password={password} />
             <ValidatedField
+              id={"secondPassword-RegisterPage"}
               name="secondPassword"
               label={translate('global.form.confirmpassword.label')}
               placeholder={translate('global.form.confirmpassword.placeholder')}

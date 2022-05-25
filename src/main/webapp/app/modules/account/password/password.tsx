@@ -42,14 +42,15 @@ export const PasswordPage = () => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="password-title">
+          <h1 id="password-title" className={'h2'}>
             <Translate contentKey="password.title" interpolate={{ username: account.login }}>
               Password for {account.login}
             </Translate>
-          </h2>
+          </h1>
           <ValidatedForm id="password-form" onSubmit={handleValidSubmit}>
             <ValidatedField
               name="currentPassword"
+              id={'currentPassword-password'}
               label={translate('global.form.currentpassword.label')}
               placeholder={translate('global.form.currentpassword.placeholder')}
               type="password"
@@ -60,6 +61,7 @@ export const PasswordPage = () => {
             />
             <ValidatedField
               name="newPassword"
+              id={'newPassword-password'}
               label={translate('global.form.newpassword.label')}
               placeholder={translate('global.form.newpassword.placeholder')}
               type="password"
@@ -73,6 +75,7 @@ export const PasswordPage = () => {
             />
             <PasswordStrengthBar password={password} />
             <ValidatedField
+              id={'confirmPassword-password'}
               name="confirmPassword"
               label={translate('global.form.confirmpassword.label')}
               placeholder={translate('global.form.confirmpassword.placeholder')}
