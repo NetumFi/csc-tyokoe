@@ -109,18 +109,24 @@ export const SearchMaterial = (props) => {
   function handleSyncList() {
     return;
   }
+  const handleKeypress = (e, filter)  => {
+    if (e.keyCode === 13) {
+      handleDeleteFilter(filter);
+    }
+  };
 
   return (
     <Container>
-        <h2>
+        <h1 className='h2'>
           <Translate contentKey="materialsearch.title.welcome" interpolate={{name: account?.firstName}}>
             Tervetuloa, {account?.firstName}.
           </Translate>
-        </h2>
+        </h1>
         <Container>
         <ValidatedForm id="materialsearch-form" onSubmit={reloadResults} defaultValues={searchparams}>
           <Row className="mt-3">
             <Col sm="10">
+              <label htmlFor="inputSearchMaterial" className="sr-only">{translate('materialsearch.form.searchterms')}</label>
               <Input
                 type="text"
                 name="searchTerms"
@@ -129,6 +135,7 @@ export const SearchMaterial = (props) => {
                 data-cy="searchTerms"
                 onChange={setInputSearchTerms}
                 defaultValue={searchparams.searchTerms}
+                id="inputSearchMaterial"
               />
             </Col>
             <Col xs="1">
@@ -140,10 +147,11 @@ export const SearchMaterial = (props) => {
           <Row className="mt-3">
             <Col
               lg="3">
+              <label htmlFor="filter" className="sr-only">{translate('materialsearch.form.filter')}</label>
               <Input
                 name="filter"
-                label={translate('materialsearch.form.filter')}
                 id="filter"
+                label={translate('materialsearch.form.filter')}
                 placeholder={translate('materialsearch.form.filter')}
                 type="select"
                 data-cy="filter"
@@ -164,20 +172,24 @@ export const SearchMaterial = (props) => {
                 <Badge
                   key={filterItem?.codeId}
                   className="filterChip"
-                  tabIndex={0}
                   color="primary"
                   onClick={() => handleDeleteFilter(filterItem)}
                   pill>
                   {filterItem["labelFi"]}
                   <span className="icon">
-                    <FontAwesomeIcon icon="x"/>
+                    <FontAwesomeIcon
+                      icon="x"
+                      tabIndex={0}
+                      onKeyDown={(e) => handleKeypress(e, filterItem)}/>
                   </span>
                 </Badge>)}
             </Col>
           </Row>
           <Row  className="mt-3">
             <Col lg="3">
+              <label htmlFor="selectFilter" className="sr-only">{translate('materialsearch.form.filter')}</label>
               <Input
+                id="selectFilter"
                 type="select">
                 {sort.map(s => <option key={s}>{s}</option>)}
               </Input>
