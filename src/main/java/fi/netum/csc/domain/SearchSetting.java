@@ -28,6 +28,9 @@ public class SearchSetting implements Serializable {
     @Column(name = "age")
     private String age;
 
+    @Column(name = "field_of_study")
+    private String fieldOfStudy;
+
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
@@ -92,6 +95,19 @@ public class SearchSetting implements Serializable {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public String getFieldOfStudy() {
+        return this.fieldOfStudy;
+    }
+
+    public SearchSetting fieldOfStudy(String fieldOfStudy) {
+        this.setFieldOfStudy(fieldOfStudy);
+        return this;
+    }
+
+    public void setFieldOfStudy(String fieldOfStudy) {
+        this.fieldOfStudy = fieldOfStudy;
     }
 
     public User getUser() {
@@ -160,6 +176,7 @@ public class SearchSetting implements Serializable {
             ", searchTerm='" + getSearchTerm() + "'" +
             ", role='" + getRole() + "'" +
             ", age='" + getAge() + "'" +
+            ", fieldOfStudy='" + getFieldOfStudy() + "'" +
             "}";
     }
 }

@@ -16,6 +16,8 @@ public class SearchSettingDTO implements Serializable, UserRelatable {
 
     private String age;
 
+    private String fieldOfStudy;
+
     private UserDTO user;
 
     private EducationLevelCodeSetDTO educationLevelCodeSet;
@@ -52,6 +54,14 @@ public class SearchSettingDTO implements Serializable, UserRelatable {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public String getFieldOfStudy() {
+        return fieldOfStudy;
+    }
+
+    public void setFieldOfStudy(String fieldOfStudy) {
+        this.fieldOfStudy = fieldOfStudy;
     }
 
     public UserDTO getUser() {
@@ -107,6 +117,7 @@ public class SearchSettingDTO implements Serializable, UserRelatable {
             ", searchTerm='" + getSearchTerm() + "'" +
             ", role='" + getRole() + "'" +
             ", age='" + getAge() + "'" +
+            ", fieldOfStudy='" + getFieldOfStudy() + "'" +
             ", user=" + getUser() +
             ", educationLevelCodeSet=" + getEducationLevelCodeSet() +
             ", ageCodeSet=" + getAgeCodeSet() +

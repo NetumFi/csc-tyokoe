@@ -21,6 +21,7 @@
       "searchTerm": "Search Term",
       "role": "Role",
       "age": "Age",
+      "fieldOfStudy": "Koulutusaste",
       "user": "User",
       "educationLevelCodeSet": "Education Level Code Set",
       "ageCodeSet": "Age Code Set"

@@ -110,6 +110,13 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
                 type="text"
               />
               <ValidatedField
+                label={translate('csc2022App.searchSetting.fieldOfStudy')}
+                id="search-setting-fieldOfStudy"
+                name="fieldOfStudy"
+                data-cy="fieldOfStudy"
+                type="text"
+              />
+              <ValidatedField
                 id="search-setting-user"
                 name="user"
                 data-cy="user"

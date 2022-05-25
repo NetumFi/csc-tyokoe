@@ -7,6 +7,7 @@ export interface ISearchSetting {
   searchTerm?: string | null;
   role?: string | null;
   age?: string | null;
+  fieldOfStudy?: string | null;
   user?: IUser | null;
   educationLevelCodeSet?: IEducationLevelCodeSet | null;
   ageCodeSet?: IAgeCodeSet | null;
