@@ -93,6 +93,7 @@ Generic styles
 /* Temporary workaround for availity-reactstrap-validation */
 .invalid-feedback {
   display: inline;
+  color: #e71813;
 }
 
 /* other generic styles */
@@ -114,7 +115,7 @@ Generic styles
 
 .error {
   color: white;
-  background-color: red;
+  background-color: #e71813;
 }
 
 .break {
