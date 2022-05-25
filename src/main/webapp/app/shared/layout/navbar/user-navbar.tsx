@@ -13,6 +13,17 @@ const UserNavbar = (props: {
   onClick1: (event) => void,
   userFullName: string,
 }) => {
+  const favorites = () => {
+    return (
+      <NavItem>
+        <NavLink href="/favorites">
+              <span>
+                <Translate contentKey="global.menu.favorites">Favorites</Translate>
+              </span>
+        </NavLink>
+      </NavItem>
+    );
+  }
 
   return (
     <Navbar className="bg-primary" light expand="md" fixed="top" data-cy="navbar">
@@ -27,13 +38,9 @@ const UserNavbar = (props: {
               </span>
             </NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink href="/favorites">
-              <span>
-                <Translate contentKey="global.menu.favorites">Favorites</Translate>
-              </span>
-            </NavLink>
-          </NavItem>
+          {
+            props.authenticated && favorites()
+          }
         </Nav>
         <Nav>
           <LocaleMenu currentLocale={props.currentLocale} onClick={props.onClick1}/>

@@ -1,17 +1,22 @@
 import React from 'react';
 import MenuItem from 'app/shared/layout/menus/menu-item';
-import { Translate, translate } from 'react-jhipster';
-import { NavDropdown } from './menu-components';
-import {useAppSelector} from "app/config/store";
+import {Translate, translate} from 'react-jhipster';
+import {NavDropdown} from './menu-components';
 
-const accountMenuItemsAuthenticated = () => (
+const accountMenuItemsAuthenticated = (isAuth) => (
   <>
-    <MenuItem icon="wrench" to="/account/settings" data-cy="settings">
-      <Translate contentKey="global.menu.account.settings">Settings</Translate>
-    </MenuItem>
-    <MenuItem icon="lock" to="/account/password" data-cy="passwordItem">
+    {
+      !isAuth
+      &&
+      <MenuItem icon="wrench" to="/account/settings" data-cy="settings">
+        <Translate contentKey="global.menu.account.settings">Settings</Translate>
+      </MenuItem>
+      &&
+      <MenuItem icon="lock" to="/account/password" data-cy="passwordItem">
       <Translate contentKey="global.menu.account.password">Password</Translate>
-    </MenuItem>
+      </MenuItem>
+    }
+
     <MenuItem icon="clock-rotate-left" to="/user-search-settings" data-cy="profiili">
       <Translate contentKey="global.menu.account.profile">User profile</Translate>
     </MenuItem>
@@ -42,7 +47,7 @@ export const AccountMenu = ({ isAuthenticated = false, userFullName = '' }) => {
   const actualFullname = userFullName.indexOf('undefined') === -1 ? userFullName : translate('global.menu.account.notLoggedIn')
   return (
     <NavDropdown name={translate('global.menu.account.main', {username: actualFullname})} id="account-menu" data-cy="accountMenu">
-      {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}
+      {isAuthenticated ? accountMenuItemsAuthenticated(isAuthenticated) : accountMenuItems()}
     </NavDropdown>
   );
 }
