@@ -179,11 +179,11 @@
     - name: "Set password for user kibana_system"
       shell:
         cmd: |
-          curl -XPOST -D- 'http://localhost:9200/_security/user/kibana_system/_password' -H 'Content-Type: application/json' -u "elastic:{{ monitoring.elastic.password }}" -d '{"password": "{{ monitoring.kibana.system_password }}"}'
+          curl -XPOST -D- 'http://localhost:9200/_security/user/kibana_system/_password' -H 'Content-Type: application/json' -u "elastic:{{ secret.monitoring.elastic.password }}" -d '{"password": "{{ secret.monitoring.kibana.system_password }}"}'
     - name: "Create role logstash_writer"
       shell:
         cmd: |
-          curl -XPOST -D- 'http://localhost:9200/_security/role/logstash_writer' -H 'Content-Type: application/json' -u "elastic:{{ monitoring.elastic.password }}" -d '
+          curl -XPOST -D- 'http://localhost:9200/_security/role/logstash_writer' -H 'Content-Type: application/json' -u "elastic:{{ secret.monitoring.elastic.password }}" -d '
           {
             "cluster": [
               "manage_index_templates",
@@ -220,7 +220,11 @@
     - name: "Create user logstash_internal"
       shell:
         cmd: |
-          curl -XPOST -D- 'http://localhost:9200/_security/user/logstash_internal' -H 'Content-Type: application/json' -u "elastic:{{ monitoring.elastic.password }}" -d '{ "password" : "{{ monitoring.logstash.internal_password }}", "roles" : ["logstash_writer"], "full_name" : "Internal Logstash User" }'
+          curl -XPOST -D- 'http://localhost:9200/_security/user/logstash_internal' -H 'Content-Type: application/json' -u "elastic:{{ secret.monitoring.elastic.password }}" -d '{ "password" : "{{ secret.monitoring.logstash.internal_password }}", "roles" : ["logstash_writer"], "full_name" : "Internal Logstash User" }'
+    - name: "Create elastic user admin for convenience"
+      shell:
+        cmd: |
+          curl -XPOST -D- 'http://localhost:9200/_security/user/admin' -H 'Content-Type: application/json' -u "elastic:{{ secret.monitoring.elastic.password }}" -d '{ "password" : "{{ secret.monitoring.elastic.password }}", "roles" : ["kibana_admin","superuser" ], "full_name" : "Admin User" }'
 
 # Promotion
     - name: "Install promotion script"

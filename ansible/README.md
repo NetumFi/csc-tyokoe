@@ -31,16 +31,24 @@ ansible-playbook -i development.yml docker.yml --extra-vars=ansible_user=TUNNUS
 # Infrastruktuurin asennus
 
 ```
-ansible-playbook -i development.yml promotion.yml --extra-vars=ansible_user=TUNNUS 
+ansible-playbook -i development.yml -i vault.yml infrastructure.yml --extra-vars=ansible_user=TUNNUS 
 ```
 
-# Promootio
+# Unix-palvelut (Infra- ja sovellus)
 
-Skripti `csc2022-promote.sh` seuraa docker-tapahtumia ja käynnistää sovelluksen uudestaan kun docker image
-merkitään (Jenkinsissä) tägillä `csc2022:promoted`. Tällä hetkellä se pitää käynnistää käsin. 
+Infrastruktuuri kokonaisuutena (tietokannat, web-proxy, yms.) ja sovellus voidaan hallita UNIX-palveluina (`serviced`). 
 
 ```
-[tyokoe@koe7-dv csc2022]$ pwd
-/opt/tyokoe/csc2022
-[tyokoe@koe7-dv csc2022]$ nohup ./csc2022-promote.sh &
+ansible-playbook -i development.yml service-infra.yml --extra-vars=ansible_user=TUNNUS TAG 
+ansible-playbook -i development.yml service-app.yml --extra-vars=ansible_user=TUNNUS TAG 
+```
+
+Missä TAG on: 
+```
+* install   -- asenna palvelu
+* up        -- käynnistä
+* down      -- pysäytä
+* remove    -- poista kokonaan
+* enabled   -- käynnistyy automaattisesti
+* disabled  -- ei käynnisty automaattisesti
 ```

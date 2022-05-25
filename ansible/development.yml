@@ -14,21 +14,9 @@ csc:
     certificate: "/home/cloud-user/koe7-dv_csc_fi_cert.cer"
     intermediate_certificate: "/home/cloud-user/koe-dv_csc_fi_interm.cer"
     pem: "{{ infradir }}/ssl.pem"
-# TODO put in vault (postgres password as well!)
-    monitoring:
-      elastic:
-        password: 'katatoninen kehittäjä'
-      kibana:
-        system_password: 'kibanasala'
-      logstash:
-        internal_password: 'logstashsala'
-      grafana:
-        admin_password: 'katatoninen kehittäjä'
-#
     postgres:
       application:
         user: csc2022
-        password: "katatoninen tietokanta"
         database: csc2022
     developers:
       - name: Jarno Luttinen

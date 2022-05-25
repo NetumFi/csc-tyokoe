@@ -16,7 +16,7 @@ output {
 	elasticsearch {
 		hosts => "http://elasticsearch:9200"
 		user => "logstash_internal"
-		password => "{{ monitoring.logstash.internal_password }}"
+		password => "{{ secret.monitoring.logstash.internal_password }}"
 		index => "logstash-%{+YYYY.MM.dd}"
  	}
 }

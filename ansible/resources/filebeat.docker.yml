@@ -30,23 +30,3 @@ output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
-
-
-filebeat:
-  prospectors:
-    -
-      paths:
-        - "/var/log/nginx/*access.log"
-      document_type: nginx-access
-      encoding: utf-8
-    -
-      paths:
-        - "/var/log/nginx/*error.log"
-      document_type: nginx-error
-      encoding: utf-8
-output:
-  logstash:
-    enabled: true
-    hosts: ["${LOGSTASH_HOST}:${LOGSTASH_PORT}"]
-    index: ${INDEX_NAME}
-    encoding: ${ENCODING}

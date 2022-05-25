@@ -1,0 +1,18 @@
+#
+# Tarkoitettu ainoastaan demo-käyttöön. Sisältö olisi normaalisti kryptattu (ansibnle vault).
+#
+csc:
+  vars:
+    secret:
+      monitoring:
+        elastic:
+          password: 'katatoninen kehittäjä'
+        kibana:
+          system_password: 'kibanasala'
+        logstash:
+          internal_password: 'logstashsala'
+        grafana:
+          admin_password: 'katatoninen kehittäjä'
+      postgres:
+        application:
+          password: "katatoninen tietokanta"
