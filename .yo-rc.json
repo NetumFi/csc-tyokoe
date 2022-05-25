@@ -19,7 +19,7 @@
     "enableHibernateCache": false,
     "enableSwaggerCodegen": true,
     "enableTranslation": true,
-    "entities": ["Profile", "SearchHistory", "Age", "SearchSetting", "ReadingList", "Note", "AgeCodeSet", "EducationLevelCodeSet"],
+    "entities": ["SearchSetting", "Profile", "SearchHistory", "ReadingList", "Note", "AgeCodeSet", "EducationLevelCodeSet"],
     "entitySuffix": "",
     "jhiPrefix": "jhi",
     "jhipsterVersion": "7.8.1",

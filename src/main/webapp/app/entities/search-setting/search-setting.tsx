@@ -107,6 +107,9 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                 <th className="hand" onClick={sort('searchTerm')}>
                   <Translate contentKey="csc2022App.searchSetting.searchTerm">Search Term</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('fieldOfStudy')}>
+                  <Translate contentKey="csc2022App.searchSetting.fieldOfStudy">Field Of Study</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th>
                   <Translate contentKey="csc2022App.searchSetting.user">User</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -129,6 +132,7 @@ export const SearchSetting = (props: RouteComponentProps<{ url: string }>) => {
                     </Button>
                   </td>
                   <td>{searchSetting.searchTerm}</td>
+                  <td>{searchSetting.fieldOfStudy}</td>
                   <td>{searchSetting.user ? searchSetting.user.login : ''}</td>
                   <td>
                     {searchSetting.educationLevelCodeSet ? (

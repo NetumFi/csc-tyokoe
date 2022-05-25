@@ -1,6 +1,5 @@
 package fi.netum.csc.web.rest;
 
-import static fi.netum.csc.web.rest.UserTestUtil.createUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
@@ -9,10 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import fi.netum.csc.IntegrationTest;
 import fi.netum.csc.domain.SearchSetting;
-import fi.netum.csc.domain.User;
 import fi.netum.csc.repository.SearchSettingRepository;
-import fi.netum.csc.repository.UserRepository;
-import fi.netum.csc.service.SearchHistoryService;
 import fi.netum.csc.service.SearchSettingService;
 import fi.netum.csc.service.dto.SearchSettingDTO;
 import fi.netum.csc.service.mapper.SearchSettingMapper;
@@ -21,8 +17,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
-
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,11 +50,14 @@ class SearchSettingResourceIT {
     private static final String DEFAULT_AGE = "AAAAAAAAAA";
     private static final String UPDATED_AGE = "BBBBBBBBBB";
 
+    private static final String DEFAULT_FIELD_OF_STUDY = "AAAAAAAAAA";
+    private static final String UPDATED_FIELD_OF_STUDY = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/search-settings";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final Random random = new Random();
-    private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+    private static Random random = new Random();
+    private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     @Autowired
     private SearchSettingRepository searchSettingRepository;
@@ -81,9 +78,6 @@ class SearchSettingResourceIT {
     private MockMvc restSearchSettingMockMvc;
 
     private SearchSetting searchSetting;
-    @Autowired
-    private UserRepository userRepository;
-    private User savedUser;
 
     /**
      * Create an entity for this test.
@@ -91,8 +85,12 @@ class SearchSettingResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public SearchSetting createEntity(EntityManager em) {
-        SearchSetting searchSetting = new SearchSetting().searchTerm(DEFAULT_SEARCH_TERM).role(DEFAULT_ROLE).age(DEFAULT_AGE).user(savedUser);
+    public static SearchSetting createEntity(EntityManager em) {
+        SearchSetting searchSetting = new SearchSetting()
+            .searchTerm(DEFAULT_SEARCH_TERM)
+            .role(DEFAULT_ROLE)
+            .age(DEFAULT_AGE)
+            .fieldOfStudy(DEFAULT_FIELD_OF_STUDY);
         return searchSetting;
     }
 
@@ -103,15 +101,16 @@ class SearchSettingResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static SearchSetting createUpdatedEntity(EntityManager em) {
-        SearchSetting searchSetting = new SearchSetting().searchTerm(UPDATED_SEARCH_TERM).role(UPDATED_ROLE).age(UPDATED_AGE);
+        SearchSetting searchSetting = new SearchSetting()
+            .searchTerm(UPDATED_SEARCH_TERM)
+            .role(UPDATED_ROLE)
+            .age(UPDATED_AGE)
+            .fieldOfStudy(UPDATED_FIELD_OF_STUDY);
         return searchSetting;
     }
 
     @BeforeEach
     public void initTest() {
-        User user = createUser();
-        savedUser = userRepository.save(user);
-
         searchSetting = createEntity(em);
     }
 
@@ -134,6 +133,7 @@ class SearchSettingResourceIT {
         assertThat(testSearchSetting.getSearchTerm()).isEqualTo(DEFAULT_SEARCH_TERM);
         assertThat(testSearchSetting.getRole()).isEqualTo(DEFAULT_ROLE);
         assertThat(testSearchSetting.getAge()).isEqualTo(DEFAULT_AGE);
+        assertThat(testSearchSetting.getFieldOfStudy()).isEqualTo(DEFAULT_FIELD_OF_STUDY);
     }
 
     @Test
@@ -159,7 +159,6 @@ class SearchSettingResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser("juuso")
     void getAllSearchSettings() throws Exception {
         // Initialize the database
         searchSettingRepository.saveAndFlush(searchSetting);
@@ -172,7 +171,8 @@ class SearchSettingResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(searchSetting.getId().intValue())))
             .andExpect(jsonPath("$.[*].searchTerm").value(hasItem(DEFAULT_SEARCH_TERM)))
             .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE)))
-            .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)));
+            .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
+            .andExpect(jsonPath("$.[*].fieldOfStudy").value(hasItem(DEFAULT_FIELD_OF_STUDY)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -206,7 +206,8 @@ class SearchSettingResourceIT {
             .andExpect(jsonPath("$.id").value(searchSetting.getId().intValue()))
             .andExpect(jsonPath("$.searchTerm").value(DEFAULT_SEARCH_TERM))
             .andExpect(jsonPath("$.role").value(DEFAULT_ROLE))
-            .andExpect(jsonPath("$.age").value(DEFAULT_AGE));
+            .andExpect(jsonPath("$.age").value(DEFAULT_AGE))
+            .andExpect(jsonPath("$.fieldOfStudy").value(DEFAULT_FIELD_OF_STUDY));
     }
 
     @Test
@@ -228,7 +229,7 @@ class SearchSettingResourceIT {
         SearchSetting updatedSearchSetting = searchSettingRepository.findById(searchSetting.getId()).get();
         // Disconnect from session so that the updates on updatedSearchSetting are not directly saved in db
         em.detach(updatedSearchSetting);
-        updatedSearchSetting.searchTerm(UPDATED_SEARCH_TERM).role(UPDATED_ROLE).age(UPDATED_AGE);
+        updatedSearchSetting.searchTerm(UPDATED_SEARCH_TERM).role(UPDATED_ROLE).age(UPDATED_AGE).fieldOfStudy(UPDATED_FIELD_OF_STUDY);
         SearchSettingDTO searchSettingDTO = searchSettingMapper.toDto(updatedSearchSetting);
 
         restSearchSettingMockMvc
@@ -246,6 +247,7 @@ class SearchSettingResourceIT {
         assertThat(testSearchSetting.getSearchTerm()).isEqualTo(UPDATED_SEARCH_TERM);
         assertThat(testSearchSetting.getRole()).isEqualTo(UPDATED_ROLE);
         assertThat(testSearchSetting.getAge()).isEqualTo(UPDATED_AGE);
+        assertThat(testSearchSetting.getFieldOfStudy()).isEqualTo(UPDATED_FIELD_OF_STUDY);
     }
 
     @Test
@@ -327,6 +329,8 @@ class SearchSettingResourceIT {
         SearchSetting partialUpdatedSearchSetting = new SearchSetting();
         partialUpdatedSearchSetting.setId(searchSetting.getId());
 
+        partialUpdatedSearchSetting.fieldOfStudy(UPDATED_FIELD_OF_STUDY);
+
         restSearchSettingMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedSearchSetting.getId())
@@ -342,6 +346,7 @@ class SearchSettingResourceIT {
         assertThat(testSearchSetting.getSearchTerm()).isEqualTo(DEFAULT_SEARCH_TERM);
         assertThat(testSearchSetting.getRole()).isEqualTo(DEFAULT_ROLE);
         assertThat(testSearchSetting.getAge()).isEqualTo(DEFAULT_AGE);
+        assertThat(testSearchSetting.getFieldOfStudy()).isEqualTo(UPDATED_FIELD_OF_STUDY);
     }
 
     @Test
@@ -356,7 +361,11 @@ class SearchSettingResourceIT {
         SearchSetting partialUpdatedSearchSetting = new SearchSetting();
         partialUpdatedSearchSetting.setId(searchSetting.getId());
 
-        partialUpdatedSearchSetting.searchTerm(UPDATED_SEARCH_TERM).role(UPDATED_ROLE).age(UPDATED_AGE);
+        partialUpdatedSearchSetting
+            .searchTerm(UPDATED_SEARCH_TERM)
+            .role(UPDATED_ROLE)
+            .age(UPDATED_AGE)
+            .fieldOfStudy(UPDATED_FIELD_OF_STUDY);
 
         restSearchSettingMockMvc
             .perform(
@@ -373,6 +382,7 @@ class SearchSettingResourceIT {
         assertThat(testSearchSetting.getSearchTerm()).isEqualTo(UPDATED_SEARCH_TERM);
         assertThat(testSearchSetting.getRole()).isEqualTo(UPDATED_ROLE);
         assertThat(testSearchSetting.getAge()).isEqualTo(UPDATED_AGE);
+        assertThat(testSearchSetting.getFieldOfStudy()).isEqualTo(UPDATED_FIELD_OF_STUDY);
     }
 
     @Test

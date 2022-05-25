@@ -56,6 +56,7 @@
             <column name="search_term" type="string"/>
             <column name="role" type="string"/>
             <column name="age" type="string"/>
+            <column name="field_of_study" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

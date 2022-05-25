@@ -14,8 +14,8 @@ import {
 describe('SearchSetting e2e test', () => {
   const searchSettingPageUrl = '/search-setting';
   const searchSettingPageUrlPattern = new RegExp('/search-setting(\\?.*)?$');
-  const username = Cypress.env('E2E_USERNAME') ?? 'admin';
-  const password = Cypress.env('E2E_PASSWORD') ?? 'admin';
+  const username = Cypress.env('E2E_USERNAME') ?? 'user';
+  const password = Cypress.env('E2E_PASSWORD') ?? 'user';
   const searchSettingSample = {};
 
   let searchSetting: any;
@@ -158,6 +158,8 @@ describe('SearchSetting e2e test', () => {
       cy.get(`[data-cy="role"]`).type('Romania Marketing').should('have.value', 'Romania Marketing');
 
       cy.get(`[data-cy="age"]`).type('navigate').should('have.value', 'navigate');
+
+      cy.get(`[data-cy="fieldOfStudy"]`).type('Mouse clicks-and-mortar services').should('have.value', 'Mouse clicks-and-mortar services');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

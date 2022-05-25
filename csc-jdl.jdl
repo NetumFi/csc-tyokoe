@@ -28,6 +28,7 @@ entity SearchSetting {
 	searchTerm String
     role String
     age String  // --> enumeration
+    fieldOfStudy String
 }
 
 entity ReadingList {

@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "searchTerm": "Hakusanat",
+      "fieldOfStudy": "Koulutusaste",
       "role": "Role",
       "age": "Age",
       "user": "Käyttäjä",
