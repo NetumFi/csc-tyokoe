@@ -16,6 +16,8 @@ import { IAgeCodeSet } from 'app/shared/model/age-code-set.model';
 import { getEntities as getAgeCodeSets } from 'app/entities/age-code-set/age-code-set.reducer';
 import { ISearchSetting } from 'app/shared/model/search-setting.model';
 import { getEntity, updateEntity, createEntity, reset } from './search-setting.reducer';
+import {hasAnyAuthority} from "app/shared/auth/private-route";
+import {AUTHORITIES} from "app/config/constants";
 
 export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
@@ -29,8 +31,15 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
   const loading = useAppSelector(state => state.searchSetting.loading);
   const updating = useAppSelector(state => state.searchSetting.updating);
   const updateSuccess = useAppSelector(state => state.searchSetting.updateSuccess);
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
+
   const handleClose = () => {
-    props.history.push('/search-setting' + props.location.search);
+    if( isAdmin ) {
+      props.history.push('/search-setting' + props.location.search);
+    }
+    else {
+      props.history.push('/user-search-settings' + props.location.search);
+    }
   };
 
   useEffect(() => {
@@ -81,9 +90,9 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="csc2022App.searchSetting.home.createOrEditLabel" data-cy="SearchSettingCreateUpdateHeading">
+          <h1 className="h2" id="csc2022App.searchSetting.home.createOrEditLabel" data-cy="SearchSettingCreateUpdateHeading">
             <Translate contentKey="csc2022App.searchSetting.home.createOrEditLabel">Create or edit a SearchSetting</Translate>
-          </h2>
+          </h1>
         </Col>
       </Row>
       <Row className="justify-content-center">
@@ -116,22 +125,24 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
                 data-cy="fieldOfStudy"
                 type="text"
               />
-              <ValidatedField
-                id="search-setting-user"
-                name="user"
-                data-cy="user"
-                label={translate('csc2022App.searchSetting.user')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
+              { isAdmin &&
+                <ValidatedField
+                  id="search-setting-user"
+                  name="user"
+                  data-cy="user"
+                  label={translate('csc2022App.searchSetting.user')}
+                  type="select"
+                >
+                  <option value="" key="0" />
+                  {users
+                    ? users.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.login}
                       </option>
                     ))
-                  : null}
-              </ValidatedField>
+                    : null}
+                </ValidatedField>
+              }
               <ValidatedField
                 id="search-setting-educationLevelCodeSet"
                 name="educationLevelCodeSet"
@@ -164,7 +175,7 @@ export const SearchSettingUpdate = (props: RouteComponentProps<{ id: string }>) 
                     ))
                   : null}
               </ValidatedField>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/search-setting" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to= {isAdmin ? "/search-setting" : "/user-search-settings" } replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

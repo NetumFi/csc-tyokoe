@@ -4,13 +4,15 @@ import { Button, Row, Col } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES} from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './search-setting.reducer';
+import {hasAnyAuthority} from "app/shared/auth/private-route";
 
 export const SearchSettingDetail = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
 
   useEffect(() => {
     dispatch(getEntity(props.match.params.id));
@@ -20,9 +22,9 @@ export const SearchSettingDetail = (props: RouteComponentProps<{ id: string }>) 
   return (
     <Row>
       <Col md="8">
-        <h2 data-cy="searchSettingDetailsHeading">
+        <h1 className="h2" data-cy="searchSettingDetailsHeading">
           <Translate contentKey="csc2022App.searchSetting.detail.title">SearchSetting</Translate>
-        </h2>
+        </h1>
         <dl className="jh-entity-details">
           <dt>
             <span id="id">
@@ -61,7 +63,7 @@ export const SearchSettingDetail = (props: RouteComponentProps<{ id: string }>) 
           </dt>
           <dd>{searchSettingEntity.ageCodeSet ? searchSettingEntity.ageCodeSet.id : ''}</dd>
         </dl>
-        <Button tag={Link} to="/search-setting" replace color="info" data-cy="entityDetailsBackButton">
+        <Button tag={Link} to= {isAdmin ? "/search-setting" : "/user-search-settings" }  replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>

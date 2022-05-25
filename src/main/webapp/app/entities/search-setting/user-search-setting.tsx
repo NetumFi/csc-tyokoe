@@ -89,11 +89,6 @@ export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) =
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="csc2022App.searchSetting.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/search-setting/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="csc2022App.searchSetting.home.createLabel">Create new Search Setting</Translate>
-          </Link>
         </div>
       </h1>
       <div className="table-responsive">
@@ -171,18 +166,6 @@ export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) =
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
                       </Button>
-                      <Button
-                        tag={Link}
-                        to={`/search-setting/${searchSetting.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="md"
-                        data-cy="entityDeleteButton"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
                     </div>
                   </td>
                 </tr>
@@ -197,24 +180,6 @@ export const UserSearchSetting = (props: RouteComponentProps<{ url: string }>) =
           )
         )}
       </div>
-      {totalItems ? (
-        <div className={searchSettingList && searchSettingList.length > 0 ? '' : 'd-none'}>
-          <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
-          </div>
-          <div className="justify-content-center d-flex">
-            <JhiPagination
-              activePage={paginationState.activePage}
-              onSelect={handlePagination}
-              maxButtons={5}
-              itemsPerPage={paginationState.itemsPerPage}
-              totalItems={totalItems}
-            />
-          </div>
-        </div>
-      ) : (
-        ''
-      )}
     </div>
   );
 };
