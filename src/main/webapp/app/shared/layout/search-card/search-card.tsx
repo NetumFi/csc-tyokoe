@@ -53,37 +53,54 @@ const SearchCard = (props: {
     props.handleSyncList();
   };
 
+  const handleKeypress = e => {
+    if (e.keyCode === 13) {
+      saveOrDeleteSearchMaterial();
+    }
+  };
+
+  const img = () => {
+    return <img src={props.result.thumbnail?.filepath} className="img-fluid" alt={'img ' + props.result?.thumbnail?.filebucket + props.result.id}/>
+  }
+
+  const imgProduction = () => {
+    return <img src={props.result.thumbnail?.filepath.replace(/^https:[/][/]aoe.fi/, '/aoe')} className="img-fluid" alt={'img ' + props.result?.thumbnail?.filebucket + props.result.id}/>
+  }
+
   return <div className="card">
     <div className="row no-gutters">
       <div className="col-auto">
-        {props.result.thumbnail?.filepath &&
-          <img src={props.result.thumbnail?.filepath.replace(/^https:[/][/]aoe.fi/, '/aoe')} className="img-fluid" alt="img"/>}
+        {props.result.thumbnail?.filepath && imgProduction()}
       </div>
       <div className="col">
-        <div className="card-block px-2">
-          <div >
-            <FontAwesomeIcon icon={'heart'}
-                             fixedWidth={true}
-                             size="2x"
-                             className={'fav-icon-heart'}
-                             color={favorite ? '#3A7A10' : '#D3D3D3'}
-                             onClick={saveOrDeleteSearchMaterial}/>
-          </div>
+        <div className="card-block px-4">
           <div className={'search-link-title'}>
             <Link to={{ pathname: aoeurl + props.result.id}} target="_blank" className={'cust-link'}>
-              <h4 className="cust_card-title">
+              <h2 className="cust_card-title h3">
                 {
                   props.component === 'search' ?
                     props.result.materialName.filter(m => m.language === props.lang).map(x => x.materialname)[0]
                     : props.result.name.filter(m => m.language === props.lang).map(x => x.materialname)[0]
                 }
-              </h4>
+              </h2>
             </Link>
           </div>
+          <div >
+            <FontAwesomeIcon icon={'heart'}
+                             tabIndex={0}
+                             fixedWidth={true}
+                             size="2x"
+                             className={'fav-icon-heart'}
+                             color={favorite ? '#3A7A10' : '#D3D3D3'}
+                             onKeyDown={(e) => handleKeypress(e)}
+                             onClick={saveOrDeleteSearchMaterial}/>
+          </div>
+          <div className={"cust-description"}>
+            <p className="card-text">
+              {props.result.description.filter(d => d.language === props.lang).map(d => d.description)[0]}
+            </p>
+          </div>
 
-          <p className="card-text">
-            {props.result.description.filter(d => d.language === props.lang).map(d => d.description)[0]}
-          </p>
           <div>
             {props.result.learningResourceTypes.map(t =>
               <Badge
@@ -106,5 +123,3 @@ const SearchCard = (props: {
 }
 
 export default SearchCard;
-{/* props.result.thumbnail?.filepath &&
-          <img src={props.result.thumbnail?.filepath} className="img-fluid" alt="img"/>*/}
