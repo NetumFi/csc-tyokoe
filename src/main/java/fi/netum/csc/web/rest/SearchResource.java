@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -61,7 +62,7 @@ public class SearchResource {
      * @return ItemMetadata
      */
     @GetMapping("/get-metadatas/{ids}")
-    public List<ItemMetadata> getMetadatas(@PathVariable ArrayList<String> ids) throws IOException, InterruptedException {
+    public List<ItemMetadata> getMetadatas(@PathVariable ArrayList<String> ids) {
         log.debug("REST request metadata to ids: {}", ids);
         if (ids == null) {
             throw new BadRequestAlertException("Ids cannot be empty", "ids", "empty");
@@ -72,6 +73,7 @@ public class SearchResource {
                 return aoeService.getMetadata(i);
             } catch (Exception e) {
                 log.warn("Metadatan hakeminen epäonnistui, id: " + i, e);
+                Thread.currentThread().interrupt();
             }
             return null;
         }).collect(Collectors.toList());
