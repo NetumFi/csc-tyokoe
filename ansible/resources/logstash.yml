@@ -1,0 +1,5 @@
+# Not monitoring logstash via xpack (it is done via prometheus):
+xpack.monitoring.enabled: false
+#xpack.monitoring.elasticsearch.hosts: ["elasticsearch:9200"]
+#xpack.monitoring.elasticsearch.username: "logstash_system"
+#xpack.monitoring.elasticsearch.password: "..."

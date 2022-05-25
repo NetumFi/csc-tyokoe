@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# This script is registered as service "promote".
+
+# Use "sudo journalctl -u promote -f" to see the service logs.
+
+cd $(dirname $0)
+
 TAG="$1"
 
 cleanup() {
@@ -25,6 +31,6 @@ function listen {
   docker events --filter "type=image" | while read f1 f2 f3 f4 f5; do handle "$f3" "$f4" "$f5"; done
 }
 
-echo "Listening to docker events: tagging an image with $TAG shall restart docker compose services"
+echo "Listening to docker events: tagging an image with $TAG shall restart docker compose application"
 
 listen

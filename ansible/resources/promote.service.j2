@@ -1,0 +1,11 @@
+[Unit]
+Description=Promotion service
+After=docker.service
+
+[Service]
+ExecStart={{ appdir }}/promote.sh csc2022:promoted
+User=tyokoe
+Group=docker
+
+[Install]
+WantedBy=multi-user.target

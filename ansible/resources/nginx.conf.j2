@@ -20,7 +20,7 @@ http {
     ssl_certificate /ssl/ssl.pem;
     ssl_certificate_key /ssl/ssl.key;
 
-    access_log /var/log/nginx/data-access.log combined;
+#    access_log /var/log/nginx/data-access.log combined;
 
     set $target "http://csc2022-app:8080";
 
@@ -55,7 +55,7 @@ http {
        proxy_set_header Connection $connection_upgrade;
        proxy_buffering off;
 
-       sub_filter_types text/html text/css text/xml application/json;
+       sub_filter_types atext/css text/xml application/json;
        sub_filter http://sonar:9000 https://$http_host;
        sub_filter_once off;
     }
@@ -72,6 +72,37 @@ http {
        proxy_set_header Upgrade $http_upgrade;
        proxy_set_header Connection $connection_upgrade;
        proxy_buffering off;
+    }
+    location /kibana/ {
+       proxy_set_header Accept-Encoding "";
+       proxy_pass http://kibana:5601/;
+       proxy_redirect http://kibana:5601 https://{{ domain }};
+       proxy_read_timeout 20d;
+       proxy_set_header X-Real-IP  $remote_addr;
+       proxy_set_header X-Forwarded-For $remote_addr;
+       proxy_set_header Host $host;
+       proxy_set_header X-Forwarded-Proto $scheme;
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection $connection_upgrade;
+       proxy_buffering off;
+    }
+    location /grafana/ {
+        proxy_set_header Host $http_host;
+        proxy_pass http://grafana:3000/;
+    }
+    # Proxy Grafana Live WebSocket connections.
+    location /grafana/api/live {
+        rewrite  ^/grafana/(.*)  /$1 break;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_set_header Host $http_host;
+        proxy_pass http://grafana:3000/;
+    }
+    location /aoe {
+        proxy_pass https://aoe.fi/;
+        proxy_set_header Host aoe.fi;
     }
   }
 }

@@ -5,6 +5,7 @@
   vars:
 
   tasks:
+# Users and groups
     - name: "Ensure group 'tyokoe' exists"
       group:
         name: tyokoe
@@ -33,6 +34,7 @@
       set_fact:
         docker_group: "{{ ansible_facts.getent_group.docker[1] }}"
 
+# Directories
     - name: "Ensure infra directory exists"
       become: true
       become_user: tyokoe
@@ -46,6 +48,7 @@
         path: "{{ appdir }}"
         state: directory
 
+# NGINX
     - name: "Create SSL key file"
       become: true
       copy:
@@ -71,40 +74,179 @@
       become: true
       become_user: tyokoe
       template:
-        src: 'docker-compose/nginx.conf.j2'
+        src: 'resources/nginx.conf.j2'
         dest: "{{ infradir }}/nginx.conf"
         mode: '0644'
       notify: "Restart nginx"
 
+# Services docker-compose
     - name: "Create infra docker-compose.yml"
       become: true
       become_user: tyokoe
       template:
-        src: 'docker-compose/docker-compose.yml.j2'
+        src: 'resources/docker-compose.yml.j2'
         dest: "{{ infradir }}/docker-compose.yml"
         mode: '0644'
+# Application docker-compose
     - name: "Create application docker-compose.yml"
       become: true
       become_user: tyokoe
       copy:
-        src: 'docker-compose/docker-compose-application.yml'
+        src: 'resources/docker-compose-application.yml'
         dest: "{{ appdir }}/docker-compose.yml"
         mode: '0644'
-    - name: "Copy promotion scripts"
+# ELK
+    - name: "Copy elasticsearch.yml"
       become: true
       become_user: tyokoe
       copy:
-        src: "{{ item }}"
-        dest: "{{ appdir }}"
-        mode: '0554'
-      with_fileglob:
-        - docker-compose/*.sh
+        src: "resources/elasticsearch.yml"
+        dest: "{{ infradir }}"
+        mode: '0644'
+    - name: "Create kibana.yml"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'resources/kibana.yml.j2'
+        dest: "{{ infradir }}/kibana.yml"
+        mode: '0644'
+    - name: "Create logstash.yml"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'resources/logstash.yml'
+        dest: "{{ infradir }}/logstash.yml"
+        mode: '0644'
+    - name: "Create logstash.conf"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'resources/logstash.conf.j2'
+        dest: "{{ infradir }}/logstash.conf"
+        mode: '0644'
+    - name: "Copy filebeat.docker.yml"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: "resources/filebeat.docker.yml"
+        dest: "{{ infradir }}"
+        mode: '0644'
+    - name: "Copy metricbeat.docker.yml"
+      copy:
+        src: "resources/metricbeat.docker.yml"
+        dest: "{{ infradir }}"
+        mode: '0644'
+        group: tyokoe
+        owner: root
+
+# Prometheus & Grafana
+    - name: "Create prometheus.yml"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: 'resources/prometheus.yml'
+        dest: "{{ infradir }}/prometheus.yml"
+        mode: '0644'
+    - name: "Create grafana.ini"
+      become: true
+      become_user: tyokoe
+      template:
+        src: 'resources/grafana.ini.j2'
+        dest: "{{ infradir }}/grafana.ini"
+        mode: '0644'
+    - name: "Create grafana directory"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: 'resources/grafana'
+        dest: "{{ infradir }}/"
+
+# Run services
     - name: "Run docker compose"
       become: true
       become_user: tyokoe
       shell:
         chdir: "{{ infradir }}"
         cmd: docker compose up -d
+
+# Configure ELK (wait for elasticsearch)
+    - wait_for:
+        host: localhost
+        port: 9200
+        delay: 10
+        sleep: 1
+        timeout: 60
+    - name: "Set password for user kibana_system"
+      shell:
+        cmd: |
+          curl -XPOST -D- 'http://localhost:9200/_security/user/kibana_system/_password' -H 'Content-Type: application/json' -u "elastic:{{ secret.monitoring.elastic.password }}" -d '{"password": "{{ secret.monitoring.kibana.system_password }}"}'
+    - name: "Create role logstash_writer"
+      shell:
+        cmd: |
+          curl -XPOST -D- 'http://localhost:9200/_security/role/logstash_writer' -H 'Content-Type: application/json' -u "elastic:{{ secret.monitoring.elastic.password }}" -d '
+          {
+            "cluster": [
+              "manage_index_templates",
+              "monitor",
+              "manage_ilm"
+            ],
+            "indices": [
+              {
+                "names": [
+                  "logs-generic-default",
+                  "logstash-*",
+                  "ecs-logstash-*"
+                ],
+                "privileges": [
+                  "write",
+                  "create",
+                  "create_index",
+                  "manage",
+                  "manage_ilm"
+                ]
+              },
+              {
+                "names": [
+                  "logstash",
+                  "ecs-logstash"
+                ],
+                "privileges": [
+                  "write",
+                  "manage"
+                ]
+              }
+            ]
+          }'
+    - name: "Create user logstash_internal"
+      shell:
+        cmd: |
+          curl -XPOST -D- 'http://localhost:9200/_security/user/logstash_internal' -H 'Content-Type: application/json' -u "elastic:{{ secret.monitoring.elastic.password }}" -d '{ "password" : "{{ secret.monitoring.logstash.internal_password }}", "roles" : ["logstash_writer"], "full_name" : "Internal Logstash User" }'
+    - name: "Create elastic user admin for convenience"
+      shell:
+        cmd: |
+          curl -XPOST -D- 'http://localhost:9200/_security/user/admin' -H 'Content-Type: application/json' -u "elastic:{{ secret.monitoring.elastic.password }}" -d '{ "password" : "{{ secret.monitoring.elastic.password }}", "roles" : ["kibana_admin","superuser" ], "full_name" : "Admin User" }'
+
+# Promotion
+    - name: "Install promotion script"
+      become: true
+      become_user: tyokoe
+      copy:
+        src: 'resources/promote.sh'
+        dest: "{{ appdir }}"
+        mode: '0554'
+    - name: "Install promotion service"
+      become: true
+      template:
+        src: 'resources/promote.service.j2'
+        dest: '/etc/systemd/system/promote.service'
+    - name: "Start promotion service"
+      service:
+        name: promote
+        state: started
+        enabled: yes
+
+# docker run --network host docker.elastic.co/beats/filebeat:8.2.0 setup   -E setup.kibana.host=localhost:5601 -E output.elasticsearch.hosts=["localhost:9200"] -E output.elasticsearch.username=elastic -E 'output.elasticsearch.password=katatoninen kehittäjä'
+# docker run --network host docker.elastic.co/beats/metricbeat:8.2.0 setup -E setup.kibana.host=localhost:5601 -E output.elasticsearch.hosts=["localhost:9200"] -E output.elasticsearch.username=elastic -E 'output.elasticsearch.password=katatoninen kehittäjä'
 
   handlers:
     - name: "Restart nginx"

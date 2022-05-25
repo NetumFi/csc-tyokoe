@@ -1,0 +1,181 @@
+version: '3.2'
+
+networks:
+  infra:
+    name: digivisio
+
+volumes:
+  jenkins: {}
+  sonar: {}
+  postgresql: {}
+  elasticsearch: {}
+  grafana: {}
+
+services:
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl.key:/ssl/ssl.key
+      - ./ssl.pem:/ssl/ssl.pem
+    networks:
+      - infra
+#    labels:
+#      - co.elastic.logs/module=nginx
+#      - co.elastic.logs/fileset.stdout=access
+#      - co.elastic.logs/fileset.stderr=error
+
+  jenkins:
+    image: jenkins/jenkins
+    restart: unless-stopped
+    environment:
+      JENKINS_OPTS: "--prefix=/jenkins"
+    networks:
+      - infra
+    privileged: true
+    user: "jenkins:{{ docker_group }}"
+    volumes:
+      - jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    depends_on:
+      - sonar
+
+  sonar:
+    image: sonarqube:9.3.0-community
+    extra_hosts:
+      - host.docker.internal:172.17.0.1
+    environment:
+      sonar.forceAuthentication: "false"
+      SONAR_WEB_CONTEXT: "/sonar"
+    volumes:
+      - sonar:/opt/sonarqube/data
+    networks:
+      - infra
+
+  postgres:
+    image: postgres:14.2
+    volumes:
+      - postgresql:/var/lib/postgresql/data/
+    user: postgres
+    environment:
+      - POSTGRES_USER={{ postgres.application.user }}
+      - POSTGRES_PASSWORD={{ secret.postgres.application.password }}
+    networks:
+      - infra
+
+# Monitoring
+# ELK
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.2.0
+    volumes:
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+#      - "9300:9300"
+    environment:
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      # Bootstrap password. Used to initialize the keystore during the initial startup of Elasticsearch. Ignored on subsequent runs.
+      - ELASTIC_PASSWORD={{ secret.monitoring.elastic.password }}
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
+      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+    networks:
+      - infra
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.2.0
+    volumes:
+      - ./logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+#    ports:
+#      - "5044:5044"
+#      - "5000:5000/tcp"
+#      - "5000:5000/udp"
+#      - "9600:9600"
+    environment:
+      - LS_JAVA_OPTS=-Xms256m -Xmx256m
+      - LOGSTASH_INTERNAL_PASSWORD={{ secret.monitoring.logstash.internal_password }}
+    networks:
+      - infra
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.2.0
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - "5601:5601"
+    environment:
+      - KIBANA_SYSTEM_PASSWORD={{ secret.monitoring.kibana.system_password }}
+      - SERVER_BASEPATH=/kibana
+      - SERVER_PUBLICBASEURL=https://{{ domain }}/kibana
+    networks:
+      - infra
+    depends_on:
+      - elasticsearch
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.2.0
+    command: filebeat -e --strict.perms=false -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    user: root
+    volumes:
+      - ./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD={{ secret.monitoring.elastic.password }}
+    networks:
+      - infra
+    depends_on:
+      - elasticsearch
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:8.2.0
+    user: root
+    volumes:
+      - ./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro
+    command: metricbeat -e -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    environment:
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD={{ secret.monitoring.elastic.password }}
+    networks:
+      - infra
+    depends_on:
+      - elasticsearch
+
+  prometheus:
+    image: prom/prometheus:v2.33.3
+    volumes:
+      - ./prometheus.yml/:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    networks:
+      - infra
+
+  grafana:
+    image: grafana/grafana:8.4.1
+    volumes:
+      - ./grafana/:/etc/grafana/provisioning/
+      - grafana:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD={{ secret.monitoring.grafana.admin_password }}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+#    ports:
+#      - 3000:3000
+    networks:
+      - infra

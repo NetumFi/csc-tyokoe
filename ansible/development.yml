@@ -17,7 +17,6 @@ csc:
     postgres:
       application:
         user: csc2022
-        password: "katatoninen tietokanta"
         database: csc2022
     developers:
       - name: Jarno Luttinen

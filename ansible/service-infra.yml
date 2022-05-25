@@ -1,0 +1,52 @@
+---
+# Assumes infrastructure has been set up (see infrastructure.yml).
+- hosts: csc
+  user: ansible
+  become: yes
+  vars:
+
+  tasks:
+    - name: "Install infrastructure service"
+      become: true
+      template:
+        src: 'resources/csc2022infra.service.j2'
+        dest: '/etc/systemd/system/csc2022infra.service'
+      tags:
+        - up
+        - install
+    - name: "Remove infrastructure service"
+      become: true
+      file:
+        path: '/etc/systemd/system/csc2022infra.service'
+        state: absent
+      tags:
+        - never
+        - remove
+    - name: "Start infrastructure service"
+      service:
+        name: csc2022infra
+        state: started
+      tags:
+        - never
+        - up
+    - name: "Stop infrastructure service"
+      service:
+        name: csc2022infra
+        state: stopped
+      tags:
+        - never
+        - down
+    - name: "Enable infrastructure service"
+      service:
+        name: csc2022infra
+        enabled: yes
+      tags:
+        - never
+        - enabled
+    - name: "Disable infrastructure service"
+      service:
+        name: csc2022infra
+        enabled: no
+      tags:
+        - never
+        - disabled

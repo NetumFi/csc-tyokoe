@@ -1,0 +1,52 @@
+---
+# Assumes infrastructure has been set up (see application.yml).
+- hosts: csc
+  user: ansible
+  become: yes
+  vars:
+
+  tasks:
+    - name: "Install application service"
+      become: true
+      template:
+        src: 'resources/csc2022app.service.j2'
+        dest: '/etc/systemd/system/csc2022app.service'
+      tags:
+        - up
+        - install
+    - name: "Remove application service"
+      become: true
+      file:
+        path: '/etc/systemd/system/csc2022app.service'
+        state: absent
+      tags:
+        - never
+        - remove
+    - name: "Start application service"
+      service:
+        name: csc2022app
+        state: started
+      tags:
+        - never
+        - up
+    - name: "Stop application service"
+      service:
+        name: csc2022app
+        state: stopped
+      tags:
+        - never
+        - down
+    - name: "Enable application service"
+      service:
+        name: csc2022app
+        enabled: yes
+      tags:
+        - never
+        - enabled
+    - name: "Disable application service"
+      service:
+        name: csc2022app
+        enabled: no
+      tags:
+        - never
+        - disabled
