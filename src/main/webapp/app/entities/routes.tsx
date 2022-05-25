@@ -9,7 +9,8 @@ import ReadingList from './reading-list';
 import Note from './note';
 import AgeCodeSet from './age-code-set';
 import EducationLevelCodeSet from './education-level-code-set';
-import UserFavourites from "app/entities/reading-list/user-favourites";
+import UserFavourites from 'app/entities/reading-list/user-favourites';
+import UserResultKeyword from './user-result-keyword';
 import UserSearchSetting from "app/entities/search-setting/user-search-setting";
 import UserSearchHistory from "app/entities/search-history/user-search-history";
 /* jhipster-needle-add-route-import - JHipster will add routes here */
@@ -29,6 +30,7 @@ export default ({ match }) => {
         <ErrorBoundaryRoute path={`${match.url}note`} component={Note} />
         <ErrorBoundaryRoute path={`${match.url}age-code-set`} component={AgeCodeSet} />
         <ErrorBoundaryRoute path={`${match.url}education-level-code-set`} component={EducationLevelCodeSet} />
+        <ErrorBoundaryRoute path={`${match.url}user-result-keyword`} component={UserResultKeyword} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </Switch>
     </div>
